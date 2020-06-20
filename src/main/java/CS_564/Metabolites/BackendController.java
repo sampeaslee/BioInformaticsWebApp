@@ -4,7 +4,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
+import java.io.FileReader;
 import java.util.ArrayList;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,8 +33,23 @@ public class BackendController {
     @GetMapping("/homepage")
     public String sendToFrontend(String name, Model model) {
         
-        String sendFromBackendToFrontend = "Text sent from backend";
+        String sendFromBackendToFrontend = "";
         
+        //Calling the method that I created in the SimpleEntiyRepo which 
+        //interacts with MySQL and Returns all the information 
+        //stored in the "test_table" table
+
+        
+
+        
+        ArrayList <SimpleEntity> s = 
+            (ArrayList<SimpleEntity>) simpleRepo.queryExample();
+        
+        //Printing out contents of the table "test_table"
+        for(SimpleEntity index: s) {
+            sendFromBackendToFrontend  += "ID: " + index.getId()
+            + " Text: " + index.getText();
+        }
         //This method adds an attribute called sentFromBackend that can 
         //be used to access the text sent from the backend in the html
         //In this example you can access the text in the html like this:
