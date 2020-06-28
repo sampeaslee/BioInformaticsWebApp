@@ -23,7 +23,7 @@ public class Reaction {
 
     public String Subsystem;
 
-    public  String model;
+
     
     @Column(columnDefinition = "MEDIUMTEXT", length  = 80000)
     public String signature;
@@ -36,7 +36,7 @@ public class Reaction {
 
 
     public Reaction(String ReactionID, String name ,String HigherBound,
-                String LowerBound,String Subsystem,String model,
+                String LowerBound,String Subsystem,
                 String signature,String gene_reaction_rule) {
 
         this.ReactionID = ReactionID;
@@ -44,7 +44,7 @@ public class Reaction {
         this.HigherBound = HigherBound;
         this.LowerBound = LowerBound;
         this.Subsystem = Subsystem;
-        this.model = model;
+
         this.signature = signature;
         this.gene_reaction_rule = gene_reaction_rule;
     }
