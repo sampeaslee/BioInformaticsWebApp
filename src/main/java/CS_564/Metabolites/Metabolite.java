@@ -18,7 +18,6 @@ public class Metabolite {
     public String compartment;
 
     public String bigg_compoundID;
-    
 
 
     public Metabolite() {
@@ -45,7 +44,7 @@ public class Metabolite {
     public String getId() {
         return metaboliteID;
     }
-    
+
     public void SetID(String id) {
         this.metaboliteID = id;
     }

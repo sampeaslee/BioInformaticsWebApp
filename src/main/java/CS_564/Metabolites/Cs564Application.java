@@ -213,8 +213,8 @@ public class Cs564Application {
     }*/
         
 	//THIRD METHOD TO RUN (THIS ONE TAKES LONGER)
-
-/*	@Bean
+	/*
+	@Bean
 	public String CommandLineRunner(StoichiometryRepo repository) throws Exception{
         
         Object obj = new JSONParser().parse(new FileReader
@@ -270,8 +270,8 @@ public class Cs564Application {
      * */
 
 	//FOURTH METHOD TO RUN (THIS ONE TAKES A COUPLE MINS)
-
- /*@Bean
+/*
+ @Bean
  public String CommandLineRunner(CompoundRepo repository,
      MetaboliteRepo metaRepo, LinkedRepo linkRepo) throws Exception{
      //Reading in the JSON File
@@ -337,12 +337,12 @@ public class Cs564Application {
      }
      System.out.println("DONE LOADING IN METABOLITE DATA!!!");
      return "Has to have non void return type";
- }*/
-
+ }
+*/
 
 //FITH METHOD TO RUN(THIS ONE TAKES A COUPLE MINUTES AS WELL)
-
- /*@Bean
+/*
+ @Bean
  public String CommandLineRunner(ReactionRepo repository, HasRepo hasRepo) throws Exception{
      //Reading in the JSON File
      Object obj = new JSONParser().parse(new FileReader
@@ -391,9 +391,9 @@ public class Cs564Application {
      }
      System.out.println("DONE LOADING IN REACTION DATA!!!");
      return "Has to have non void return type";
- }*/
+ }
 
 	
-
+*/
         
 }
