@@ -1,7 +1,9 @@
 package CS_564.Metabolites;
 
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -50,10 +52,130 @@ public class Cs564Application {
 	 * 
 	 */
 	
-	/*
+	/**
+	 * In order to load in all the data, You will have to run each method below 
+	 * once. You have to run them one at a time, so uncomment one and start the 
+	 * application up. Once the data for that method is done loading a message 
+	 * will be printed to the screen. Then stop the application comment the method
+	 * out again and then uncomment the next method and repeat.
+	 * 
+	 * There are 5 method that need to be run to get all the data
+	 * 
+	 * 
+	 * NOTE: It does take a couple minutes for the metabolite and reaction data
+	 * to be loaded in. As long as no error pops up, which I dont think will 
+	 * happen, the code should be working. 
+	 */
+	
+	
+	
+	//FIRST METHOD TO RUN (THIS ONE IS QUICK)
+	/* 
 	@Bean
-	public String CommandLineRunner(GeneRepo repository) throws Exception{
-	    //Reading in the JSON File 
+    public String CommandLineRunner(ModelRepo repository) throws Exception{
+
+        //Object obj = new JSONParser().parse(new FileReader("exampleJSON.json"));
+        Object reaction_json = new JSONParser().parse(new FileReader
+            ("JSON\\final_compounds_from_bigg.json"));
+        Object compound_json = new JSONParser().parse(new FileReader
+            ("JSON\\final_reactions_from_bigg.json"));
+        Object gene_json = new JSONParser().parse(new FileReader
+            ("JSON\\genes_from_bigg.json"));
+        
+        ArrayList<String> allModels = new ArrayList<String>();
+        
+
+
+        
+        JSONObject jsonObj = (JSONObject) gene_json;
+        //keySet() returns a set of all the keys in the JSON 
+        Set<String> GeneIDs = jsonObj.keySet();
+        
+        //Iterate through the set of keys and parse the JSON data associated 
+        //with each key(GeneID).
+        for(String idKey: GeneIDs) {
+
+            JSONObject geneData =(JSONObject)  jsonObj.get(idKey);
+
+            JSONArray model = (JSONArray) geneData.get("model"); 
+            String modelName;
+      
+            Iterator itr = model.iterator();
+            modelName = "" + itr.next(); 
+            
+            if(!allModels.contains(modelName)) {
+                allModels.add(modelName);
+            }
+
+
+        }
+        
+        
+        JSONObject jsonObj2 = (JSONObject) compound_json;
+        //keySet() returns a set of all the keys in the JSON
+        Set<String> MetaIDs = jsonObj.keySet();
+
+        //Iterate through the set of keys and parse the JSON data associated
+        //with each key(MetaID).
+        for(String idKey: MetaIDs) {
+            //Parsing the JSON
+            JSONObject metaData =(JSONObject)  jsonObj.get(idKey);
+
+
+            JSONArray model = (JSONArray) metaData.get("model");
+            String modelName = "";
+
+            Iterator itr = model.iterator();
+            while (itr.hasNext()) {
+                
+                modelName = "" + itr.next();
+                
+                if(!allModels.contains(modelName)) {
+                    allModels.add(modelName);
+                }
+            }
+        }
+
+        JSONObject jsonObjThree = (JSONObject) gene_json;
+        //keySet() returns a set of all the keys in the JSON
+        Set<String> ReactionsIDs = jsonObj.keySet();
+
+        //Iterate through the set of keys and parse the JSON data associated
+        //with each key(ReactionsID).
+        for(String idKey: ReactionsIDs) {
+            //Parsing the JSON
+            JSONObject reactData =(JSONObject)  jsonObj.get(idKey);
+
+            JSONArray model = (JSONArray) reactData.get("model");
+            String modelName = "";
+
+            Iterator itr = model.iterator();
+            while (itr.hasNext()) {
+                modelName = "" + itr.next();
+                
+                if(!allModels.contains(modelName)) {
+                    allModels.add(modelName);
+                }
+            }
+
+        }
+        
+        for(String s: allModels){
+            repository.save(new Model(s));
+        }
+        
+        System.out.println("DONE LOADING IN MODEL DATA!!!");
+        
+        return "";
+        
+    }*/
+	
+	//SECOND METHOD TO RUN (THIS ONE IS QUICK)
+	
+	/*
+    @Bean
+    public String CommandLineRunner(GeneRepo repository) throws Exception{
+        //Reading in the JSON File 
         Object obj = new JSONParser().parse(new FileReader
             ("JSON\\genes_from_bigg.json"));
         //Casting to JSONObject
@@ -84,8 +206,194 @@ public class Cs564Application {
             
             //Send that data to MySQL
             repository.save(gene);
+
         }
-    
+        System.out.println("DONE LOADING IN GENE DATA!!!");
+        return "Has to have non void return type";
+    }*/
+        
+	//THIRD METHOD TO RUN (THIS ONE TAKES LONGER)
+	/*
+	@Bean
+	public String CommandLineRunner(StoichiometryRepo repository) throws Exception{
+        
+        Object obj = new JSONParser().parse(new FileReader
+            ("JSON\\final_reactions_from_bigg.json"));
+        JSONObject jsonObj = (JSONObject) obj;
+        //keySet() returns a set of all the keys in the JSON 
+        
+        Set<String> reactionIDs = jsonObj.keySet();
+        
+        for(String key: reactionIDs) {
+            
+            JSONObject j =  (JSONObject) jsonObj.get(key);
+            j  =  (JSONObject) j.get("stoichometry");
+            Set<String> metaIDs = j.keySet();
+            String start = "";
+            String end= "";
+            for(String s: metaIDs) {
+                Double coef = (Double) j.get(s);
+                if(coef < 0) {
+                        start = start + s + ":"+ coef + ",#" ;
+                }else {
+                        end = end + s + ":"+ coef + ",#" ;
+                }               
+            }
+            
+            
+            if(start.length() != 0) {
+                start = "#" + start;
+
+                start = start.substring(0, start.length() - 2);
+
+            }
+            
+            if(end.length() != 0) {
+                end = "#" + end;
+
+                end = end.substring(0, end.length() - 2);
+            }
+            
+            
+            Stoichiometry stoichometry = new Stoichiometry(key, start,end);
+            repository.save(stoichometry);
+            
+   
+        }
+       
+       System.out.println("DONE LOADING IN STOICHOMETRY DATA!!!");
 	   return "Has to have non void return type";
 	}*/
+	
+    /** Only one of the @Bean can be run in each time. So it needs three times to store all of json files into a json file.
+     * For some reasons, it takes minutes to run the metabolites and reactions. I assume it may be caused by the iterator.
+     * */
+
+	//FOURTH METHOD TO RUN (THIS ONE TAKES A COUPLE MINS)
+/*
+ @Bean
+ public String CommandLineRunner(CompoundRepo repository,
+     MetaboliteRepo metaRepo, LinkedRepo linkRepo) throws Exception{
+     //Reading in the JSON File
+     Object obj = new JSONParser().parse(new FileReader
+             ("JSON\\final_compounds_from_bigg.json"));
+     //Casting to JSONObject
+     JSONObject jsonObj = (JSONObject) obj;
+     //keySet() returns a set of all the keys in the JSON
+     Set<String> MetaIDs = jsonObj.keySet();
+
+     //Iterate through the set of keys and parse the JSON data associated
+     //with each key(MetaID).
+     for(String idKey: MetaIDs) {
+         //Parsing the JSON
+         JSONObject metaData =(JSONObject)  jsonObj.get(idKey);
+         JSONObject annotation = (JSONObject) metaData.get("annotation");
+         String bigg_compoundID = "" + annotation.get("bigg.metabolite");
+         String inchi_key = "" + annotation.get("inchi_key");
+         String metanetx_chemical = "" + annotation.get("metanetx.chemical");
+         String kegg_compound = "" + annotation.get("kegg.compound");
+
+         JSONArray model = (JSONArray) metaData.get("model");
+         String modelName = "";
+
+         Iterator itr = model.iterator();
+         while (itr.hasNext()) {
+            modelName = "" + itr.next();
+            MetaModel metamodel = new MetaModel(idKey, modelName);
+            Linked link = new Linked(metamodel);
+            linkRepo.save(link);
+            
+         }
+
+
+         String compartment = "" + metaData.get("compartment");
+         String charge =  "" + metaData.get("charge");
+         String name = "" + metaData.get("name");
+         String formula = "" + metaData.get("formula");
+
+
+         // I haven't figure out how to set up the long String datatype, so I just put the "" into the database instead.
+         JSONObject signature = (JSONObject) metaData.get("signature");
+         String SMILES = "" + signature.get("SMILES");
+         
+         if(SMILES.compareTo("NA") == 0){
+             SMILES = "null";
+         }
+         
+         String PRIME = "" + signature.get("PRIME");
+
+         //Create a Metabolite Object to store the data
+         Compound compound = new Compound(bigg_compoundID, name, charge, formula,
+                 inchi_key, kegg_compound, metanetx_chemical, SMILES, PRIME);
+
+
+         //Send that data to MySQL
+         repository.save(compound);
+         
+         Metabolite m = new Metabolite(idKey,bigg_compoundID, compartment );
+         
+         metaRepo.save(m);
+         
+     }
+     System.out.println("DONE LOADING IN METABOLITE DATA!!!");
+     return "Has to have non void return type";
+ }
+*/
+
+//FITH METHOD TO RUN(THIS ONE TAKES A COUPLE MINUTES AS WELL)
+/*
+ @Bean
+ public String CommandLineRunner(ReactionRepo repository, HasRepo hasRepo) throws Exception{
+     //Reading in the JSON File
+     Object obj = new JSONParser().parse(new FileReader
+             ("JSON\\final_reactions_from_bigg.json"));
+     //Casting to JSONObject
+     JSONObject jsonObj = (JSONObject) obj;
+     //keySet() returns a set of all the keys in the JSON
+     Set<String> ReactionsIDs = jsonObj.keySet();
+
+     //Iterate through the set of keys and parse the JSON data associated
+     //with each key(ReactionsID).
+     for(String idKey: ReactionsIDs) {
+         //Parsing the JSON
+         JSONObject reactData =(JSONObject)  jsonObj.get(idKey);
+
+
+         String name = "" + reactData.get("name");
+         String lowerbound = "" + reactData.get("lower_bound");
+         String subsystem = "" + reactData.get("subsystem");
+         String higherbound = "" + reactData.get("upper_bound");
+
+         JSONArray model = (JSONArray) reactData.get("model");
+         String modelName = "";
+
+         Iterator itr = model.iterator();
+         while (itr.hasNext()) {
+             modelName = "" + itr.next();
+             ReactionModel metamodel = new ReactionModel(idKey, modelName);
+             Has has  = new Has(metamodel);
+             hasRepo.save(has);
+         }
+
+         // I haven't figure out how to set up the long String datatype, so I just put the "" into the database instead.
+         String signature = "" +  reactData.get("signature");
+         //String stoichiometry = "";// + reactData.get("stoichometry");
+         String gene_reaction_rule = "" +  reactData.get("gene_reaction_rule");
+
+         
+         //Create a Reaction Object to store the data
+         Reaction reaction = new Reaction(idKey, name, higherbound, lowerbound, subsystem,
+          signature, gene_reaction_rule);
+
+         //Send that data to MySQL BIOMASS_Ec_iJO1366_WT_53p95M
+             repository.save(reaction);
+         
+     }
+     System.out.println("DONE LOADING IN REACTION DATA!!!");
+     return "Has to have non void return type";
+ }
+
+	
+*/
+        
 }
