@@ -16,8 +16,8 @@ import javax.persistence.Table;
 
 @Entity
 //Mapping the entity to a table in MySQL names genes
-@Table(name= "stoichometry")
-public class Stoichometry {
+@Table(name= "stoichiometry")
+public class Stoichiometry {
     @Id
     public String reactionID;
     
@@ -28,12 +28,12 @@ public class Stoichometry {
     
     
     
-    public Stoichometry() {
+    public Stoichiometry() {
         
     }
     
     
-    public Stoichometry(String reactionID, String startMetabolites,
+    public Stoichiometry(String reactionID, String startMetabolites,
         String endMetabolites) {
         this.reactionID = reactionID;
         this.startMetabolites = startMetabolites;

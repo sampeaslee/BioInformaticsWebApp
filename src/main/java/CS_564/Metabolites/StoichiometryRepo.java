@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-public interface StoichometryRepo extends JpaRepository<Stoichometry, Integer> {
+public interface StoichiometryRepo extends JpaRepository<Stoichiometry, Integer> {
     
     
     @Query(value = " select * from stoichometry ;", nativeQuery = true)
-    public ArrayList<Stoichometry> queryExample();
+    public ArrayList<Stoichiometry> queryExample();
     
 }
 

@@ -51,7 +51,26 @@ public class Cs564Application {
 	 * https://www.geeksforgeeks.org/parse-json-java/
 	 * 
 	 */
-	/*
+	
+	/**
+	 * In order to load in all the data, You will have to run each method below 
+	 * once. You have to run them one at a time, so uncomment one and start the 
+	 * application up. Once the data for that method is done loading a message 
+	 * will be printed to the screen. Then stop the application comment the method
+	 * out again and then uncomment the next method and repeat.
+	 * 
+	 * There are 5 method that need to be run to get all the data
+	 * 
+	 * 
+	 * NOTE: It does take a couple minutes for the metabolite and reaction data
+	 * to be loaded in. As long as no error pops up, which I dont think will 
+	 * happen, the code should be working. 
+	 */
+	
+	
+	
+	//FIRST METHOD TO RUN (THIS ONE IS QUICK)
+	/* 
 	@Bean
     public String CommandLineRunner(ModelRepo repository) throws Exception{
 
@@ -151,8 +170,10 @@ public class Cs564Application {
         
     }*/
 	
+	//SECOND METHOD TO RUN (THIS ONE IS QUICK)
 	
-   /* @Bean
+	/*
+    @Bean
     public String CommandLineRunner(GeneRepo repository) throws Exception{
         //Reading in the JSON File 
         Object obj = new JSONParser().parse(new FileReader
@@ -191,9 +212,10 @@ public class Cs564Application {
         return "Has to have non void return type";
     }*/
         
+	//THIRD METHOD TO RUN (THIS ONE TAKES LONGER)
 	/*
 	@Bean
-	public String CommandLineRunner(StoichometryRepo repository) throws Exception{
+	public String CommandLineRunner(StoichiometryRepo repository) throws Exception{
         
         Object obj = new JSONParser().parse(new FileReader
             ("JSON\\final_reactions_from_bigg.json"));
@@ -233,7 +255,7 @@ public class Cs564Application {
             }
             
             
-            Stoichometry stoichometry = new Stoichometry(key, start,end);
+            Stoichiometry stoichometry = new Stoichiometry(key, start,end);
             repository.save(stoichometry);
             
    
@@ -247,6 +269,7 @@ public class Cs564Application {
      * For some reasons, it takes minutes to run the metabolites and reactions. I assume it may be caused by the iterator.
      * */
 
+	//FOURTH METHOD TO RUN (THIS ONE TAKES A COUPLE MINS)
 /*
  @Bean
  public String CommandLineRunner(CompoundRepo repository,
@@ -292,6 +315,11 @@ public class Cs564Application {
          // I haven't figure out how to set up the long String datatype, so I just put the "" into the database instead.
          JSONObject signature = (JSONObject) metaData.get("signature");
          String SMILES = "" + signature.get("SMILES");
+         
+         if(SMILES.compareTo("NA") == 0){
+             SMILES = "null";
+         }
+         
          String PRIME = "" + signature.get("PRIME");
 
          //Create a Metabolite Object to store the data
@@ -309,12 +337,11 @@ public class Cs564Application {
      }
      System.out.println("DONE LOADING IN METABOLITE DATA!!!");
      return "Has to have non void return type";
- }*/
+ }
+*/
 
-
-
+//FITH METHOD TO RUN(THIS ONE TAKES A COUPLE MINUTES AS WELL)
 /*
-
  @Bean
  public String CommandLineRunner(ReactionRepo repository, HasRepo hasRepo) throws Exception{
      //Reading in the JSON File
@@ -364,9 +391,9 @@ public class Cs564Application {
      }
      System.out.println("DONE LOADING IN REACTION DATA!!!");
      return "Has to have non void return type";
- }*/
+ }
 
 	
-	
+*/
         
 }
