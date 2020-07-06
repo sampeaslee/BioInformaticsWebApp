@@ -33,7 +33,7 @@ public class BackendController {
     @GetMapping("/homepage")
     public String sendToFrontend(String name, Model model) {
         
-        String sendFromBackendToFrontend = "";
+        String sendFromBackendToFrontend = "SAm";
         
         //Calling the method that I created in the SimpleEntiyRepo which 
         //interacts with MySQL and Returns all the information 
@@ -60,6 +60,9 @@ public class BackendController {
         return "homepage";
         
     }
+    
+
+    
     
     /**
      * LOOK at the SimpleEntity and SimpleEntiyRepo files before you try and 
