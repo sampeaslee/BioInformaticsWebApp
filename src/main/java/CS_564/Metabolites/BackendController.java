@@ -29,7 +29,9 @@ public class BackendController {
      * called and the String "Text sent from backend" is sent to the html page
      * where is can be displayed
      */
-    
+
+
+
     @GetMapping("/homepage")
     public String sendToFrontend(String name, Model model) {
         

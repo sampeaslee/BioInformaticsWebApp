@@ -39,9 +39,65 @@ public class Reaction {
     }
 
 
-    public Reaction(String ReactionID, String name ,String HigherBound,
-                String LowerBound,String Subsystem,
-                String signature,String gene_reaction_rule) {
+    public String getReactionID() {
+        return ReactionID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getHigherBound() {
+        return HigherBound;
+    }
+
+    public String getLowerBound() {
+        return LowerBound;
+    }
+
+    public String getSubsystem() {
+        return Subsystem;
+    }
+
+    public void setReactionID(String reactionID) {
+        ReactionID = reactionID;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setHigherBound(String higherBound) {
+        HigherBound = higherBound;
+    }
+
+    public void setLowerBound(String lowerBound) {
+        LowerBound = lowerBound;
+    }
+
+    public void setSubsystem(String subsystem) {
+        Subsystem = subsystem;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+
+    public void setGene_reaction_rule(String gene_reaction_rule) {
+        this.gene_reaction_rule = gene_reaction_rule;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public String getGene_reaction_rule() {
+        return gene_reaction_rule;
+    }
+
+    public Reaction(String ReactionID, String name , String HigherBound,
+                    String LowerBound, String Subsystem,
+                    String signature, String gene_reaction_rule) {
 
         this.ReactionID = ReactionID;
         this.name = name;
