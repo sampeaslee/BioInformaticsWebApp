@@ -68,9 +68,8 @@ public class Cs564Application {
 	 */
 	
 	
-	
+/*
 	//FIRST METHOD TO RUN (THIS ONE IS QUICK)
-	/* 
 	@Bean
     public String CommandLineRunner(ModelRepo repository) throws Exception{
 
@@ -168,22 +167,21 @@ public class Cs564Application {
         
         return "";
         
-    }*/
-	
+    }
+	*/
 	//SECOND METHOD TO RUN (THIS ONE IS QUICK)
 	
-	/*
-    @Bean
+  /*  @Bean
     public String CommandLineRunner(GeneRepo repository) throws Exception{
-        //Reading in the JSON File 
+        //Reading in the JSON File
         Object obj = new JSONParser().parse(new FileReader
             ("JSON\\genes_from_bigg.json"));
         //Casting to JSONObject
         JSONObject jsonObj = (JSONObject) obj;
-        //keySet() returns a set of all the keys in the JSON 
+        //keySet() returns a set of all the keys in the JSON
         Set<String> GeneIDs = jsonObj.keySet();
-        
-        //Iterate through the set of keys and parse the JSON data associated 
+
+        //Iterate through the set of keys and parse the JSON data associated
         //with each key(GeneID).
         for(String idKey: GeneIDs) {
             //Parsing the JSON
@@ -192,18 +190,18 @@ public class Cs564Application {
             String ncbigi = "" + annotation.get("ncbigi");
             String refseq_name = "" + annotation.get("refseq_name");
             String sbo = "" + annotation.get("sbo");
-            JSONArray model = (JSONArray) geneData.get("model"); 
+            JSONArray model = (JSONArray) geneData.get("model");
             String modelName;
-      
+
             Iterator itr = model.iterator();
-            modelName = "" + itr.next(); 
+            modelName = "" + itr.next();
 
             String name = "" + geneData.get("name");
-            
-            //Create a Gene Object to store the data 
-            Gene gene = new Gene(idKey, name, ncbigi, refseq_name, 
+
+            //Create a Gene Object to store the data
+            Gene gene = new Gene(idKey, name, ncbigi, refseq_name,
                 sbo, modelName);
-            
+
             //Send that data to MySQL
             repository.save(gene);
 
@@ -211,9 +209,7 @@ public class Cs564Application {
         System.out.println("DONE LOADING IN GENE DATA!!!");
         return "Has to have non void return type";
     }*/
-        
-	//THIRD METHOD TO RUN (THIS ONE TAKES LONGER)
-	/*
+/*	//THIRD METHOD TO RUN (THIS ONE TAKES LONGER)
 	@Bean
 	public String CommandLineRunner(StoichiometryRepo repository) throws Exception{
         
