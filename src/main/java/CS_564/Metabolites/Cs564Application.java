@@ -70,17 +70,17 @@ public class Cs564Application {
 	
 	
 	//FIRST METHOD TO RUN (THIS ONE IS QUICK)
-	/* 
+	/*
 	@Bean
     public String CommandLineRunner(ModelRepo repository) throws Exception{
 
         //Object obj = new JSONParser().parse(new FileReader("exampleJSON.json"));
         Object reaction_json = new JSONParser().parse(new FileReader
-            ("JSON\\final_compounds_from_bigg.json"));
+            ("/home/charasi/eclipse-web/CS_564/JSON/final_compounds_from_bigg.json"));
         Object compound_json = new JSONParser().parse(new FileReader
-            ("JSON\\final_reactions_from_bigg.json"));
+            ("/home/charasi/eclipse-web/CS_564/JSON/final_reactions_from_bigg.json"));
         Object gene_json = new JSONParser().parse(new FileReader
-            ("JSON\\genes_from_bigg.json"));
+            ("/home/charasi/eclipse-web/CS_564/JSON/genes_from_bigg.json"));
         
         ArrayList<String> allModels = new ArrayList<String>();
         
@@ -177,7 +177,7 @@ public class Cs564Application {
     public String CommandLineRunner(GeneRepo repository) throws Exception{
         //Reading in the JSON File 
         Object obj = new JSONParser().parse(new FileReader
-            ("JSON\\genes_from_bigg.json"));
+            ("/home/charasi/eclipse-web/CS_564/JSON/genes_from_bigg.json"));
         //Casting to JSONObject
         JSONObject jsonObj = (JSONObject) obj;
         //keySet() returns a set of all the keys in the JSON 
@@ -213,12 +213,13 @@ public class Cs564Application {
     }*/
         
 	//THIRD METHOD TO RUN (THIS ONE TAKES LONGER)
+	
 	/*
 	@Bean
 	public String CommandLineRunner(StoichiometryRepo repository) throws Exception{
         
         Object obj = new JSONParser().parse(new FileReader
-            ("JSON\\final_reactions_from_bigg.json"));
+            ("/home/charasi/eclipse-web/CS_564/JSON/final_reactions_from_bigg.json"));
         JSONObject jsonObj = (JSONObject) obj;
         //keySet() returns a set of all the keys in the JSON 
         
@@ -270,13 +271,13 @@ public class Cs564Application {
      * */
 
 	//FOURTH METHOD TO RUN (THIS ONE TAKES A COUPLE MINS)
-/*
+ /*
  @Bean
  public String CommandLineRunner(CompoundRepo repository,
      MetaboliteRepo metaRepo, LinkedRepo linkRepo) throws Exception{
      //Reading in the JSON File
      Object obj = new JSONParser().parse(new FileReader
-             ("JSON\\final_compounds_from_bigg.json"));
+             ("/home/charasi/eclipse-web/CS_564/JSON/final_compounds_from_bigg.json"));
      //Casting to JSONObject
      JSONObject jsonObj = (JSONObject) obj;
      //keySet() returns a set of all the keys in the JSON
@@ -337,16 +338,16 @@ public class Cs564Application {
      }
      System.out.println("DONE LOADING IN METABOLITE DATA!!!");
      return "Has to have non void return type";
- }
-*/
+ }*/
+
 
 //FITH METHOD TO RUN(THIS ONE TAKES A COUPLE MINUTES AS WELL)
-/*
+ /*
  @Bean
  public String CommandLineRunner(ReactionRepo repository, HasRepo hasRepo) throws Exception{
      //Reading in the JSON File
      Object obj = new JSONParser().parse(new FileReader
-             ("JSON\\final_reactions_from_bigg.json"));
+             ("/home/charasi/eclipse-web/CS_564/JSON/final_reactions_from_bigg.json"));
      //Casting to JSONObject
      JSONObject jsonObj = (JSONObject) obj;
      //keySet() returns a set of all the keys in the JSON
@@ -391,9 +392,9 @@ public class Cs564Application {
      }
      System.out.println("DONE LOADING IN REACTION DATA!!!");
      return "Has to have non void return type";
- }
+ }*/
 
 	
-*/
+
         
 }
