@@ -6,8 +6,8 @@ import javax.persistence.Table;
 
 @Entity
 
-@Table(name= "modelssh")
-public class Model {
+@Table(name= "models")
+public class Model{
     
     @Id
     String name;
