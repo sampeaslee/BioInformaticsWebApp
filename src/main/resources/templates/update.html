@@ -1,77 +1,162 @@
 <!DOCTYPE html>
-<html xmlns:th = "http://www.thymeleaf.org">
+<html xmlns:th = "http://www.thymeleaf.org" lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Bioinformatics</title>
-     <link th:href="@{/css/homepage.css}" rel="stylesheet" />
+  <title>BioInformatics</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
+
+ <script th:inline="javascript">	
+	function getGeneDatabaseToAdd()
+	{ 
+		location.assign("/addgenes?add");
+	}
+	 
+	function getGeneDatabaseToDelete()
+	{ 
+		location.assign("/deletegenes?delete");
+	}	
+	
+	function getModelDatabaseToAdd()
+ 	{ 
+		location.assign("/addmodels?add");
+	}
+	
+	function getModelDatabaseToDelete()
+	{ 
+		location.assign("/deletemodels?delete");
+	}
+	
+	function getMetabolitesDatabaseToAdd()
+ 	{ 
+		location.assign("/addmetabolites?add");
+	}
+	 
+	function getMetabolitesDatabaseToDelete()
+	{ 
+		location.assign("/deletemetabolites?delete");
+	}
+	
+	function getReactionDatabaseToAdd()
+ 	{ 
+		location.assign("/addreactions?add");  
+	}
+	 
+	function getReactionDatabaseToDelete()
+	{ 
+		location.assign("/deletereactions?delete");
+	}
+</script>
+
+<style>
+  #compound_add_one, #compound_add_two {
+    font: 400 20px Lato, sans-serif;
+    text-align: left;
+    line-height: 1.8;
+    color: red;
+  }
+  
+  #compound_label {
+  font: 400 20px Lato, sans-serif;
+    width: 500px !important;
+  }
+  
+  #select_compounds {
+    width: 500px !important;
+}
+</style>
 
 <body>
 
-<h2>Sam and Hui's Project</h2>
-<p>We Love Bioinformatics!!!</p>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header"> </div>
+    <ul class="nav navbar-nav navbar-right">
+ 		<li><a href="#home">Home</a></li>
+        <li><a href="#functionality">FUNCTIONALITY</a></li>
+        <li><a href="#admin login">ADMIN LOGIN</a></li>
+      </ul>
+  </div>
+</nav>
 
-<header>
- <img src="https://www.inquirer.com/resizer/034la0wxWdw-J37vhlrqfS2PYKU=/1400x932/smart/arc-anglerfish-arc2-prod-pmn.s3.amazonaws.com/public/A6FYERLUBZCBFE5IH76OQXSNEM.jpg" 
- alt="Picture did not load" width="200" height="150"> 
-  <h2>Metabolites</h2>
+<header id="subject" class="jumbotron text-center">
+ <div class="container">
+    <h1></h1> 
+      <h1>
+      <b>
+       <strong>
+        	Update Database
+       </strong>
+      </b>
+    </h1> 
+  </div>
 </header>
 
-<section>  
-   <nav>
-    <p >Please enter text in first text bot and click button to change text displayed </p>
-    <input class = "inputText" type = "text" id = "textInput1" onchange = "changeTextDisplayed()">
-    <div class = "button1div">
-        <button class = "button1" onClick = "changeTextDisplayed()" type="button">
-           Change Text Displayed
-        </button> 
+ <div class="container-fluid">
+  <div class="row content">
+    <div class="col-lg-2">
+    <ul class="nav nav-pills nav-stacked"> 
+      <div class="container">
+			<a href="#gene" class="btn btn-link" data-toggle="collapse">Gene</a>
+				<div id="gene" class="collapse">
+					<button id="add_gene" type="button" onClick="getGeneDatabaseToAdd()" class="btn btn-default">Add Gene</button>
+    				<button id="delete_gene" type="button" onClick="getGeneDatabaseToDelete()" class="btn btn-default">Delete Gene</button>
+    			</div>
+		</div>
+		
+		<div class="container">
+			<a href="#metabolites" id="metaboliteslink" class="btn btn-link">Metabolites</a>
+				<div id="metabolites" class="collapse">
+					<button id="add_metabolite" type="button" onClick="getMetabolitesDatabaseToAdd()" class="btn btn-default">Add Metabolite</button>
+    				<button id="delete_metabolite" type="button" onClick="getMetabolitesDatabaseToDelete()" class="btn btn-default">Delete Metabolite</button>
+    			</div>
+		</div>
+		
+		<div class="container">
+			<a href="#model" id="modelslink" class="btn btn-link" data-toggle="collapse">Models</a>
+				<div id="model" class="collapse">
+					<button id="add_model" type="button" onClick="getModelDatabaseToAdd()" class="btn btn-default">Add Model</button>
+    				<button id="delete_model" type="button" onClick="getModelDatabaseToDelete()" class="btn btn-default">Delete Model</button>
+    			</div>
+		</div>
+			
+		<div class="container">
+			<a href="#reactions" id="reactionslink" class="btn btn-link" data-toggle="collapse">Reactions</a>
+				<div id="reactions" class="collapse">
+					<button id="add_reactions" type="button" onClick="getReactionDatabaseToAdd()" class="btn btn-default">Add Reactions</button>
+    				<button id="delete_reactions" type="button" onClick="getReactionDatabaseToDelete()" class="btn btn-default">Delete Reactions</button>
+    			</div>
+		</div>
+		
+		 
+	 </ul>	     
     </div>
-    <p th:text = "${sentFromBackend}"/>
-           <input class = "inputText"type = "text"  id = "textInput2" ><br>
-           <button class = "button1" onClick = "sendTextToBackend()">  Send Info To Backend </button>
   
-   </nav>
-  <article>
-    <h1>Display User Input</h1>
-    <p id = "displayedText" > type and press enter or click the button to change me</p>
-  </article>
-</section>
-
-<footer>
-
-</footer>
-   
-   <!--Some javascript functions -->
-   
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-   
-    <script>
-    //Using javascript to write a function to change the text displayed-
-    function changeTextDisplayed() {
-          
-    	  var displayedText = document.getElementById("displayedText");
-         
-          var textInput1 = document.getElementById("textInput1");
-          
-          displayedText.innerHTML = textInput1.value;
-          
-    }
+ 
     
-    //Javascript Function to send text from frontend to backend via a POST 
-    //Request
-    function sendTextToBackend(){
-    	
-    	var textInput2 = document.getElementById("textInput2");
-    	
-        $.post("/homepage",
-        	    {
-        	        textFromFrontend: textInput2.value,
-        	    })
-        	    alert('Sent "' + textInput2.value + '" to the backend!!!');
-    }
+    <div id="column_one"  class="col-lg-5">
     
-    </script>
+    </div>
     
-</body>
-
+    <div id="column_two" class="col-lg-5">
+    
+    </div>
+    
+    </div>
+    
+  	<div id="update_database" class="row justify-content-md-center">
+  	
+  	</div>    
+  	
+    
+    </div>
+    
+ </body>
 </html>
+
+
+
+
