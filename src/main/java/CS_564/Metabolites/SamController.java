@@ -133,12 +133,15 @@ public class SamController {
         System.out.println("-- executing query --");
 
         
-        
+       /*
+        * This code uses javax.persisstence framework to make an sql query that
+        * that then maps to an arraylist of ob
+        */
        javax.persistence.Query queryCompound = em.createQuery(""
            + "Select distinct  c, m FROM Metabolite m, Compound c where c.BiggmetaboliteID = m.bigg_compoundID "
            + "AND m.metaboliteID LIKE :search", Object[].class); 
        queryCompound.setParameter("search", name + "%");
-       
+       queryCompound.setMaxResults(1000);
        ArrayList<Object[]> results = (ArrayList<Object[]>) queryCompound.getResultList();
        
        Compound c = (Compound) results.get(0)[0];

@@ -197,6 +197,7 @@ div.b {
     
 table, tr, th, td {
   border: 1px solid black;
+
 }
 
 #block_container {
@@ -257,9 +258,13 @@ table, tr, th, td {
        <tr>
              <th>ID</th>
              <th>Compartment</th>
-             <th>Compound</th>
-             <th>charge</th>
-
+             <th>Compound ID</th>
+             <th>Compound Name</th>
+             <th>Charge</th>
+             <th>Formula</th>
+             <th>Inchi_key ID</th>
+             <th>Kegg</th>
+             <th>Metanetx </th>
         </tr>
         <tbody>
         
@@ -267,7 +272,13 @@ table, tr, th, td {
             <td th:text="${meta.metaboliteID}"></td>
             <td th:text="${meta.compartment}"/>
             <td th:text="${meta.bigg_compoundID}"/>
-             <td th:text="${compounds[itr.index].charge}"></td>
+            <td th:text="${compounds[itr.index].name}"></td>
+            <td th:text="${compounds[itr.index].charge}"></td>
+            <td th:text="${compounds[itr.index].formula}"></td>
+            <td th:text="${compounds[itr.index].inchi_key}"></td>
+            <td th:text="${compounds[itr.index].kegg_compound}"></td>
+             <td th:text="${compounds[itr.index].metanetx_chemical}"></td>
+
         </tr>
 
         </tbody>
