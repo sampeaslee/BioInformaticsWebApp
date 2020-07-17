@@ -33,7 +33,7 @@ public class SamController {
         // the webpage
         model.addAttribute("sentFromBackend",sendFromBackendToFrontend);
         
-        return "test";
+        return "home";
         
     }
     

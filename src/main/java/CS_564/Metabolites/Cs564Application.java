@@ -80,36 +80,36 @@ public class Cs564Application {
             ("JSON\\final_reactions_from_bigg.json"));
         Object gene_json = new JSONParser().parse(new FileReader
             ("JSON\\genes_from_bigg.json"));
-        
+
         ArrayList<String> allModels = new ArrayList<String>();
-        
 
 
-        
+
+
         JSONObject jsonObj = (JSONObject) gene_json;
-        //keySet() returns a set of all the keys in the JSON 
+        //keySet() returns a set of all the keys in the JSON
         Set<String> GeneIDs = jsonObj.keySet();
-        
-        //Iterate through the set of keys and parse the JSON data associated 
+
+        //Iterate through the set of keys and parse the JSON data associated
         //with each key(GeneID).
         for(String idKey: GeneIDs) {
 
             JSONObject geneData =(JSONObject)  jsonObj.get(idKey);
 
-            JSONArray model = (JSONArray) geneData.get("model"); 
+            JSONArray model = (JSONArray) geneData.get("model");
             String modelName;
-      
+
             Iterator itr = model.iterator();
-            modelName = "" + itr.next(); 
-            
+            modelName = "" + itr.next();
+
             if(!allModels.contains(modelName)) {
                 allModels.add(modelName);
             }
 
 
         }
-        
-        
+
+
         JSONObject jsonObj2 = (JSONObject) compound_json;
         //keySet() returns a set of all the keys in the JSON
         Set<String> MetaIDs = jsonObj.keySet();
@@ -126,9 +126,9 @@ public class Cs564Application {
 
             Iterator itr = model.iterator();
             while (itr.hasNext()) {
-                
+
                 modelName = "" + itr.next();
-                
+
                 if(!allModels.contains(modelName)) {
                     allModels.add(modelName);
                 }
@@ -151,24 +151,24 @@ public class Cs564Application {
             Iterator itr = model.iterator();
             while (itr.hasNext()) {
                 modelName = "" + itr.next();
-                
+
                 if(!allModels.contains(modelName)) {
                     allModels.add(modelName);
                 }
             }
 
         }
-        
+
         for(String s: allModels){
             repository.save(new Model(s));
         }
-        
+
         System.out.println("DONE LOADING IN MODEL DATA!!!");
-        
+
         return "";
-        
+
     }
-	*/
+*/
 	//SECOND METHOD TO RUN (THIS ONE IS QUICK)
 	
   /*  @Bean
@@ -388,8 +388,8 @@ public class Cs564Application {
      System.out.println("DONE LOADING IN REACTION DATA!!!");
      return "Has to have non void return type";
  }
+*/
 
 	
-*/
-        
+
 }
