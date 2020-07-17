@@ -49,6 +49,15 @@ public interface ReactionRepo extends JpaRepository<Reaction, Integer> {
 	@Query(value = "UPDATE reactions SET gene_reaction_rule = :rule_ID WHERE ReactionID = :reaction_ID",  nativeQuery = true)
     public void updateReactionRule(@Param("reaction_ID") String reaction_ID, @Param("rule_ID") String rule_ID);
 
+	@Query(value = " select * from reactions limit 1000 ;", nativeQuery = true)
+	public List<Reaction> getReactions();
+
+	@Query(value = "SELECT * FROM reactions r WHERE r.reactionid = :reactionid",  nativeQuery = true)
+	public Reaction findByReactionID(@Param("reactionid") String reactionid);
+
+	@Query(value = "SELECT * FROM reactions r WHERE r.reactionid LIKE :reactionid%",  nativeQuery = true)
+	public List<Reaction> autoSearch(@Param("reactionid") String reactionid);
+
 }
 
 

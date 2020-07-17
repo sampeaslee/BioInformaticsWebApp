@@ -61,5 +61,7 @@ public interface CompoundRepo extends JpaRepository<Compound, Integer> {
 	 @Transactional
 	 @Query(value = "UPDATE compounds SET prime = :prime_ID WHERE biggmetaboliteID = :compound_ID",  nativeQuery = true)
 	    public void updateCompoundprime(@Param("compound_ID") String compound_ID, @Param("prime_ID") String prime_ID);
-	 
+
+	@Query(value = "SELECT * FROM compounds c WHERE c.biggmetaboliteid = (SELECT bigg_compoundid FROM  metabolites m WHERE m. metaboliteid = :metaboliteid)",  nativeQuery = true)
+	public Compound findByMetaboliteID(@Param("metaboliteid") String metabolite_ID);
 }

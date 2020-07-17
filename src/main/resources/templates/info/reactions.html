@@ -238,13 +238,9 @@
     <p>Look!  </p>
     <p th:text="'This is ' + ${reaction.reactionID}"> </p>
     <p th:text="'the stoichiometry is ' + ${stoichiometry}"></p>
-    <p th:text="the name is ${reaction.name}"></p>
+    <p th:text="'the name is' + ${reaction.name}"></p>
 
 
-
-
-
-    <button type="submit" onClick = "sendTextToBackend()" class="btn btn-default">Search</button>
 </div>
 
 <div class="row">

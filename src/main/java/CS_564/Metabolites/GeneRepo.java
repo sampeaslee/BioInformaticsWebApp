@@ -43,6 +43,15 @@ public interface GeneRepo extends JpaRepository<Gene, Integer> {
 	@Transactional
 	@Query(value = "UPDATE genes SET model = :model_ID WHERE geneID = :gene_ID",  nativeQuery = true)
     public void updateGeneModel(@Param("gene_ID") String gene_ID, @Param("model_ID") String model_ID);
+
+	@Query(value = " select * from genes limit 1000 ;", nativeQuery = true)
+	public List<Gene> getGenes();
+
+	@Query(value = "SELECT * FROM genes g WHERE g.geneid = :geneid",  nativeQuery = true)
+	public Gene findByGeneID(@Param("geneid") String geneid);
+
+	@Query(value = "SELECT * FROM genes g WHERE g.geneid LIKE :geneid%",  nativeQuery = true)
+	public List<Gene> autoSearch(@Param("geneid") String geneid);
 	
 }
 

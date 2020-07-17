@@ -23,7 +23,7 @@ public class ReactController {
     }
 
 
-    @GetMapping("/reaction")
+    @GetMapping("/reactions")
     public String senTo(@RequestParam(value = "name", defaultValue = "")
                                 String name, Model model) {
 
@@ -58,7 +58,7 @@ public class ReactController {
             model.addAttribute("reactions", relation);
         }
 
-        return "reaction";
+        return "reactions";
 
     }
 
@@ -73,7 +73,7 @@ public class ReactController {
 
 
     // this function help you find the individual page of one reaction!
-    // in the reaction.html, we can use
+    // in the reactions.html, we can use
     //  <a th:text="${relation.getKey().reactionID}" th:href="@{'~/reactiontemp/'+${relation.getKey().reactionID}}" />
     // to direct the website of the individual page of certain reaction.
     // we can request the information of the reaction entity or stoichiometry entity in the reactiontemp.html;
