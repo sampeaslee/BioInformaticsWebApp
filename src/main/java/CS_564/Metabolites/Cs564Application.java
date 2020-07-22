@@ -213,7 +213,6 @@ public class Cs564Application {
     }*/
         
 	//THIRD METHOD TO RUN (THIS ONE TAKES LONGER)
-	
 	/*
 	@Bean
 	public String CommandLineRunner(StoichiometryRepo repository) throws Exception{
@@ -264,8 +263,8 @@ public class Cs564Application {
        
        System.out.println("DONE LOADING IN STOICHOMETRY DATA!!!");
 	   return "Has to have non void return type";
-	}*/
-	
+	}
+	*/
     /** Only one of the @Bean can be run in each time. So it needs three times to store all of json files into a json file.
      * For some reasons, it takes minutes to run the metabolites and reactions. I assume it may be caused by the iterator.
      * */
@@ -394,7 +393,48 @@ public class Cs564Application {
      return "Has to have non void return type";
  }*/
 
-	
+//Sixth METHOD TO RUN(THIS ONE TAKES 20 MINUTES AS WELL)
+//	@Bean
+//	public String CommandLineRunner(StartMetaReactionRepo startRepo,  EndMetaReactionRepo endRepo) throws Exception{
+//
+//		Object obj = new JSONParser().parse(new FileReader
+//				("JSON\\final_reactions_from_bigg.json"));
+//		JSONObject jsonObj = (JSONObject) obj;
+//		//keySet() returns a set of all the keys in the JSON
+//
+//		Set<String> reactionIDs = jsonObj.keySet();
+//		for(String key: reactionIDs) {
+//
+//			JSONObject j =  (JSONObject) jsonObj.get(key);
+//			j  =  (JSONObject) j.get("stoichometry");
+//			Set<String> metaIDs = j.keySet();
+//			String start = "";
+//			String end= "";
+//			for(String s: metaIDs) {
+//				Double coef = (Double) j.get(s);
+//				if(coef < 0) {
+//					start = start + s + ":"+ coef + ",#" ;
+//					MetaReaction metaReaction = new MetaReaction(s, key);
+//					StartMetaReaction startMetaReaction = new StartMetaReaction(metaReaction);
+//					startRepo.save(startMetaReaction);
+//				}else {
+//					end = end + s + ":"+ coef + ",#" ;
+//					MetaReaction metaReaction = new MetaReaction(s, key);
+//					EndMetaReaction endMetaReaction = new EndMetaReaction(metaReaction);
+//					endRepo.save(endMetaReaction);
+//				}
+//
+//			}
+////			Stoichiometry stoichometry = new Stoichiometry(key, start,end);
+////			startRepo.save(start);
+//
+//
+//		}
+//
+//		System.out.println("DONE LOADING IN STOICHOMETRY DATA!!!");
+//		return "Has to have non void return type";
+//	}
 
-        
+
+
 }

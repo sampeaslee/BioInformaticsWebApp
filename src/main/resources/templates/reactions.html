@@ -277,7 +277,11 @@
 
 
 
-
+<footer id="bioinformatics" class="page-footer font-small blue">
+    <div class="footer-copyright text-center py-3">
+        <label> <b><strong>© 2020 Copyright: BioInformatics.com</strong></b></label>
+    </div>
+</footer>
 
 <script>
   $("#compare").click(function(){
@@ -322,7 +326,7 @@
   function sendTextToBackend(){
 
     var textInput2 = document.getElementById("search");
-    location.assign("/reaction?name=".concat(search.value))
+    location.assign("/reactions?name=".concat(search.value))
   }
 
   function sendTextToBackend2(){

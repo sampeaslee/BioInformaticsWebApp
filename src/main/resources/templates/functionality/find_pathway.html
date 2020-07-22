@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <!-- Theme Made By www.w3schools.com -->
+    <title>BioInformatics</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#myPage"></a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#about">Home</a></li>
+                <li><a href="#Functionality">FUNCTIONALITY</a></li>
+                <li><a href="#Admin">ADMIN LOGIN</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="jumbotron text-center">
+
+    <h1>Functionality</h1>
+
+</div>
+
+
+<div id="First_Functionality" class="container-fluid text-center">
+    <h3>Functionality</h3>
+    <p>This is a functionality that find the metabolites within certain steps</p>
+    <div id="metabolites_add_one" class="col-lg-5 ">
+        <p> Source </p>
+        <div class="form-group">
+
+            <input  class="form-control" type = "search"
+                    id="search2" value="g6p_c" >
+
+        </div>
+
+
+        <p> target </p>
+        <div class="form-group">
+            <input  class="form-control" type = "search"
+                    id="search3" value="pyr_c" >
+        </div>
+
+        <p> Knockout Reaction </p>
+        <div class="form-group">
+            <input  class="form-control" type = "search"
+                    id="search4" value="F6PA" >
+        </div>
+        <button type="submit" onClick = "sendTextToBackend2()" class="btn btn-default">Search</button>
+
+    </div>
+</div>
+
+<div id = "reactiontable" style = "padding:10px"  class="container-fluid text-center">
+
+    <p th:text = "${test}"/>
+    <h4 th:text = "'This is a functionality that find the pathway starting from the ' + ${start} + ' and ending with ' + ${end} "/>
+    <table style="width:100%" >
+        <tr>
+            <th>Source</th>
+            <th>Product</th>
+            <th>Find Pathway</th>
+            <!--            <th>Stoichiometry</th>-->
+        </tr>
+        <tbody>
+
+        <tr th:each="next:${nextMetabolites}">
+            <td th:text="${start}">
+            <td>
+                <a th:text="${next.getKey()[0]}" th:href="@{'../info/metabolites/'+ ${next.getKey()[0]}}"/>
+            </td>
+            <td>
+                <!--                 <a th:text="${next.getKey()[1]}" th:href="@{'../info/reactions/' + ${next.getKey()[1]}}"/>-->
+            </td>
+            <td th:text="${next.getValue()}">
+
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<footer id="bioinformatics" class="page-footer font-small blue">
+    <div class="footer-copyright text-center py-3">
+        <label> <b><strong>© 2020 Copyright: BioInformatics.com</strong></b></label>
+    </div>
+</footer>
+
+
+<script>
+  $("#compare").click(function(){
+    alert('I got a click');
+  });
+
+  $(document).ready(function(){
+    // Add smooth scrolling to all links in navbar + footer link
+    $(".navbar a, footer a[href='#myPage']").on('click', function(event) {
+      // Make sure this.hash has a value before overriding default behavior
+      if (this.hash !== "") {
+        // Prevent default anchor click behavior
+        event.preventDefault();
+
+        // Store hash
+        var hash = this.hash;
+
+        // Using jQuery's animate() method to add smooth page scroll
+        // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
+        $('html, body').animate({
+          scrollTop: $(hash).offset().top
+        }, 900, function(){
+
+          // Add hash (#) to URL when done scrolling (default click behavior)
+          window.location.hash = hash;
+        });
+      } // End if
+    });
+
+    $(window).scroll(function() {
+      $(".slideanim").each(function(){
+        var pos = $(this).offset().top;
+
+        var winTop = $(window).scrollTop();
+        if (pos < winTop + 600) {
+          $(this).addClass("slide");
+        }
+      });
+    });
+  })
+
+  function sendTextToBackend(){
+
+    var textInput2 = document.getElementById("search");
+    location.assign("/reactions?name=".concat(search.value))
+  }
+
+  function sendTextToBackend2(){
+    location.assign("/functionality/find_pathway?start=".concat(search2.value).concat("&end=").concat(search3.value).concat("&knock=").concat(search4.value))
+  }
+
+</script>
+
+</body>
+</html>
