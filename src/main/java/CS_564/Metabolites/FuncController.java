@@ -141,7 +141,6 @@ public class FuncController {
 
                                         if (!seen.containsKey(step)) {
 //                                                        System.out.println("This is using:   " + Meta[0]+ "    " + Meta[1]+"  times  "+Meta[2]);
-//                                                        System.out.println("This is using:   " + seen.get(Meta));
                                             ArrayList<String> pathway = new ArrayList<String>(seen.get(Meta));
                                             pathway.add(Meta[1]);
                                             seen.put(step,pathway);
