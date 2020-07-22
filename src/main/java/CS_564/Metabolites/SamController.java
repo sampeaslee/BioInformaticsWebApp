@@ -39,7 +39,7 @@ public class SamController {
      * @return
      */
     
-    @GetMapping("/gene")
+    @GetMapping("/genes")
     public String Gene(@RequestParam(value = "name", defaultValue = "") String name, Model model) {
 
 
@@ -61,7 +61,7 @@ public class SamController {
             model.addAttribute("test", search);
         }
 
-        return "gene";
+        return "genes";
 
     }
     /**
@@ -83,7 +83,7 @@ public class SamController {
          * an arraylist of ob
          */
         javax.persistence.Query queryCompound = em.createQuery(""
-            + "Select distinct  c, m FROM Metabolite m, Compound c where c.BiggmetaboliteID = m.bigg_compoundID "
+            + "Select distinct  c, m FROM Metabolite m, Compound c where c.biggmetaboliteID = m.bigg_compoundID "
             + "AND m.metaboliteID LIKE :search", Object[].class);
         queryCompound.setParameter("search", name + "%");
         //queryCompound.setMaxResults(1000);
