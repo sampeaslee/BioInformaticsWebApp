@@ -223,9 +223,7 @@ table, tr, th, td {
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#about">Home</a></li>
-        <li><a href="#Functionality">FUNCTIONALITY</a></li>
-        <li><a href="#Admin">ADMIN LOGIN</a></li>
+        <li id = "home"><a href="#about">Home</a></li>
       </ul>
     </div>
   </div>
@@ -239,7 +237,7 @@ table, tr, th, td {
   <div class="form-group">
     
     <input  class="form-control" type = "search" 
-    id="search"  onChange = "sendTextToBackend()">
+    id="search"  onChange = "searchForGene()">
 
   </div>
 
@@ -280,9 +278,10 @@ table, tr, th, td {
 
 
 <script>
-$("#compare").click(function(){
-    alert('I got a click');
+$("#home").click(function(){
+    window.location.assign("http://localhost:8080/home")
 });
+
 
 $(document).ready(function(){
   // Add smooth scrolling to all links in navbar + footer link
@@ -319,7 +318,7 @@ $(document).ready(function(){
   });
 })
 
-  function sendTextToBackend(){
+  function searchForGene(){
         
         var textInput2 = document.getElementById("search");
            location.assign("/gene?name=".concat(search.value))     

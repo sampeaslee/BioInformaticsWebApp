@@ -224,9 +224,7 @@ table, tr, th, td {
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#about">Home</a></li>
-        <li><a href="#Functionality">FUNCTIONALITY</a></li>
-        <li><a href="#Admin">ADMIN LOGIN</a></li>
+        <li id = "home"><a href="#about">Home</a></li>
       </ul>
     </div>
   </div>
@@ -251,33 +249,27 @@ table, tr, th, td {
 
 <div id = "genetable" style = "padding:10px">
 
-<p th:text = "${test}"/>
+<p th:text = "${current}"/>
 <table style="width:100%" >
 
 
        <tr>
              <th>ID</th>
-             <th>Compartment</th>
+     
              <th>Compound ID</th>
              <th>Compound Name</th>
-             <th>Charge</th>
-             <th>Formula</th>
-             <th>Inchi_key ID</th>
-             <th>Kegg</th>
-             <th>Metanetx </th>
+
         </tr>
         <tbody>
         
         <tr th:each="meta,itr : ${metas}"  >
-            <td th:text="${meta.metaboliteID}"></td>
-            <td th:text="${meta.compartment}"/>
+             <td>
+                <a th:text="${meta.metaboliteID}" th:href="@{'../info/metabolites/'+${meta.metaboliteID}}" />
+            </td>
+      
             <td th:text="${meta.bigg_compoundID}"/>
             <td th:text="${compounds[itr.index].name}"></td>
-            <td th:text="${compounds[itr.index].charge}"></td>
-            <td th:text="${compounds[itr.index].formula}"></td>
-            <td th:text="${compounds[itr.index].inchi_key}"></td>
-            <td th:text="${compounds[itr.index].kegg_compound}"></td>
-             <td th:text="${compounds[itr.index].metanetx_chemical}"></td>
+
 
         </tr>
 
@@ -286,12 +278,9 @@ table, tr, th, td {
 </div>
 
 
-
-
-
 <script>
-$("#compare").click(function(){
-    alert('I got a click');
+$("#home").click(function(){
+    window.location.assign("http://localhost:8080/home")
 });
 
 $(document).ready(function(){
