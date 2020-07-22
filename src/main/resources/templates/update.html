@@ -9,56 +9,46 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 
- <script th:inline="javascript">	
-	function getGeneDatabaseToAdd()
-	{ 
-		location.assign("/addgenes?add");
-	}
+ <script th:inline="javascript">
+ function getGeneDatabaseToAdd()
+ { 		
+	location.assign("/addgenes?add");
+ }
 	 
-	function getGeneDatabaseToDelete()
-	{ 
-		location.assign("/deletegenes?delete");
-	}	
+ function getGeneDatabaseToDelete()
+ { 		   
+	location.assign("/deletegenes?delete");
+ }
 	
-	function getModelDatabaseToAdd()
- 	{ 
-		location.assign("/addmodels?add");
-	}
+ function getModelDatabaseToAdd()
+ { 	
+	location.assign("/addmodels?add");
+ }
 	
-	function getModelDatabaseToDelete()
-	{ 
-		location.assign("/deletemodels?delete");
-	}
+ function getModelDatabaseToDelete()
+ { 	
+	location.assign("/deletemodels?delete");
+ }
 	
-	function getMetabolitesDatabaseToAdd()
- 	{ 
-		location.assign("/addmetabolites?add");
-	}
+ function getMetabolitesDatabaseToAdd()
+ { 	
+	location.assign("/addmetabolites?add");
+ }
 	 
-	function getMetabolitesDatabaseToDelete()
-	{ 
-		location.assign("/deletemetabolites?delete");
-	}
-	
-	function getModelDatabaseToDelete()
-	{ 
-		location.assign("/deletemodels?delete");
-	}
-	
-	function getMetabolitesDatabaseToAdd()
- 	{ 
-		location.assign("/addmetabolites?add");
-	}
-	
-	function getReactionDatabaseToAdd()
- 	{ 
-		location.assign("/addreactions?add");  
-	}
+ function getMetabolitesDatabaseToDelete()
+ { 
+	location.assign("/deletemetabolites?delete");
+ }
+
+ function getReactionDatabaseToAdd()
+ { 		
+	location.assign("/addreactions?add");
+ }
 	 
-	function getReactionDatabaseToDelete()
-	{ 
-		location.assign("/deletereactions?delete");
-	}
+ function getReactionDatabaseToDelete()
+ { 				
+	location.assign("/deletereactions?delete");
+ }
 </script>
 
 <style>
@@ -100,6 +90,13 @@
   .navbar-default .navbar-toggle {
     border-color: transparent;
     color: #fff !important;
+  }
+  
+  #log_out
+  {
+   position:fixed;
+   right:300px;
+   top:15px;
   }
 
   
@@ -143,8 +140,7 @@
  	font-size: 25px;
  }
 </style>
-}
-</style>
+
 
 <body>
 
@@ -153,11 +149,18 @@
     <div class="navbar-header"> </div>
     <ul class="nav navbar-nav navbar-right">
  		<li><a href="#home">Home</a></li>
-        <li><a href="#functionality">FUNCTIONALITY</a></li>
-        <li><a href="#admin login">ADMIN LOGIN</a></li>
-      </ul>
+        <li><a href="#functionality">FUNCTIONALITY</a></li> 
+        <li><a href="/update" th:text = "${usernamelogin}"></a></li>
+        <form id="log_out" th:action="@{/logout}" method="post">
+        	<button type="submit">LogOut</button>
+		</form>
+    </ul>
   </div>
+  
+  
+ 
 </nav>
+        
 
 <header id="subject" class="jumbotron text-center">
  <div class="container">
@@ -213,6 +216,7 @@
     </div> 
   
     </div>
+   </div>
     
     <footer id="bioinformatics" class="page-footer font-small blue">
   		<div class="footer-copyright text-center py-3">

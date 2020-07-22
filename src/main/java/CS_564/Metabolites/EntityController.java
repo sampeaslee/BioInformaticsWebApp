@@ -4,12 +4,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import java.util.ArrayList;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.boot.origin.SystemEnvironmentOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 
 //This class it used to interact directly with the frontend 
@@ -26,7 +27,32 @@ public class EntityController{
 	  
 	  @Autowired
 	  ModelRepo modelsRepo;
+	  
+	  @Autowired
+	  UserLoginRepo userRepo;
 	  	
+	  public static String user_name_login = "Hi! BioInformatics";
+	  
+	  /**
+	     * @GetMapping is used to map HTTP get request  to certain webpages
+	     * 
+	     * When you visit the url http://localhost@ModelAttribute:8080/homepage this method is 
+	     * called and the String "Text sent from backend" is sent to thLet's say that we have an endpoint /api/foos that takes a query parame html page
+	     * where is can be displayed
+	     */
+	    
+	    @GetMapping("/login")
+	    public String loginToAdmin() 
+	    {	        
+	        return "login";    
+	    }
+	    
+	    @GetMapping("/accessdenied")
+	    public String accessDenied() 
+	    {
+	        return "accessdenied";   
+	    }
+	  
     /**
      * @GetMapping is used to map HTTP get request  to certain webpages
      * 
@@ -36,11 +62,10 @@ public class EntityController{
      */
     
     @GetMapping("/update")
-    public String sendToFrontend() 
+    public String sendToFrontend(Model model) 
     {
-        
-        return "update";
-        
+    	model.addAttribute("usernamelogin", user_name_login);
+        return "update";      
     }
     
     
@@ -58,6 +83,7 @@ public class EntityController{
     {
     	ArrayList <Gene> list_of_genes = (ArrayList<Gene>) genesRepo.getListOfGenes();
         model.addAttribute("listofgenes", list_of_genes);
+    	model.addAttribute("usernamelogin", user_name_login);
             
     	return "addgenes";
     }
@@ -77,6 +103,7 @@ public class EntityController{
     	
     	ArrayList <Gene> list_of_genes = (ArrayList<Gene>) genesRepo.getListOfGenes();
         model.addAttribute("listofgenes", list_of_genes);
+    	model.addAttribute("usernamelogin", user_name_login);
     		    	
         return "deletegenes";  
     }
@@ -86,7 +113,7 @@ public class EntityController{
     {	 
     	 Gene delete_gene_object = genesRepo.getAGene(genes_to_delete);
     	 genesRepo.delete(delete_gene_object);
-    	     	 
+    	      	 
     	return "deletegenes";
     }
     
@@ -160,6 +187,7 @@ public class EntityController{
     {
     	ArrayList <Reaction> list_of_reactions = (ArrayList<Reaction>) reactionRepo.getListOfReactions();
         model.addAttribute("listofreactions", list_of_reactions);
+    	model.addAttribute("usernamelogin", user_name_login);
     	
     	return "addreactions";
     }
@@ -178,6 +206,7 @@ public class EntityController{
     {
     	ArrayList <Reaction> list_of_reactions = (ArrayList<Reaction>) reactionRepo.getListOfReactions();
         model.addAttribute("listofreactions", list_of_reactions);
+    	model.addAttribute("usernamelogin", user_name_login);
     		    	
         return "deletereactions";  
     }
@@ -270,6 +299,7 @@ public class EntityController{
     	
         model.addAttribute("listofmetabolites", list_of_metabolites);
         model.addAttribute("listofcompounds", list_of_compounds);
+    	model.addAttribute("usernamelogin", user_name_login);
     	
     	return "addmetabolites";
     }
@@ -288,6 +318,7 @@ public class EntityController{
     {
     	ArrayList <Metabolite> list_of_metabolites = (ArrayList<Metabolite>) metaboliteRepo.getListOfMetabolites();
         model.addAttribute("listofmetabolites", list_of_metabolites);
+    	model.addAttribute("usernamelogin", user_name_login);
     		    	
         return "deletemetabolites";  
     }
@@ -353,6 +384,7 @@ public class EntityController{
     	ArrayList<String> list_of_model = (ArrayList<String>) modelsRepo.getListOfModel();
     	
         model.addAttribute("listofmodel", list_of_model);
+    	model.addAttribute("usernamelogin", user_name_login);
     	
     	return "addmodels";
     }
@@ -371,6 +403,7 @@ public class EntityController{
     {
     	ArrayList <String> list_of_model = (ArrayList<String>) modelsRepo.getListOfModel();
         model.addAttribute("listofmodel", list_of_model);
+    	model.addAttribute("usernamelogin", user_name_login);
     		    	
         return "deletemodels";  
     }
@@ -396,7 +429,7 @@ public class EntityController{
     		 //System.out.println(models_nameID);
     		 modelsRepo.insertModel(models_nameID);
     	 }
-		
+    	 		
     	return "addmodels";
     }
 

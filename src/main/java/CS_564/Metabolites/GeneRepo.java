@@ -17,7 +17,7 @@ public interface GeneRepo extends JpaRepository<Gene, Integer> {
  	public String getGeneID(@Param("gene_ID") String gene_ID);
  
 	@Query(value = "SELECT * FROM genes WHERE geneID = :gene_ID",  nativeQuery = true)
-    public Gene getAGene(@Param("gene_ID") String gene_ID);
+    public Gene getAGene(@Param("gene_ID") String gene_IDfrom);
  	
 	@Modifying(clearAutomatically = true)
 	@Transactional

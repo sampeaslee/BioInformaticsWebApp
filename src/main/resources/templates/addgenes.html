@@ -10,42 +10,53 @@
 </head>
 
  <script th:inline="javascript">
- 	function getGeneDatabaseToAdd(){ 
-		location.assign("/addgenes?add")  
-		//document.getElementById("BiggMetaboliteID").disabled = false;
-	}
+ 
+ $("#mysearch").keyup(function(e) {
+     //Enter key
+     if (e.which == 13) {
+       return false;
+     }
+   });
+ 
+ function getGeneDatabaseToAdd()
+ { 		
+	location.assign("/addgenes");
+ }
 	 
-	function getGeneDatabaseToDelete(){ 
-		location.assign("/deletegenes?delete")   
-	}
+ function getGeneDatabaseToDelete()
+ { 		   
+	location.assign("/deletegenes");
+ }
 	
-	function getModelDatabaseToAdd()
- 	{ 
-		location.assign("/addmodels?add");
-	}
+ function getModelDatabaseToAdd()
+ { 	
+	location.assign("/addmodels");
+ }
 	
-	function getModelDatabaseToDelete()
-	{ 
-		location.assign("/deletemodels?delete");
-	}
+ function getModelDatabaseToDelete()
+ { 	
+	location.assign("/deletemodels");
+ }
 	
-	function getMetabolitesDatabaseToAdd()
- 	{ 
-		location.assign("/addmetabolites?add");
-	}
+ function getMetabolitesDatabaseToAdd()
+ { 	
+	location.assign("/addmetabolites");
+ }
 	 
-	function getMetabolitesDatabaseToDelete()
-	{ 
-		location.assign("/deletemetabolites?delete");
-	}
-	
-	function getReactionDatabaseToAdd(){ 
-		location.assign("/addreactions?add")  
-	}
+ function getMetabolitesDatabaseToDelete()
+ { 
+	location.assign("/deletemetabolites");
+ }
+
+ function getReactionDatabaseToAdd()
+ { 		
+	location.assign("/addreactions");
+ }
 	 
-	function getReactionDatabaseToDelete(){ 
-		location.assign("/deletereactions?delete")   
-	}
+ function getReactionDatabaseToDelete()
+ { 				
+	location.assign("/deletereactions");
+ }
 	
 	function selectGenesToAdd()
 	{ 
@@ -96,17 +107,30 @@
     	
     	if (string_found_index !== -1)
     	{
-    		document.getElementById("GeneID").value = gene_object.geneID
-    		document.getElementById("Name").value = gene_object.name
-    		document.getElementById("Ncbigi:").value = gene_object.ncbigi
-    		document.getElementById("Refseq_name").value = gene_object.refseq_name
-    		document.getElementById("Sbo").value = gene_object.sbo
-    		document.getElementById("Model").value = gene_object.model
+    		document.getElementById("GeneID").value = gene_object.geneID;
+    		document.getElementById("Name").value = gene_object.name;
+    		document.getElementById("Ncbigi:").value = gene_object.ncbigi;
+    		document.getElementById("Refseq_name").value = gene_object.refseq_name;
+    		document.getElementById("Sbo").value = gene_object.sbo;
+    		document.getElementById("Model").value = gene_object.model;
+    		document.getElementById("search").value = "";	
+    		document.getElementById("record").innerHTML = "";
     	}
     	else
     	{
-    		alert(search_value + " Not Found In Database!");
-    	}		
+    		document.getElementById("GeneID").value = "";
+    		document.getElementById("Name").value = "";
+    		document.getElementById("Ncbigi:").value = "";
+    		document.getElementById("Refseq_name").value = "";
+    		document.getElementById("Sbo").value = "";
+    		document.getElementById("Model").value = "";
+    		if (search_value != "")
+    		{
+    		  document.getElementById("record").innerHTML = search_value+" not found in gene table!";
+    		}
+    		document.getElementById("search").value = "";
+    		
+    	}
 	}
 	
 	
@@ -133,8 +157,13 @@
 		 
 			 $.post("/addgenes", {gene_to_add: new_gene})
 			
-			 location.assign("/addgenes?add");			 
+			 location.assign("/addgenes");			 
 		}  
+	}
+	
+	function signOut()
+	{
+		 location.assign("/login");
 	}
 </script>
 
@@ -183,6 +212,12 @@
     color: #fff !important;
   }
   
+  #record
+ {
+    color: red;
+    text-align: center;
+  }
+  
  #add_gene_database
  {
  	padding: 210px 800px;
@@ -192,6 +227,13 @@
     text-align: center;
   	size: 30px;
   	margin: 4px 2px;
+  }
+  
+  #log_out
+  {
+   position:fixed;
+   right:300px;
+   top:15px;
   }
   
  #bioinformatics
@@ -255,7 +297,10 @@
     <ul class="nav navbar-nav navbar-right">
  		<li><a href="#home">Home</a></li>
         <li><a href="#functionality">FUNCTIONALITY</a></li>
-        <li><a href="#admin login">ADMIN LOGIN</a></li>
+        <li><a href="/update" th:text = "${usernamelogin}"></a></li>
+        <form id="log_out" th:action="@{/logout}" method="post">
+        	<button type="submit">LogOut</button>
+		</form>
       </ul>
   </div>
 </nav>
@@ -270,11 +315,12 @@
       		</b>
     	</h1>
     
-    <form class="form-inline" action="/">
+    <form class="form-inline" id="mysearch" onsubmit="selectGeneToUpdateBySearch();return false">
   		<div class="form-group">
     		<input  class="form-control" id="search">
+    		<button type="button" onClick="selectGeneToUpdateBySearch()" class="btn btn-default">Search</button>
   		</div>
-  			<button type="button" onClick="selectGeneToUpdateBySearch()" class="btn btn-default">Search</button>
+  			
 	</form> 
   </div>
 </header>
@@ -395,6 +441,13 @@
     </div>
     
     </div>
+    
+    <h1 id="record">
+      		<b>
+       			<strong>
+       			</strong>
+      		</b>
+    </h1>
     
     <footer id="bioinformatics" class="page-footer font-small blue">
   		<div class="footer-copyright text-center py-3">

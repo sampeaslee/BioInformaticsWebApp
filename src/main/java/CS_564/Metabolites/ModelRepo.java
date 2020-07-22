@@ -15,7 +15,8 @@ public interface ModelRepo extends JpaRepository<Model, Integer> {
 	
 	@Modifying(clearAutomatically = true)
 	@Transactional
-	@Query(value = "DELETE FROM models WHERE name = :name_ID",  nativeQuery = true)
+	//@Query(value = "DELETE FROM models WHERE name = :name_ID",  nativeQuery = true)
+	@Query(value = "CALL deleteAModel(:name_ID);", nativeQuery = true)
     public void deleteAModel(@Param("name_ID") String name_ID);
 	
  
@@ -25,7 +26,8 @@ public interface ModelRepo extends JpaRepository<Model, Integer> {
  	
 	@Modifying(clearAutomatically = true)
 	@Transactional
-	@Query(value = "INSERT INTO models(name) VALUES(:name_ID)",  nativeQuery = true)
+	//@Query(value = "INSERT INTO models(name) VALUES(:name_ID)",  nativeQuery = true)
+	@Query(value = "CALL insertModel(:name_ID);", nativeQuery = true)
     public void insertModel(@Param("name_ID") String name_ID);
-		 
+			 
 }

@@ -211,6 +211,25 @@ public class Cs564Application {
         System.out.println("DONE LOADING IN GENE DATA!!!");
         return "Has to have non void return type";
     }*/
+	
+	/*
+    @Bean
+    public String CommandLineRunner(UserLoginRepo repository) throws Exception
+    {
+            
+            //Create a UserLogin Object to store the data 
+            UserLogin userlogin = new UserLogin("BioInformatics", "Victory");
+            //Send that data to MySQL
+            repository.save(userlogin);
+
+        System.out.println("DONE LOADING IN User DATA!!!");
+        return "Has to have non void return type";
+    }*/
+	
+	
+	
+	
+	
         
 	//THIRD METHOD TO RUN (THIS ONE TAKES LONGER)
 	
