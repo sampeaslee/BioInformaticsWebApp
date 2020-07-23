@@ -13,19 +13,24 @@ public interface ModelRepo extends JpaRepository<Model, Integer> {
 	@Query(value = "select * from models;", nativeQuery = true)
 	public List<String> getListOfModel();
 	
-	@Modifying(clearAutomatically = true)
-	@Transactional
-	@Query(value = "DELETE FROM models WHERE name = :name_ID",  nativeQuery = true)
+
+    
+    @Modifying(clearAutomatically = true)
+    @Transactional
+    //@Query(value = "DELETE FROM models WHERE name = :name_ID",  nativeQuery = true)
+    @Query(value = "CALL deleteAModel(:name_ID);", nativeQuery = true)
     public void deleteAModel(@Param("name_ID") String name_ID);
-	
+    
  
-	@Query(value = "select name from models WHERE name = :name_ID", nativeQuery = true)
- 	public String getModelID(@Param("name_ID") String name_ID);
+    @Query(value = "select name from models WHERE name = :name_ID", nativeQuery = true)
+    public String getModelID(@Param("name_ID") String name_ID);
  
- 	
-	@Modifying(clearAutomatically = true)
-	@Transactional
-	@Query(value = "INSERT INTO models(name) VALUES(:name_ID)",  nativeQuery = true)
+    
+    @Modifying(clearAutomatically = true)
+    @Transactional
+    //@Query(value = "INSERT INTO models(name) VALUES(:name_ID)",  nativeQuery = true)
+    @Query(value = "CALL insertModel(:name_ID);", nativeQuery = true)
     public void insertModel(@Param("name_ID") String name_ID);
-		 
+			 
+
 }

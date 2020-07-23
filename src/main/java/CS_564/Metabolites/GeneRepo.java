@@ -18,6 +18,7 @@ public interface GeneRepo extends JpaRepository<Gene, Integer> {
  
 	@Query(value = "SELECT * FROM genes WHERE geneID = :gene_ID",  nativeQuery = true)
     public Gene getAGene(@Param("gene_ID") String gene_ID);
+
  	
 	@Modifying(clearAutomatically = true)
 	@Transactional
@@ -44,6 +45,7 @@ public interface GeneRepo extends JpaRepository<Gene, Integer> {
 	@Query(value = "UPDATE genes SET model = :model_ID WHERE geneID = :gene_ID",  nativeQuery = true)
     public void updateGeneModel(@Param("gene_ID") String gene_ID, @Param("model_ID") String model_ID);
 
+
 	@Query(value = " select * from genes limit 1000 ;", nativeQuery = true)
 	public List<Gene> getGenes();
 
@@ -55,6 +57,9 @@ public interface GeneRepo extends JpaRepository<Gene, Integer> {
 
 	@Query(value = "Call searchgenes(:geneid)", nativeQuery = true)
 	public List<Gene> geneProcedure(@Param("geneid") String geneid);
+
+	
+
 }
 
 

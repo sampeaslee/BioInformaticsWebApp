@@ -10,139 +10,145 @@
 </head>
 
  <script th:inline="javascript">
- 	function getGeneDatabaseToAdd()
- 	{ 
-		location.assign("/addgenes?add");
-	}
-	 
-	function getGeneDatabaseToDelete()
-	{ 
-		location.assign("/deletegenes?delete");
-	}
-	
-	function getModelDatabaseToAdd()
- 	{ 
-		location.assign("/addmodels?add");
-	}
-	
-	function getModelDatabaseToDelete()
-	{ 
-		location.assign("/deletemodels?delete");
-	}
-	
-	function getMetabolitesDatabaseToAdd()
- 	{ 
-		location.assign("/addmetabolites?add");
-	}
-	 
-	function getMetabolitesDatabaseToDelete()
-	{ 
-		location.assign("/deletemetabolites?delete");
-	}
- 
- 	function getReactionDatabaseToAdd()
- 	{ 
-		location.assign("/addreactions?add");  
-	}
-	 
-	function getReactionDatabaseToDelete()
-	{ 
-		location.assign("/deletereactions?delete");
-	}
-	
-	function selectReactionsToAdd(val)
-	{ 
-		var index= (document.getElementById("select_add_reactions_dropdown").selectedIndex);
-	  	
-		 /*<![CDATA[*/
-	    	var array_reactions = [[${listofreactions}]]  
-	    /*]]>*/	
-	    
-	    var reaction_object = array_reactions[index - 1];
-	    
-	    document.getElementById("ReactionID").value = reaction_object.ReactionID
-		document.getElementById("Name").value = reaction_object.name
-		document.getElementById("HigherBound:").value = reaction_object.HigherBound
-		document.getElementById("LowerBound").value = reaction_object.LowerBound
-		document.getElementById("Subsystem").value = reaction_object.Subsystem
-		document.getElementById("Signature").value = reaction_object.signature
-		document.getElementById("GeneReactionRule").value = reaction_object.gene_reaction_rule
-	}
-	
-	function selectReactionToUpdateBySearch() 
-	{ 
-		
-		var string_found_index = -1;
-		var index = 0;
-		
-		var search_value = document.getElementById("search").value;
-		
-		/*<![CDATA[*/
-    		var array_reactions = [[${listofreactions}]]  
-    	/*]]>*/
-    	
-    	var array_length = array_reactions.length;
-    	     	
-    	while(string_found_index == -1 && index < array_length)
-    	{
-    		
-    		var reaction_object = array_reactions[index];
-    		
-    		if (reaction_object.ReactionID === search_value)
-    		{
-    			string_found_index = 0;
-    		}
-    		else
-    		{
-    			index++;
-    		}
-    	}
-    	
-    	if (string_found_index !== -1)
-    	{
-    		document.getElementById("ReactionID").value = reaction_object.ReactionID
-    		document.getElementById("Name").value = reaction_object.name
-    		document.getElementById("HigherBound:").value = reaction_object.HigherBound
-    		document.getElementById("LowerBound").value = reaction_object.LowerBound
-    		document.getElementById("Subsystem").value = reaction_object.Subsystem
-    		document.getElementById("Signature").value = reaction_object.signature
-    		document.getElementById("GeneReactionRule").value = reaction_object.gene_reaction_rule
-    	}
-    	else
-    	{
-    		alert(search_value + " Not Found In Database!");
-    	}		
-	}
-	
-	function sendToBackEndToAddAReaction()
-	{ 
-		var reaction_to_add = document.getElementById("ReactionID").value;
-		//
-		if (reaction_to_add === "")
-		{
-			alert("Please Select A Reaction Or Add a New Reaction ID");
-		}
-		else
-		{			
-			var new_reaction_obj = {
-				ReactionID: document.getElementById("ReactionID").value,
-				name: document.getElementById("Name").value,
-				HigherBound: document.getElementById("HigherBound:").value,
-				LowerBound: document.getElementById("LowerBound").value,
-				Subsystem: document.getElementById("Subsystem").value,
-				signature: document.getElementById("Signature").value,
-				gene_reaction_rule: document.getElementById("GeneReactionRule").value
+ function getGeneDatabaseToAdd()
+ {      
+    location.assign("/addgenes?add");
+ }
+     
+ function getGeneDatabaseToDelete()
+ {         
+    location.assign("/deletegenes?delete");
+ }
+    
+ function getModelDatabaseToAdd()
+ {  
+    location.assign("/addmodels?add");
+ }
+    
+ function getModelDatabaseToDelete()
+ {  
+    location.assign("/deletemodels?delete");
+ }
+    
+ function getMetabolitesDatabaseToAdd()
+ {  
+    location.assign("/addmetabolites?add");
+ }
+     
+ function getMetabolitesDatabaseToDelete()
+ { 
+    location.assign("/deletemetabolites?delete");
+ }
 
-			};
-				 
-			var new_reaction = JSON.stringify(new_reaction_obj);
-		 
-			 $.post("/addreactions", {reaction_to_add: new_reaction})
-			
-			 location.assign("/addreactions?add");
-		   
-		}
-	}
+ function getReactionDatabaseToAdd()
+ {      
+    location.assign("/addreactions?add");
+ }
+     
+ function getReactionDatabaseToDelete()
+ {              
+    location.assign("/deletereactions?delete");
+ }
+    
+    function selectReactionsToAdd(val)
+    { 
+        var index= (document.getElementById("select_add_reactions_dropdown").selectedIndex);
+        
+         /*<![CDATA[*/
+            var array_reactions = [[${listofreactions}]]  
+        /*]]>*/ 
+        
+        var reaction_object = array_reactions[index - 1];
+        
+        document.getElementById("ReactionID").value = reaction_object.ReactionID
+        document.getElementById("Name").value = reaction_object.name
+        document.getElementById("HigherBound:").value = reaction_object.HigherBound
+        document.getElementById("LowerBound").value = reaction_object.LowerBound
+        document.getElementById("Subsystem").value = reaction_object.Subsystem
+        document.getElementById("Signature").value = reaction_object.signature
+        document.getElementById("GeneReactionRule").value = reaction_object.gene_reaction_rule
+    }
+    
+    function selectReactionToUpdateBySearch() 
+    { 
+        
+        var string_found_index = -1;
+        var index = 0;
+        
+        var search_value = document.getElementById("search").value;
+        
+        /*<![CDATA[*/
+            var array_reactions = [[${listofreactions}]]  
+        /*]]>*/
+        
+        var array_length = array_reactions.length;
+                
+        while(string_found_index == -1 && index < array_length)
+        {
+            
+            var reaction_object = array_reactions[index];
+            
+            if (reaction_object.ReactionID === search_value)
+            {
+                string_found_index = 0;
+            }
+            else
+            {
+                index++;
+            }
+        }
+        
+        if (string_found_index !== -1)
+        {
+            document.getElementById("ReactionID").value = reaction_object.ReactionID
+            document.getElementById("Name").value = reaction_object.name
+            document.getElementById("HigherBound:").value = reaction_object.HigherBound
+            document.getElementById("LowerBound").value = reaction_object.LowerBound
+            document.getElementById("Subsystem").value = reaction_object.Subsystem
+            document.getElementById("Signature").value = reaction_object.signature
+            document.getElementById("GeneReactionRule").value = reaction_object.gene_reaction_rule
+        }
+        else
+        {
+            alert(search_value + " Not Found In Database!");
+        }       
+    }
+    
+    function sendToBackEndToAddAReaction()
+    { 
+        var reaction_to_add = document.getElementById("ReactionID").value;
+        //
+        if (reaction_to_add === "")
+        {
+            alert("Please Select A Reaction Or Add a New Reaction ID");
+        }
+        else
+        {           
+            var new_reaction_obj = {
+                ReactionID: document.getElementById("ReactionID").value,
+                name: document.getElementById("Name").value,
+                HigherBound: document.getElementById("HigherBound:").value,
+                LowerBound: document.getElementById("LowerBound").value,
+                Subsystem: document.getElementById("Subsystem").value,
+                signature: document.getElementById("Signature").value,
+                gene_reaction_rule: document.getElementById("GeneReactionRule").value
+
+            };
+                 
+            var new_reaction = JSON.stringify(new_reaction_obj);
+         
+             $.post("/addreactions", {reaction_to_add: new_reaction})
+            
+             location.assign("/addreactions?add");
+           
+        }
+    }
+    
+    function signOut()
+    {
+        $.post("/login", {username: "", password: ""})
+         location.assign("/login");
+    }
 </script>
 
 <style>
@@ -192,13 +198,13 @@
   
  #add_reaction_database
  {
- 	padding: 210px 800px;
+    padding: 210px 800px;
     font: 400 15px Lato, sans-serif;
     color: blue;
     font-family: Montserrat, sans-serif; 
     text-align: center;
-  	size: 30px;
-  	margin: 4px 2px;
+    size: 30px;
+    margin: 4px 2px;
   }
   
  #bioinformatics
@@ -209,12 +215,19 @@
     border-radius: 0;
     font-family: Montserrat, sans-serif;
     position: absolute;
-  	bottom: 0;
-  	width: 100%;
-  	/* Set the fixed height of the footer here */
-  	height: 60px;
-  	line-height: 60px; /* Vertically center the text there */
-  	background-color: #2E8B57;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    line-height: 60px; /* Vertically center the text there */
+    background-color: #2E8B57;
+  }
+  
+  #log_out
+  {
+   position:fixed;
+   right:300px;
+   top:15px;
   }
   
  #reaction_add_two
@@ -226,31 +239,31 @@
  
  #search
  {
-  	width: 400px;
+    width: 400px;
  }
  
  #geneslink
  {
- 	 font-weight: bold;
- 	 font-size: 25px;
+     font-weight: bold;
+     font-size: 25px;
  }
  
  #modelslink
  {
-  	font-weight: bold;
- 	font-size: 25px;
+    font-weight: bold;
+    font-size: 25px;
  }
  
  #metaboliteslink
  {
-  	font-weight: bold;
- 	font-size: 25px;
+    font-weight: bold;
+    font-size: 25px;
  }
  
  #reactionslink
  {
-  	font-weight: bold;
- 	font-size: 25px;
+    font-weight: bold;
+    font-size: 25px;
  }
 </style>
 
@@ -260,29 +273,32 @@
   <div class="container">
     <div class="navbar-header"> </div>
     <ul class="nav navbar-nav navbar-right">
- 		<li><a href="#home">Home</a></li>
+        <li><a href="#home">Home</a></li>
         <li><a href="#functionality">FUNCTIONALITY</a></li>
-        <li><a href="#admin login">ADMIN LOGIN</a></li>
+        <li><a href="/update" th:text = "${usernamelogin}"></a></li>
+        <form id="log_out" th:action="@{/logout}" method="post">
+            <button type="submit">LogOut</button>
+        </form>
       </ul>
   </div>
 </nav>
 
 <header id="subject" class="jumbotron text-center">
- 	<div class="container">
-      	<h1>
-      		<b>
-       			<strong>
-        			Add Or Modify A Reaction
-       			</strong>
-      		</b>
-    	</h1>
+    <div class="container">
+        <h1>
+            <b>
+                <strong>
+                    Add Or Modify A Reaction
+                </strong>
+            </b>
+        </h1>
     
     <form class="form-inline" action="/">
-  		<div class="form-group">
-    		<input  class="form-control" id="search">
-  		</div>
-  			<button type="button" onClick="selectReactionToUpdateBySearch()" class="btn btn-default">Search</button>
-	</form> 
+        <div class="form-group">
+            <input  class="form-control" id="search">
+        </div>
+            <button type="button" onClick="selectReactionToUpdateBySearch()" class="btn btn-default">Search</button>
+    </form> 
   </div>
 </header>
 
@@ -291,130 +307,130 @@
     <div class="col-lg-2">
       <ul class="nav nav-pills nav-stacked"> 
          <div class="container">
-			<a href="#gene" id="geneslink" class="btn btn-link" data-toggle="collapse">Genes</a>
-				<div id="gene" class="collapse">
-					<button id="add_gene" type="button" onClick="getGeneDatabaseToAdd()" class="btn btn-default">Add Gene</button>
-    				<button id="delete_gene" type="button" onClick="getGeneDatabaseToDelete()" class="btn btn-default">Delete Gene</button>
-    			</div>
-		</div>
-			
-		<div class="container">
-			<a href="#metabolites" id="metaboliteslink" class="btn btn-link" data-toggle="collapse">Metabolites</a>
-				<div id="metabolites" class="collapse">
-					<button id="add_metabolite" type="button" onClick="getMetabolitesDatabaseToAdd()" class="btn btn-default">Add Metabolite</button>
-    				<button id="delete_metabolite" type="button" onClick="getMetabolitesDatabaseToDelete()" class="btn btn-default">Delete Metabolite</button>
-    			</div>
-		</div>
-			
-		<div class="container">
-			<a href="#model" id="modelslink" class="btn btn-link" data-toggle="collapse">Models</a>
-				<div id="model" class="collapse">
-					<button id="add_model" type="button" onClick="getModelDatabaseToAdd()" class="btn btn-default">Add Model</button>
-    				<button id="delete_model" type="button" onClick="getModelDatabaseToDelete()" class="btn btn-default">Delete Model</button>
-    			</div>
-		</div>	
-			
-		<div class="container">
-			<a href="#reactions" id="reactionslink" class="btn btn-link" data-toggle="collapse">Reactions</a>
-				<div id="reactions" class="collapse">
-					<button id="add_reactions" type="button" onClick="getReactionDatabaseToAdd()" class="btn btn-default">Add Reactions</button>
-    				<button id="delete_reactions" type="button" onClick="getReactionDatabaseToDelete()" class="btn btn-default">Delete Reactions</button>
-    			</div>
-		</div> 
-	 </ul>    
+            <a href="#gene" id="geneslink" class="btn btn-link" data-toggle="collapse">Genes</a>
+                <div id="gene" class="collapse">
+                    <button id="add_gene" type="button" onClick="getGeneDatabaseToAdd()" class="btn btn-default">Add Gene</button>
+                    <button id="delete_gene" type="button" onClick="getGeneDatabaseToDelete()" class="btn btn-default">Delete Gene</button>
+                </div>
+        </div>
+            
+        <div class="container">
+            <a href="#metabolites" id="metaboliteslink" class="btn btn-link" data-toggle="collapse">Metabolites</a>
+                <div id="metabolites" class="collapse">
+                    <button id="add_metabolite" type="button" onClick="getMetabolitesDatabaseToAdd()" class="btn btn-default">Add Metabolite</button>
+                    <button id="delete_metabolite" type="button" onClick="getMetabolitesDatabaseToDelete()" class="btn btn-default">Delete Metabolite</button>
+                </div>
+        </div>
+            
+        <div class="container">
+            <a href="#model" id="modelslink" class="btn btn-link" data-toggle="collapse">Models</a>
+                <div id="model" class="collapse">
+                    <button id="add_model" type="button" onClick="getModelDatabaseToAdd()" class="btn btn-default">Add Model</button>
+                    <button id="delete_model" type="button" onClick="getModelDatabaseToDelete()" class="btn btn-default">Delete Model</button>
+                </div>
+        </div>  
+            
+        <div class="container">
+            <a href="#reactions" id="reactionslink" class="btn btn-link" data-toggle="collapse">Reactions</a>
+                <div id="reactions" class="collapse">
+                    <button id="add_reactions" type="button" onClick="getReactionDatabaseToAdd()" class="btn btn-default">Add Reactions</button>
+                    <button id="delete_reactions" type="button" onClick="getReactionDatabaseToDelete()" class="btn btn-default">Delete Reactions</button>
+                </div>
+        </div> 
+     </ul>    
     </div>
   
  
     
     <div id="reaction_add_one" class="col-lg-5">
-    	<div class="container">
-  			<form>
-    			<div class="form-group">
-      				<label id="reactions_label" for="select_reactions">Reactions</label>
-      					<select id="select_add_reactions_dropdown" onchange="selectReactionsToAdd(value)" class="form-control">
-      							<option selected disabled>Choose A Reaction...</option>
-       					 		<option id="select_reactions" th:each="reactionslist : ${listofreactions}"  
-       					 	     		th:value = "${reactionslist.ReactionID}" th:text="${reactionslist.ReactionID}">
-       					 	     </option>
-        				
-      					</select>
-    			</div>
-  			</form>
-		</div>
+        <div class="container">
+            <form>
+                <div class="form-group">
+                    <label id="reactions_label" for="select_reactions">Reactions</label>
+                        <select id="select_add_reactions_dropdown" onchange="selectReactionsToAdd(value)" class="form-control">
+                                <option selected disabled>Choose A Reaction...</option>
+                                <option id="select_reactions" th:each="reactionslist : ${listofreactions}"  
+                                        th:value = "${reactionslist.ReactionID}" th:text="${reactionslist.ReactionID}">
+                                 </option>
+                        
+                        </select>
+                </div>
+            </form>
+        </div>
     </div>
     
     <div id="reaction_add_two" class="col-lg-5">  
-  	  <form class="form-inline">    
- 		 <div class="form-group">
- 		 	<div class="col-lg-6 offset-lg-3">
-    			<label for="reactionID">ReactionID:</label>
-    			<input type="text" class=" mb-sm-5 form-control" id="ReactionID">
-    		</div>
- 		 </div>
- 		 
- 		 <div class="form-group">
-  			<div class="col-lg-6 offset-lg-3">
-    			<label for="name">Name:</label>
-    			<input type="text" class="form-control" id="Name">
-    		</div>
-  		</div>
-  		
-	  </form>
+      <form class="form-inline">    
+         <div class="form-group">
+            <div class="col-lg-6 offset-lg-3">
+                <label for="reactionID">ReactionID:</label>
+                <input type="text" class=" mb-sm-5 form-control" id="ReactionID">
+            </div>
+         </div>
+         
+         <div class="form-group">
+            <div class="col-lg-6 offset-lg-3">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="Name">
+            </div>
+        </div>
+        
+      </form>
     
       <form class="form-inline">
- 		 <div class="form-group">
- 		 	<div class="col-lg-6 offset-lg-3">
-    			<label for="ncbigi">HigherBound:</label>
-    			<input type="text" class="form-control" id="HigherBound:">
-    		</div>
- 		 </div>
- 		 
-  		<div class="form-group">
-  			<div class="col-lg-6 offset-lg-3">
-    			<label for="refseq_name">LowerBound:</label>
-    			<input type="text" class="form-control" id="LowerBound">
-    		</div>
-  		</div>
-	</form>
-	
-	<form class="form-inline">
- 		 <div class="form-group">
- 		 	<div class="col-lg-6 offset-lg-3">
-    			<label for="sbo">Subsystem:</label>
-    			<input type="text" class="form-control" id="Subsystem">
-    		</div>
- 		 </div>
- 		 
-  		<div class="form-group">
-  			<div class="col-lg-6 offset-lg-3">
-    			<label for="Signature">Signature:</label>
-    			<input type="text" class="form-control" id="Signature">
-    		</div>
-  		</div>
-  		
-  		<div class="form-group">
-  			<div class="col-lg-6 offset-lg-3">
-    			<label for="GeneReactionRule">GeneReactionRule:</label>
-    			<input type="text" class="form-control" id="GeneReactionRule">
-    		</div>
-  		</div>
-	</form>
+         <div class="form-group">
+            <div class="col-lg-6 offset-lg-3">
+                <label for="ncbigi">HigherBound:</label>
+                <input type="text" class="form-control" id="HigherBound:">
+            </div>
+         </div>
+         
+        <div class="form-group">
+            <div class="col-lg-6 offset-lg-3">
+                <label for="refseq_name">LowerBound:</label>
+                <input type="text" class="form-control" id="LowerBound">
+            </div>
+        </div>
+    </form>
+    
+    <form class="form-inline">
+         <div class="form-group">
+            <div class="col-lg-6 offset-lg-3">
+                <label for="sbo">Subsystem:</label>
+                <input type="text" class="form-control" id="Subsystem">
+            </div>
+         </div>
+         
+        <div class="form-group">
+            <div class="col-lg-6 offset-lg-3">
+                <label for="Signature">Signature:</label>
+                <input type="text" class="form-control" id="Signature">
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <div class="col-lg-6 offset-lg-3">
+                <label for="GeneReactionRule">GeneReactionRule:</label>
+                <input type="text" class="form-control" id="GeneReactionRule">
+            </div>
+        </div>
+    </form>
  </div>
     
     <div id="add_reaction_database">
-		<button type="button" onClick="getReactionDatabaseToAdd()" class="btn btn-default"><b><strong>Clear</strong></b></button>
-    	<button type="button" onClick="sendToBackEndToAddAReaction()" class="btn btn-default"><b><strong>ADD</strong></b></button>
-  	</div>
+        <button type="button" onClick="getReactionDatabaseToAdd()" class="btn btn-default"><b><strong>Clear</strong></b></button>
+        <button type="button" onClick="sendToBackEndToAddAReaction()" class="btn btn-default"><b><strong>ADD</strong></b></button>
+    </div>
     
     </div>
     
     </div>
     
     <footer id="bioinformatics" class="page-footer font-small blue">
-  		<div class="footer-copyright text-center py-3">
-   	 		<label> <b><strong>© 2020 Copyright: BioInformatics.com</strong></b></label>
-  		</div>
-	</footer>
+        <div class="footer-copyright text-center py-3">
+            <label> <b><strong>© 2020 Copyright: BioInformatics.com</strong></b></label>
+        </div>
+    </footer>
     
  </body>
 </html>

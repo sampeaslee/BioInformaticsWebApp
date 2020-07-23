@@ -211,8 +211,28 @@ public class Cs564Application {
         System.out.println("DONE LOADING IN GENE DATA!!!");
         return "Has to have non void return type";
     }*/
+	
+	/*
+    @Bean
+    public String CommandLineRunner(UserLoginRepo repository) throws Exception
+    {
+            
+            //Create a UserLogin Object to store the data 
+            UserLogin userlogin = new UserLogin("BioInformatics", "Victory");
+            //Send that data to MySQL
+            repository.save(userlogin);
+
+        System.out.println("DONE LOADING IN User DATA!!!");
+        return "Has to have non void return type";
+    }*/
+	
+	
+	
+	
+	
         
 	//THIRD METHOD TO RUN (THIS ONE TAKES LONGER)
+	
 	/*
 	@Bean
 	public String CommandLineRunner(StoichiometryRepo repository) throws Exception{
@@ -393,6 +413,7 @@ public class Cs564Application {
      return "Has to have non void return type";
  }*/
 
+
 //Sixth METHOD TO RUN(THIS ONE TAKES 20 MINUTES AS WELL)
 //	@Bean
 //	public String CommandLineRunner(StartMetaReactionRepo startRepo,  EndMetaReactionRepo endRepo) throws Exception{
@@ -434,6 +455,7 @@ public class Cs564Application {
 //		System.out.println("DONE LOADING IN STOICHOMETRY DATA!!!");
 //		return "Has to have non void return type";
 //	}
+
 
 
 
