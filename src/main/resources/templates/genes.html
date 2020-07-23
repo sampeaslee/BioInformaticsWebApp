@@ -206,12 +206,16 @@ table, tr, th, td {
     display: inline-block;
     vertical-align: middle;
 }
-
+ .topcorner{
+   top:0;
+   left:0;
+  }
 </style>
 </head>
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
 
 <nav class="navbar navbar-default navbar-fixed-top">
+
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -223,9 +227,8 @@ table, tr, th, td {
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#about">Home</a></li>
-        <li><a href="#Functionality">FUNCTIONALITY</a></li>
-        <li><a href="#Admin">ADMIN LOGIN</a></li>
+        <img src = "images/gene.png"  width="50" height="50" id = "genepage" class = "topcorner" ></img>
+        <li id = "home"><a href="#about">Home</a></li>
       </ul>
     </div>
   </div>
@@ -239,7 +242,7 @@ table, tr, th, td {
   <div class="form-group">
     
     <input  class="form-control" type = "search" 
-    id="search"  onChange = "sendTextToBackend()">
+    id="search"  onChange = "searchForGene()">
 
   </div>
 
@@ -276,53 +279,25 @@ table, tr, th, td {
 </div>
 
 
-
+<footer id="bioinformatics" class="page-footer font-small blue">
+    <div class="footer-copyright text-center py-3">
+        <label> <b><strong>© 2020 Copyright: BioInformatics.com</strong></b></label>
+    </div>
+</footer>
 
 
 <script>
-$("#compare").click(function(){
-    alert('I got a click');
+$("#home").click(function(){
+    window.location.assign("http://localhost:8080/home")
 });
 
-$(document).ready(function(){
-  // Add smooth scrolling to all links in navbar + footer link
-  $(".navbar a, footer a[href='#myPage']").on('click', function(event) {
-    // Make sure this.hash has a value before overriding default behavior
-    if (this.hash !== "") {
-      // Prevent default anchor click behavior
-      event.preventDefault();
 
-      // Store hash
-      var hash = this.hash;
 
-      // Using jQuery's animate() method to add smooth page scroll
-      // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
-      $('html, body').animate({
-        scrollTop: $(hash).offset().top
-      }, 900, function(){
-   
-        // Add hash (#) to URL when done scrolling (default click behavior)
-        window.location.hash = hash;
-      });
-    } // End if
-  });
-  
-  $(window).scroll(function() {
-    $(".slideanim").each(function(){
-      var pos = $(this).offset().top;
 
-      var winTop = $(window).scrollTop();
-        if (pos < winTop + 600) {
-          $(this).addClass("slide");
-        }
-    });
-  });
-})
-
-  function sendTextToBackend(){
+ function searchForGene(){
         
         var textInput2 = document.getElementById("search");
-           location.assign("/gene?name=".concat(search.value))     
+           location.assign("/genes?name=".concat(search.value))     
     }
     
     

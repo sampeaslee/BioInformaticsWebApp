@@ -14,9 +14,8 @@ public class Linked {
     MetaModel metaModel;
     
     public Linked() {
-        
-    }
     
+    }
     
     public Linked(MetaModel metaModel) {
         this.metaModel = metaModel;

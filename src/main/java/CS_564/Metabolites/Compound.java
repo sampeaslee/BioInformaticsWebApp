@@ -5,13 +5,14 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+
 @Entity
 
 @Table(name= "compounds")
 public class Compound {
 
     @Id
-    public String BiggmetaboliteID;
+    public String biggmetaboliteID;
 
     public String name;
 
@@ -38,7 +39,7 @@ public class Compound {
     public Compound( String id, String name, String charge,
             String formula, String inchi_key, String kegg_compound,
             String metanetx_chemical, String SMILES, String PRIME) {
-        this.BiggmetaboliteID = id;
+        this.biggmetaboliteID = id;
         this.name = name;
         this.charge = charge;
         this.formula = formula;

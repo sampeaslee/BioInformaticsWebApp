@@ -1,7 +1,7 @@
 package CS_564.Metabolites;
+import java.util.List;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,5 +18,10 @@ public interface StoichiometryRepo extends JpaRepository<Stoichiometry, Integer>
 
     @Query(value = "SELECT * FROM stoichiometry s WHERE s.startMetabolites LIKE %:Metaboliteid% or  s.endMetabolites LIKE %:Metaboliteid%",  nativeQuery = true)
     public ArrayList<Stoichiometry> autoSearch(@Param("Metaboliteid") String Metaboliteid);
+    @Query(value = " select * from stoichometry ;", nativeQuery = true)
+    public ArrayList<Stoichiometry> queryExample();
+
+    @Query(value = " select * from stoichiometry  where reactionid = :id ;", nativeQuery = true)
+    public Stoichiometry queryExampleTwo(@Param("id") String id);
 }
 
