@@ -43,6 +43,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
           .antMatchers("/reactions").permitAll()
           .antMatchers("/functionality/find_pathway").permitAll()
           .antMatchers("/functionality/find_product").permitAll()
+          .antMatchers("/images/*.png").permitAll()
+          .antMatchers("/images/*.jpg").permitAll()
+          .antMatchers("/info/metabolites/*").permitAll()
+          .antMatchers("/info/reactions/*").permitAll()
 
          // .antMatchers("/update").hasAnyRole("ADMIN")
           	//.antMatchers("/").permitAll()
