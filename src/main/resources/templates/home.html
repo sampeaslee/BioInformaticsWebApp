@@ -225,9 +225,9 @@ div.b {
     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"> Catalog
     <span class="caret"></span></button>
     <ul class="dropdown-menu" id = "poop">
-      <li ><a   >Gene</a></li>
+      <li ><a   >Genes</a></li>
       <li><a >Metabolites</a></li>
-      <li><a >Reaction</a></li>
+      <li><a >Reactions</a></li>
     </ul>
     </div>
   </div>
@@ -289,11 +289,11 @@ $("#reactionpage").click(function(){
     window.location.assign("http://localhost:8080/reactions")
 });
 
-$("#modify").click(function(){
+$("#pathway").click(function(){
 	 window.location.assign("http://localhost:8080/functionality/find_pathway")
 });
 
-$("#pathway").click(function(){
+$("#modify").click(function(){
     window.location.assign("http://localhost:8080/update")
 });
 

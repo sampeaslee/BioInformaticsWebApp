@@ -4,7 +4,7 @@
     <!-- Theme Made By www.w3schools.com -->
     <title>BioInformatics</title>
     <meta charset="utf-8">
-·    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -205,6 +205,20 @@
             display: inline-block;
             vertical-align: middle;
         }
+        .Row {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    border-spacing: 10px;
+}
+
+.Column {
+    display: table-cell;
+}
+.displaydata{
+text-align: center;
+}
+
 
     </style>
 </head>
@@ -222,9 +236,8 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#about">Home</a></li>
-                <li><a href="#Functionality">FUNCTIONALITY</a></li>
-                <li><a href="#Admin">ADMIN LOGIN</a></li>
+                <li id = "home"><a>Home</a></li>
+
             </ul>
         </div>
     </div>
@@ -233,31 +246,27 @@
 
 
 <div class="jumbotron text-center">
-
     <h1>Reactions</h1>
-    <p>Look!  </p>
-    <p th:text="'This is ' + ${reaction.reactionID}"> </p>
-    <p th:text="'the stoichiometry is ' + ${stoichiometry}"></p>
-    <p th:text="'the name is' + ${reaction.name}"></p>
 
 
 </div>
 
-<div class="row">
+<div>
+
+
+<div class="displaydata" >
+    <p th:text="'Reaction Name: ' + ${reaction.name}"></p>
+    <p th:text="'Reaaction ID:  ' + ${reaction.reactionID}"> </p>
+    <p th:text="'Stoichiometry: ' + ${stoichiometry}"></p>
+    <div >
+          
     <h1 class="text-center">Comment on this reaction!</h1>
-</div>
-
-<div class="row" >
-    <div class="col-md-6">
-
-    </div>
-    <div class="col-md-6">
         <div class="row">
             <div class="col-sm-6 form-group">
                 <input class="form-control" id="name" name="name" placeholder="Name" type="text" required>
             </div>
             <div class="col-sm-6 form-group">
-                <input class="form-control" id="email" name="email" placeholder="Email" type="email" required>
+                <input class="form-control" id="email" maxlength="4" name="email" placeholder="Email" type="email" required>
             </div>
         </div>
         <textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea>
@@ -268,11 +277,9 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6">
 
-    </div>
 </div>
-
+</div>
 
 <footer id="bioinformatics" class="page-footer font-small blue">
     <div class="footer-copyright text-center py-3">
@@ -280,6 +287,16 @@
     </div>
 </footer>
 
+<script>
+$("#home").click(function(){
+    window.location.assign("http://localhost:8080/home")
+});
+
+
+
+    
+
+</script>
 
 </body>
 </html>
