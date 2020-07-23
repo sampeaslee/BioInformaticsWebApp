@@ -12,42 +12,42 @@
  <script th:inline="javascript">
  function getGeneDatabaseToAdd()
  { 		
-	location.assign("/addgenes?add");
+	location.assign("/addgenes");
  }
 	 
  function getGeneDatabaseToDelete()
  { 		   
-	location.assign("/deletegenes?delete");
+	location.assign("/deletegenes");
  }
 	
  function getModelDatabaseToAdd()
  { 	
-	location.assign("/addmodels?add");
+	location.assign("/addmodels");
  }
 	
  function getModelDatabaseToDelete()
  { 	
-	location.assign("/deletemodels?delete");
+	location.assign("/deletemodels");
  }
 	
  function getMetabolitesDatabaseToAdd()
  { 	
-	location.assign("/addmetabolites?add");
+	location.assign("/addmetabolites");
  }
 	 
  function getMetabolitesDatabaseToDelete()
  { 
-	location.assign("/deletemetabolites?delete");
+	location.assign("/deletemetabolites");
  }
 
  function getReactionDatabaseToAdd()
  { 		
-	location.assign("/addreactions?add");
+	location.assign("/addreactions");
  }
 	 
  function getReactionDatabaseToDelete()
  { 				
-	location.assign("/deletereactions?delete");
+	location.assign("/deletereactions");
  }
 	
 	function selectReactionsToAdd(val)
@@ -101,16 +101,31 @@
     	if (string_found_index !== -1)
     	{
     		document.getElementById("ReactionID").value = reaction_object.ReactionID
-    		document.getElementById("Name").value = reaction_object.name
-    		document.getElementById("HigherBound:").value = reaction_object.HigherBound
-    		document.getElementById("LowerBound").value = reaction_object.LowerBound
-    		document.getElementById("Subsystem").value = reaction_object.Subsystem
-    		document.getElementById("Signature").value = reaction_object.signature
-    		document.getElementById("GeneReactionRule").value = reaction_object.gene_reaction_rule
+    		document.getElementById("Name").value = reaction_object.name;
+    		document.getElementById("HigherBound:").value = reaction_object.HigherBound;
+    		document.getElementById("LowerBound").value = reaction_object.LowerBound;
+    		document.getElementById("Subsystem").value = reaction_object.Subsystem;
+    		document.getElementById("Signature").value = reaction_object.signature;
+    		document.getElementById("GeneReactionRule").value = reaction_object.gene_reaction_rule;
+    		document.getElementById("search").value = "";	
+    		document.getElementById("record").innerHTML = "";
     	}
     	else
     	{
-    		alert(search_value + " Not Found In Database!");
+    		document.getElementById("ReactionID").value = "";
+    		document.getElementById("Name").value = "";
+    		document.getElementById("HigherBound:").value = "";
+    		document.getElementById("LowerBound").value = "";
+    		document.getElementById("Subsystem").value = "";
+    		document.getElementById("Signature").value = "";
+    		document.getElementById("GeneReactionRule").value = "";
+    		if (search_value != "")
+    		{
+    		  document.getElementById("record").innerHTML = search_value+" not found in Reaction table!";
+    		}
+    		document.getElementById("search").value = "";
+    		
+    		
     	}		
 	}
 	
@@ -120,7 +135,7 @@
 		//
 		if (reaction_to_add === "")
 		{
-			alert("Please Select A Reaction Or Add a New Reaction ID");
+			document.getElementById("record").innerHTML = "Please Select A Reaction Or Add a New Reaction ID";
 		}
 		else
 		{			
@@ -137,18 +152,15 @@
 				 
 			var new_reaction = JSON.stringify(new_reaction_obj);
 		 
-			 $.post("/addreactions", {reaction_to_add: new_reaction})
+			 $.post("/addreactions", {reaction_to_add: new_reaction}, function(data, status){
+					alert(status);
+				});
 			
-			 location.assign("/addreactions?add");
+			 location.assign("/addreactions");
 		   
 		}
 	}
-	
-	function signOut()
-	{
-		$.post("/login", {username: "", password: ""})
-		 location.assign("/login");
-	}
+
 </script>
 
 <style>
@@ -195,6 +207,12 @@
     border-color: transparent;
     color: #fff !important;
   }
+  
+ #record
+ {
+    color: red;
+    text-align: center;
+ }
   
  #add_reaction_database
  {
@@ -293,7 +311,7 @@
       		</b>
     	</h1>
     
-    <form class="form-inline" action="/">
+    <form class="form-inline" id="mysearch" onsubmit="selectReactionToUpdateBySearch();return false">
   		<div class="form-group">
     		<input  class="form-control" id="search">
   		</div>
@@ -425,6 +443,13 @@
     </div>
     
     </div>
+    
+    <h1 id="record">
+      		<b>
+       			<strong>
+       			</strong>
+      		</b>
+    </h1>
     
     <footer id="bioinformatics" class="page-footer font-small blue">
   		<div class="footer-copyright text-center py-3">

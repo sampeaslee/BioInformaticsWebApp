@@ -12,42 +12,42 @@
  <script th:inline="javascript"> 
  function getGeneDatabaseToAdd()
  { 		
-	location.assign("/addgenes?add");
+	location.assign("/addgenes");
  }
 	 
  function getGeneDatabaseToDelete()
  { 		   
-	location.assign("/deletegenes?delete");
+	location.assign("/deletegenes");
  }
 	
  function getModelDatabaseToAdd()
  { 	
-	location.assign("/addmodels?add");
+	location.assign("/addmodels");
  }
 	
  function getModelDatabaseToDelete()
  { 	
-	location.assign("/deletemodels?delete");
+	location.assign("/deletemodels");
  }
 	
  function getMetabolitesDatabaseToAdd()
  { 	
-	location.assign("/addmetabolites?add");
+	location.assign("/addmetabolites");
  }
 	 
  function getMetabolitesDatabaseToDelete()
  { 
-	location.assign("/deletemetabolites?delete");
+	location.assign("/deletemetabolites");
  }
 
  function getReactionDatabaseToAdd()
  { 		
-	location.assign("/addreactions?add");
+	location.assign("/addreactions");
  }
 	 
  function getReactionDatabaseToDelete()
  { 				
-	location.assign("/deletereactions?delete");
+	location.assign("/deletereactions");
  }
 	
 	function selectMetabolitesToDelete()
@@ -98,10 +98,19 @@
     		document.getElementById("MetaboliteID").value = metabolite_object.metaboliteID;
     		document.getElementById("Compartment").value = metabolite_object.compartment;
     		document.getElementById("Compounds").value = metabolite_object.bigg_compoundID;
+    		document.getElementById("search").value = "";	
+    		document.getElementById("record").innerHTML = "";
     	}
     	else
     	{
-    		alert(search_value + " Not Found In Database!");
+    		document.getElementById("MetaboliteID").value = "";
+    		document.getElementById("Compartment").value = "";
+    		document.getElementById("Compounds").value = "";
+    		if (search_value != "")
+    		{
+    		  document.getElementById("record").innerHTML = search_value+" not found in Metabolite table!";
+    		}
+    		document.getElementById("search").value = "";
     	}		
 	}
 	
@@ -111,20 +120,17 @@
 		//
 		if (metabolite_for_deletion === "")
 		{
-			alert("Please Select A Metabolite To Delete");
+			document.getElementById("record").innerHTML = "Please Select A Metabolite to delete!";
 		}
 		else
 		{			 
-			$.post("/deletemetabolites", {metabolites_to_delete: metabolite_for_deletion})
+			$.post("/deletemetabolites", {metabolites_to_delete: metabolite_for_deletion}, function(data, status){
+				alert(status);
+			});
+			
 			 location.assign("/deletemetabolites?delete");
 		   
 		}  
-	}
-	
-	function signOut()
-	{
-		$.post("/login", {username: "", password: ""})
-		 location.assign("/login");
 	}
 </script>
 
@@ -174,7 +180,7 @@
   
  #delete_metabolite_database
  {
- 	padding: 210px 800px;
+ 	padding: 110px 600px;
     font: 400 15px Lato, sans-serif;
     color: blue;
     font-family: Montserrat, sans-serif; 
@@ -182,6 +188,12 @@
   	size: 30px;
   	margin: 4px 2px;
   }
+  
+ #record
+ {
+    color: red;
+    text-align: center;
+ }
   
   #log_out
   {
@@ -270,7 +282,7 @@
       		</b>
     	</h1>
     
-    <form class="form-inline" action="/">
+    <form class="form-inline" id="mysearch" onsubmit="selectMetabolitesToDeleteBySearch();return false">
   		<div class="form-group">
     		<input  class="form-control" id="search">
   		</div>
@@ -365,11 +377,18 @@
     </div>
     
     <div id="delete_metabolite_database">
-		<button type="button" onClick="getMetaboliteDatabaseToDelete()" class="btn btn-default"><b><strong>Clear</strong></b></button>
+		<button type="button" onClick="getMetabolitesDatabaseToDelete()" class="btn btn-default"><b><strong>Clear</strong></b></button>
     	<button type="button" onClick="sendToBackEndToDeleteAMetabolite()" class="btn btn-default"><b><strong>Delete</strong></button>
   	</div>
     
  </div>
+ 
+   <h1 id="record">
+      		<b>
+       			<strong>
+       			</strong>
+      		</b>
+    </h1>
     
     <footer id="bioinformatics" class="page-footer font-small blue">
   		<div class="footer-copyright text-center py-3">

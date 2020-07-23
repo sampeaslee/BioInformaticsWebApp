@@ -126,7 +126,7 @@
     		document.getElementById("Model").value = "";
     		if (search_value != "")
     		{
-    		  document.getElementById("record").innerHTML = search_value+" not found in gene table!";
+    		  document.getElementById("record").innerHTML = search_value+" not found in Gene table!";
     		}
     		document.getElementById("search").value = "";
     		
@@ -140,7 +140,7 @@
 		//
 		if (gene_to_add === "")
 		{
-			alert("Please Select A Gene Or Add a New Gene ID");
+			 document.getElementById("record").innerHTML = "Please Select A Gene To Add!";
 		}
 		else
 		{			
@@ -155,7 +155,9 @@
 				 
 			var new_gene = JSON.stringify(new_gene_obj);
 		 
-			 $.post("/addgenes", {gene_to_add: new_gene})
+			 $.post("/addgenes", {gene_to_add: new_gene}, function(data, status){
+					alert(status);
+				});
 			
 			 location.assign("/addgenes");			 
 		}  
@@ -216,7 +218,7 @@
  {
     color: red;
     text-align: center;
-  }
+ }
   
  #add_gene_database
  {
