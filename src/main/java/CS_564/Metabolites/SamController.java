@@ -7,13 +7,19 @@ import java.util.List;
 import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -184,7 +190,7 @@ public class SamController {
 
         }else {
             javax.persistence.Query queryCompound = em.createQuery(""
-                + "Select distinct  c, m FROM Metabolite m, Compound c where c.BiggmetaboliteID = m.bigg_compoundID "
+                + "Select distinct  c, m FROM Metabolite m, Compound c where c.biggmetaboliteID = m.bigg_compoundID "
                 + "AND m.metaboliteID = :search", Object[].class);
             queryCompound.setParameter("search", id  );
             ArrayList<Object[]> results = (ArrayList<Object[]>) queryCompound.getResultList();
@@ -218,5 +224,75 @@ public class SamController {
 
         return "info/metabolites";
     }
+
+    @PostMapping("info/metabolites/{id}")
+    public String sentTOBack(String name, Model model, @PathVariable String id) {
+
+        return "info/metabolites";
+    }
+
+
+//    @PostMapping("/deletegenes")
+//    public String deleteGenes(String genes_to_delete) throws ParseException
+//    {
+//        Gene delete_gene_object = genesRepo.getAGene(genes_to_delete);
+//        genesRepo.delete(delete_gene_object);
+//
+//        return "deletegenes";
+//    }
+//
+//
+//    @PostMapping("/addgenes")
+//    public String postGenes(String gene_to_add) throws ParseException
+//    {
+//        JSONParser parser = new JSONParser();
+//        JSONObject convert_to_json = (JSONObject) parser.parse(gene_to_add);
+//
+//        String gene_geneID = ((String)convert_to_json.get("geneID"));
+//        String gene_name = ((String)convert_to_json.get("name"));
+//        String gene_ncbigi = ((String)convert_to_json.get("ncbigi"));
+//        String gene_refseq_name = ((String)convert_to_json.get("refseq_name"));
+//        String gene_sbo = ((String)convert_to_json.get("sbo"));
+//        String gene_model = ((String)convert_to_json.get("model"));
+//
+//        if (genesRepo.getAGene(gene_geneID) != null)
+//        {
+//            Gene update_gene_object = genesRepo.getAGene(gene_geneID);
+//
+//            if(!update_gene_object.name.equals(gene_name))
+//            {
+//                genesRepo.updateGenesName(gene_geneID, gene_name);
+//            }
+//
+//            if(!update_gene_object.ncbigi.equals(gene_ncbigi))
+//            {
+//                genesRepo.updateGeneNcbigi(gene_geneID, gene_ncbigi);
+//            }
+//
+//            if(!update_gene_object.refseq_name.equals(gene_refseq_name))
+//            {
+//                genesRepo.updateGeneRefseqName(gene_geneID, gene_refseq_name);
+//            }
+//
+//            if(!update_gene_object.sbo.equals(gene_sbo))
+//            {
+//                genesRepo.updateGeneSbo(gene_geneID, gene_sbo);
+//            }
+//
+//            if(!update_gene_object.model.equals(gene_model))
+//            {
+//                genesRepo.updateGeneModel(gene_geneID, gene_model);
+//            }
+//        }
+//        else
+//        {
+//            // create a gene object
+//            Gene addGeneObj = new Gene(gene_geneID, gene_name, gene_ncbigi, gene_refseq_name,
+//                    gene_sbo, gene_model);
+//            genesRepo.save(addGeneObj);
+//        }
+//
+//        return "addgenes";
+//    }
 
 }

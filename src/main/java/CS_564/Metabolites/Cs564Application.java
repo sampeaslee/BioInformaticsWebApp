@@ -212,19 +212,34 @@ public class Cs564Application {
         return "Has to have non void return type";
     }*/
 	
-	/*
-    @Bean
-    public String CommandLineRunner(UserLoginRepo repository) throws Exception
-    {
-            
-            //Create a UserLogin Object to store the data 
-            UserLogin userlogin = new UserLogin("BioInformatics", "Victory");
-            //Send that data to MySQL
-            repository.save(userlogin);
+//    @Bean
+//    public String CommandLineRunner(UserLoginRepo repository) throws Exception
+//    {
+//
+//            //Create a UserLogin Object to store the data
+//            UserLogin userlogin = new UserLogin("BioInformatics", "Victory");
+//            //Send that data to MySQL
+//            repository.save(userlogin);
+//
+//        System.out.println("DONE LOADING IN User DATA!!!");
+//        return "Has to have non void return type";
+//    }
 
-        System.out.println("DONE LOADING IN User DATA!!!");
-        return "Has to have non void return type";
-    }*/
+
+
+	// this is for creating a comment repo in the mysql;
+	@Bean
+	public String CommandLineRunner(CommentRepo repository) throws Exception
+	{
+
+		//Create a UserLogin Object to store the data
+		Comment comment = new Comment("", null, null, null, 0);
+		//Send that data to MySQL
+		repository.save(comment);
+
+		System.out.println("DONE LOADING IN Comment DATA!!!");
+		return "Has to have non void return type";
+	}
 	
 	
 	
