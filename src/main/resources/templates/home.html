@@ -225,9 +225,9 @@ div.b {
     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"> Catalog
     <span class="caret"></span></button>
     <ul class="dropdown-menu" id = "poop">
-      <li ><a>Genes</a></li>
-      <li><a>Metabolites</a></li>
-      <li><a>Reactions</a></li>
+      <li ><a   >Genes</a></li>
+      <li><a >Metabolites</a></li>
+      <li><a >Reactions</a></li>
     </ul>
     </div>
   </div>
@@ -249,27 +249,22 @@ div.b {
     <div class="col-sm-4">
     <img src = "images/meta.png"  width="125" height="125" id = "metapage"></img>
       <h4>Metabolites</h4>
-      <p>Click to search metabolites</p>
+      <p>Click to view table of metabolites</p>
     </div>
     <div class="col-sm-4">
   <img src = "images/gene.png"  width="125" height="125" id = "genepage" ></img>
       <h4>Genes</h4>
-      <p>Click to search genes</p>
+      <p>Click to view table of genes</p>
     </div> 
     <div class="col-sm-4">
   <img src = "images/reactionspic.jpg"  width="125" height="125" id = "reactionpage" ></img>
       <h4>Reactions</h4>
-      <p>Click to search reactions</p>
+      <p>Click to view table of reactions</p>
     </div>       
     <div class="col-sm-4">
-  <img src = "images/pathway.png"  width="125" height="125" id = "pathway" ></img>
-      <h4>Pathway Between Two Metabolites</h4>
-      <p>Find the reaction pathway from one metabolite to another</p>
-    </div>
-            <div class="col-sm-4">
-  <img src ="images/pathway.png"  width="125" height="125" id = "product" ></img>
-      <h4>Metabolites Within A Number Of Steps</h4>
-      <p>Find all the metabolites you can reach starting from one metabolite in a certain number of steps</p>
+  <img src = "images/graph.jpg"  width="125" height="125" id = "pathway" ></img>
+      <h4>Reaction Graph</h4>
+      <p>Find the reaction pathways from one metabolite another</p>
     </div>
         <div class="col-sm-4">
   <img src = "images/modify.png"  width="125" height="125" id = "modify" ></img>
@@ -296,11 +291,6 @@ $("#reactionpage").click(function(){
 $("#pathway").click(function(){
 	 window.location.assign("http://localhost:8080/functionality/find_pathway")
 });
-
-$("#product").click(function(){
-    window.location.assign("http://localhost:8080/functionality/find_product")
-});
-
 
 $("#modify").click(function(){
     window.location.assign("http://localhost:8080/update")

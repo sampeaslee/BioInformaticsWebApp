@@ -11,148 +11,176 @@
 
  <script th:inline="javascript">
  function getGeneDatabaseToAdd()
- {      
-    location.assign("/addgenes?add");
+ { 		
+	location.assign("/addgenes");
  }
-     
+	 
  function getGeneDatabaseToDelete()
- {         
-    location.assign("/deletegenes?delete");
+ { 		   
+	location.assign("/deletegenes");
  }
-    
- function getModelDatabaseToAdd()
- {  
-    location.assign("/addmodels?add");
- }
-    
- function getModelDatabaseToDelete()
- {  
-    location.assign("/deletemodels?delete");
- }
-    
+	
  function getMetabolitesDatabaseToAdd()
- {  
-    location.assign("/addmetabolites?add");
+ { 	
+	location.assign("/addmetabolites");
  }
-     
+	 
  function getMetabolitesDatabaseToDelete()
  { 
-    location.assign("/deletemetabolites?delete");
+	location.assign("/deletemetabolites");
  }
 
  function getReactionDatabaseToAdd()
- {      
-    location.assign("/addreactions?add");
+ { 		
+	location.assign("/addreactions");
  }
-     
+	 
  function getReactionDatabaseToDelete()
- {              
-    location.assign("/deletereactions?delete");
+ { 				
+	location.assign("/deletereactions");
  }
-    
-    function selectMetabolitesToAdd()
-    { 
-        var index= (document.getElementById("select_add_metabolites_one_dropdown").selectedIndex);
-        
-         /*<![CDATA[*/
-            var array_metabolites = [[${listofmetabolites}]]  
-        /*]]>*/ 
-        
-        var metabolites_object = array_metabolites[index - 1];
-        
-        document.getElementById("MetaboliteID").value = metabolites_object.metaboliteID
-        document.getElementById("Compartment").value = metabolites_object.compartment
-    }
-    
-    function selectCompoundsToAdd()
-    { 
-        var index= (document.getElementById("select_add_metabolites_two_dropdown").selectedIndex);
-        
-         /*<![CDATA[*/
-            var array_compounds = [[${listofcompounds}]]  
-        /*]]>*/ 
-        
-        var compound_object = array_compounds[index - 1];
-        
-        document.getElementById("Compounds").value = compound_object;
-    }
-    
-    function selectMetabolitesToUpdateBySearch() 
-    { 
-        
-        var string_found_index = -1;
-        var index = 0;
-        
-        var search_value = document.getElementById("search").value;
-        
-        /*<![CDATA[*/
-            var array_metabolites = [[${listofmetabolites}]]  
-        /*]]>*/
-        
-        var array_length = array_metabolites.length;
-                
-        while(string_found_index == -1 && index < array_length)
-        {
-            
-            var metabolite_object = array_metabolites[index];
-            
-            if (metabolite_object.metaboliteID === search_value)
-            {
-                string_found_index = 0;
-            }
-            else
-            {
-                index++;
-            }
-        }
-        
-        if (string_found_index !== -1)
-        {
-            document.getElementById("MetaboliteID").value = metabolite_object.metaboliteID;
-            document.getElementById("Compartment").value = metabolite_object.compartment;
-            document.getElementById("Compounds").value = metabolite_object.bigg_compoundID;
-            document.getElementById("search").value = "";   
-            document.getElementById("record").innerHTML = "";
-        }
-        else
-        {
-            document.getElementById("MetaboliteID").value = "";
-            document.getElementById("Compartment").value = "";
-            document.getElementById("Compounds").value = "";
-            if (search_value != "")
-            {
-              document.getElementById("record").innerHTML = search_value+" not found in Metabolite table!";
-            }
-            document.getElementById("search").value = "";
-        }       
-    }
-    
-    function sendToBackEndToAddAMetabolite()
-    { 
-        var metabolite_to_add = document.getElementById("MetaboliteID").value;
-        //
-        if (metabolite_to_add === "")
-        {
-            document.getElementById("record").innerHTML = "Please Select A Metabolite Or Add a New Metabolite ID";
-        }
-        else
-        {           
-            var new_metabolite_obj = {
-                metaboliteID: document.getElementById("MetaboliteID").value,
-                compartment: document.getElementById("Compartment").value,
-                bigg_compoundID: document.getElementById("Compounds").value
-            };
-                 
-            var new_metabolites = JSON.stringify(new_metabolite_obj);
-         
-             $.post("/addmetabolites", {metabolites_to_add: new_metabolites}, function(data, status){
-                    alert(status);
-                });
-            
-             location.assign("/addmetabolites");
-           
-        }
-    }
+	
+	function selectMetabolitesToAdd()
+	{ 
+		var index= (document.getElementById("select_add_metabolites_one_dropdown").selectedIndex);
+	  	
+		 /*<![CDATA[*/
+	    	var array_metabolites = [[${listofmetabolites}]]  
+	    /*]]>*/	
+	    
+	    var metabolites_object = array_metabolites[index - 1];
+	    
+	    document.getElementById("MetaboliteID").value = metabolites_object.metaboliteID
+		document.getElementById("Compartment").value = metabolites_object.compartment
+	}
+	
+	function selectCompoundsToAdd()
+	{ 
+		var index= (document.getElementById("select_add_metabolites_two_dropdown").selectedIndex);
+	  	
+		 /*<![CDATA[*/
+	    	var array_compounds = [[${listofcompounds}]]  
+	    /*]]>*/	
+	    
+	    var compound_object = array_compounds[index - 1];
+	    
+	    document.getElementById("Compounds").value = compound_object;
+	}
+	
+	function selectMetabolitesToUpdateBySearch() 
+	{ 
+		
+		var string_found_index = -1;
+		var index = 0;
+		
+		var search_value = document.getElementById("search").value;
+		
+		/*<![CDATA[*/
+    		var array_metabolites = [[${listofmetabolites}]]  
+    	/*]]>*/
+    	
+    	var array_length = array_metabolites.length;
+    	     	
+    	while(string_found_index == -1 && index < array_length)
+    	{
+    		
+    		var metabolite_object = array_metabolites[index];
+    		
+    		if (metabolite_object.metaboliteID === search_value)
+    		{
+    			string_found_index = 0;
+    		}
+    		else
+    		{
+    			index++;
+    		}
+    	}
+    	
+    	if (string_found_index !== -1)
+    	{
+    		document.getElementById("MetaboliteID").value = metabolite_object.metaboliteID;
+    		document.getElementById("Compartment").value = metabolite_object.compartment;
+    		document.getElementById("Compounds").value = metabolite_object.bigg_compoundID;
+    		document.getElementById("search").value = "";	
+    		document.getElementById("record").innerHTML = "";
+    	}
+    	else
+    	{
+    		document.getElementById("MetaboliteID").value = "";
+    		document.getElementById("Compartment").value = "";
+    		document.getElementById("Compounds").value = "";
+    		if (search_value != "")
+    		{
+    		  document.getElementById("record").innerHTML = search_value+" not found in Metabolite table!";
+    		}
+    		document.getElementById("search").value = "";
+    	}		
+	}
+	
+	function sendToBackEndToAddAMetabolite()
+	{ 
+		var add_or_update = addOrUpdate();
+		var metabolite_to_add = document.getElementById("MetaboliteID").value;
+		//
+		if (metabolite_to_add === "")
+		{
+			document.getElementById("record").innerHTML = "Please Select A Metabolite Or Add a New Metabolite ID";
+		}
+		else
+		{			
+			var new_metabolite_obj = {
+				metaboliteID: document.getElementById("MetaboliteID").value,
+				compartment: document.getElementById("Compartment").value,
+				bigg_compoundID: document.getElementById("Compounds").value
+			};
+				 
+			var new_metabolites = JSON.stringify(new_metabolite_obj);
+		 
+			 $.post("/addmetabolites", {metabolites_to_add: new_metabolites}, function(data, status){
+				 if (add_or_update === 0)
+					{
+						 alert(status+": "+metabolite_to_add+" has been updated in Metabolites database!");		
+					}
+					else
+					{
+						alert(status+": "+metabolite_to_add+" has been added to Metabolites database!");
+					}
+				 
+				 location.assign("/addmetabolites");
+				});
+  
+		}
+	}
+	
+	function addOrUpdate()
+	{
+	    var string_found_index = -1;
+		var index = 0;
+			
+		var data_to_find = document.getElementById("MetaboliteID").value;
+			
+		/*<![CDATA[*/
+	    	var array_list = [[${listofmetabolites}]]  
+	    /*]]>*/
+
+	    var array_length = array_list.length;
+	    	     	
+	    while(string_found_index == -1 && index < array_length)
+	    {
+	    	var data_object = array_list[index];
+	    		
+	    	if (data_object.metaboliteID === data_to_find)
+	    	{
+	    		string_found_index = 0;
+	    	}
+	    	else
+	    	{
+	    		index++;
+	    	}
+	    }
+	    	
+	    return string_found_index;
+	}
 </script>
 
 <style>
@@ -220,13 +248,13 @@
   
  #add_metabolites_database
  {
-    padding: 210px 800px;
+ 	padding: 210px 800px;
     font: 400 15px Lato, sans-serif;
     color: blue;
     font-family: Montserrat, sans-serif; 
     text-align: center;
-    size: 30px;
-    margin: 4px 2px;
+  	size: 30px;
+  	margin: 4px 2px;
   }
   
  #bioinformatics
@@ -237,12 +265,12 @@
     border-radius: 0;
     font-family: Montserrat, sans-serif;
     position: absolute;
-    bottom: 0;
-    width: 100%;
-    /* Set the fixed height of the footer here */
-    height: 60px;
-    line-height: 60px; /* Vertically center the text there */
-    background-color: #2E8B57;
+  	bottom: 0;
+  	width: 100%;
+  	/* Set the fixed height of the footer here */
+  	height: 60px;
+  	line-height: 60px; /* Vertically center the text there */
+  	background-color: #2E8B57;
   }
   
  #metabolites_add_two
@@ -254,31 +282,25 @@
  
  #search
  {
-    width: 400px;
+  	width: 400px;
  }
  
  #geneslink
  {
-     font-weight: bold;
-     font-size: 25px;
- }
- 
- #modelslink
- {
-    font-weight: bold;
-    font-size: 25px;
+ 	 font-weight: bold;
+ 	 font-size: 25px;
  }
  
  #metaboliteslink
  {
-    font-weight: bold;
-    font-size: 25px;
+  	font-weight: bold;
+ 	font-size: 25px;
  }
  
  #reactionslink
  {
-    font-weight: bold;
-    font-size: 25px;
+  	font-weight: bold;
+ 	font-size: 25px;
  }
 </style>
 
@@ -288,32 +310,30 @@
   <div class="container">
     <div class="navbar-header"> </div>
     <ul class="nav navbar-nav navbar-right">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#functionality">FUNCTIONALITY</a></li>
-        <li><a href="/update" th:text = "${usernamelogin}"></a></li>
+ 		<li><a href="#home">Home</a></li>
         <form id="log_out" th:action="@{/logout}" method="post">
-            <button type="submit">LogOut</button>
-        </form>
+        	<button type="submit">LogOut</button>
+		</form>
       </ul>
   </div>
 </nav>
 
 <header id="subject" class="jumbotron text-center">
-    <div class="container">
-        <h1>
-            <b>
-                <strong>
-                    Add Or Modify A Metabolite
-                </strong>
-            </b>
-        </h1>
+ 	<div class="container">
+      	<h1>
+      		<b>
+       			<strong>
+        			Add Or Modify A Metabolite
+       			</strong>
+      		</b>
+    	</h1>
     
     <form class="form-inline" id="mysearch" onsubmit="selectMetabolitesToUpdateBySearch();return false">
-        <div class="form-group">
-            <input  class="form-control" id="search">
-        </div>
-            <button type="button" onClick="selectMetabolitesToUpdateBySearch()" class="btn btn-default">Search</button>
-    </form> 
+  		<div class="form-group">
+    		<input  class="form-control" id="search">
+  		</div>
+  			<button type="button" onClick="selectMetabolitesToUpdateBySearch()" class="btn btn-default">Search</button>
+	</form> 
   </div>
 </header>
 
@@ -322,125 +342,117 @@
     <div class="col-lg-2">
       <ul class="nav nav-pills nav-stacked"> 
          <div class="container">
-            <a href="#gene" id="geneslink" class="btn btn-link" data-toggle="collapse">Genes</a>
-                <div id="gene" class="collapse">
-                    <button id="add_gene" type="button" onClick="getGeneDatabaseToAdd()" class="btn btn-default">Add Gene</button>
-                    <button id="delete_gene" type="button" onClick="getGeneDatabaseToDelete()" class="btn btn-default">Delete Gene</button>
-                </div>
-        </div>
-            
-        <div class="container">
-            <a href="#metabolites" id="metaboliteslink" class="btn btn-link" data-toggle="collapse">Metabolites</a>
-                <div id="metabolites" class="collapse">
-                    <button id="add_metabolite" type="button" onClick="getMetabolitesDatabaseToAdd()" class="btn btn-default">Add Metabolite</button>
-                    <button id="delete_metabolite" type="button" onClick="getMetabolitesDatabaseToDelete()" class="btn btn-default">Delete Metabolite</button>
-                </div>
-        </div>
-            
-        <div class="container">
-            <a href="#model" id="modelslink" class="btn btn-link" data-toggle="collapse">Models</a>
-                <div id="model" class="collapse">
-                    <button id="add_model" type="button" onClick="getModelDatabaseToAdd()" class="btn btn-default">Add Model</button>
-                    <button id="delete_model" type="button" onClick="getModelDatabaseToDelete()" class="btn btn-default">Delete Model</button>
-                </div>
-        </div>  
-            
-        <div class="container">
-            <a href="#reactions" id="reactionslink" class="btn btn-link" data-toggle="collapse">Reactions</a>
-                <div id="reactions" class="collapse">
-                    <button id="add_reactions" type="button" onClick="getReactionDatabaseToAdd()" class="btn btn-default">Add Reactions</button>
-                    <button id="delete_reactions" type="button" onClick="getReactionDatabaseToDelete()" class="btn btn-default">Delete Reactions</button>
-                </div>
-        </div> 
-     </ul>    
+			<a href="#gene" id="geneslink" class="btn btn-link" data-toggle="collapse">Genes</a>
+				<div id="gene" class="collapse">
+					<button id="add_gene" type="button" onClick="getGeneDatabaseToAdd()" class="btn btn-default">Add Gene</button>
+    				<button id="delete_gene" type="button" onClick="getGeneDatabaseToDelete()" class="btn btn-default">Delete Gene</button>
+    			</div>
+		</div>
+			
+		<div class="container">
+			<a href="#metabolites" id="metaboliteslink" class="btn btn-link" data-toggle="collapse">Metabolites</a>
+				<div id="metabolites" class="collapse">
+					<button id="add_metabolite" type="button" onClick="getMetabolitesDatabaseToAdd()" class="btn btn-default">Add Metabolite</button>
+    				<button id="delete_metabolite" type="button" onClick="getMetabolitesDatabaseToDelete()" class="btn btn-default">Delete Metabolite</button>
+    			</div>
+		</div>
+			
+		<div class="container">
+			<a href="#reactions" id="reactionslink" class="btn btn-link" data-toggle="collapse">Reactions</a>
+				<div id="reactions" class="collapse">
+					<button id="add_reactions" type="button" onClick="getReactionDatabaseToAdd()" class="btn btn-default">Add Reactions</button>
+    				<button id="delete_reactions" type="button" onClick="getReactionDatabaseToDelete()" class="btn btn-default">Delete Reactions</button>
+    			</div>
+		</div> 
+	 </ul>    
     </div>
   
  
     
     <div id="metabolites_add_one" class="col-lg-5">
-        <div class="container">
-            <form>
-                <div class="form-group">
-                    <label id="metabolites_label" for="select_metabolites">Metabolites</label>
-                        <select id="select_add_metabolites_one_dropdown" onchange="selectMetabolitesToAdd()" class="form-control">
-                                <option selected disabled>Choose A Metabolite...</option>
-                                <option id="select_metabolites" th:each="metaboliteslist : ${listofmetabolites}"  
-                                        th:value = "${metaboliteslist.metaboliteID}" th:text="${metaboliteslist.metaboliteID}">
-                                 </option>
-                        
-                        </select>
-                </div>
-            </form>
-        </div>
+    	<div class="container">
+  			<form>
+    			<div class="form-group">
+      				<label id="metabolites_label" for="select_metabolites">Metabolites</label>
+      					<select id="select_add_metabolites_one_dropdown" onchange="selectMetabolitesToAdd()" class="form-control">
+      							<option selected disabled>Choose A Metabolite...</option>
+       					 		<option id="select_metabolites" th:each="metaboliteslist : ${listofmetabolites}"  
+       					 	     		th:value = "${metaboliteslist.metaboliteID}" th:text="${metaboliteslist.metaboliteID}">
+       					 	     </option>
+        				
+      					</select>
+    			</div>
+  			</form>
+		</div>
     </div>
     
     <div id="metabolites_add_two" class="col-lg-5">
-        <div class="container">
-            <form>
-                <div class="form-group">
-                    <label id="reactions_label" for="select_reactions">Compounds</label>
-                        <select id="select_add_metabolites_two_dropdown" onchange="selectCompoundsToAdd()" class="form-control">
-                                <option selected disabled>Choose A Compound...</option>
-                                <option id="select_reactions" th:each="compoundlist : ${listofcompounds}"  
-                                        th:value = "${compoundlist}" th:text="${compoundlist}">
-                                 </option>
-                        
-                        </select>
-                </div>
-            </form>
-        </div>
+    	<div class="container">
+  			<form>
+    			<div class="form-group">
+      				<label id="reactions_label" for="select_reactions">Compounds</label>
+      					<select id="select_add_metabolites_two_dropdown" onchange="selectCompoundsToAdd()" class="form-control">
+      							<option selected disabled>Choose A Compound...</option>
+       					 		<option id="select_reactions" th:each="compoundlist : ${listofcompounds}"  
+       					 	     		th:value = "${compoundlist}" th:text="${compoundlist}">
+       					 	     </option>
+        				
+      					</select>
+    			</div>
+  			</form>
+		</div>
     </div>
     
     <div id="metabolites_add_three" class="col-lg-5">  
-      <form class="form-inline">    
-         <div class="form-group">
-            <div class="col-lg-6 offset-lg-3">
-                <label for="MetaboliteID">MetaboliteID:</label>
-                <input type="text" class=" mb-sm-5 form-control" id="MetaboliteID">
-            </div>
-         </div>
-         
-         <div class="form-group">
-            <div class="col-lg-6 offset-lg-3">
-                <label for="Compartment">Compartment:</label>
-                <input type="text" class="form-control" id="Compartment">
-            </div>
-        </div>
-        
-      </form>
+  	  <form class="form-inline">    
+ 		 <div class="form-group">
+ 		 	<div class="col-lg-6 offset-lg-3">
+    			<label for="MetaboliteID">MetaboliteID:</label>
+    			<input type="text" class=" mb-sm-5 form-control" id="MetaboliteID" readonly>
+    		</div>
+ 		 </div>
+ 		 
+ 		 <div class="form-group">
+  			<div class="col-lg-6 offset-lg-3">
+    			<label for="Compartment">Compartment:</label>
+    			<input type="text" class="form-control" id="Compartment">
+    		</div>
+  		</div>
+  		
+	  </form>
     
       <form class="form-inline">
-         <div class="form-group">
-            <div class="col-lg-6 offset-lg-3">
-                <label for="Compounds">Compounds:</label>
-                <input type="text" class="form-control" id="Compounds" readonly>
-            </div>
-         </div>
-    </form>
-    
+ 		 <div class="form-group">
+ 		 	<div class="col-lg-6 offset-lg-3">
+    			<label for="Compounds">Compounds:</label>
+    			<input type="text" class="form-control" id="Compounds" readonly>
+    		</div>
+ 		 </div>
+	</form>
+	
  </div>
     
     <div id="add_metabolites_database">
-        <button type="button" onClick="getMetabolitesDatabaseToAdd()" class="btn btn-default"><b><strong>Clear</strong></b></button>
-        <button type="button" onClick="sendToBackEndToAddAMetabolite()" class="btn btn-default"><b><strong>ADD</strong></b></button>
-    </div>
+		<button type="button" onClick="getMetabolitesDatabaseToAdd()" class="btn btn-default"><b><strong>Clear</strong></b></button>
+    	<button type="button" onClick="sendToBackEndToAddAMetabolite()" class="btn btn-default"><b><strong>Update</strong></b></button>
+  	</div>
     
     </div>
     
     </div>
     
     <h1 id="record">
-            <b>
-                <strong>
-                </strong>
-            </b>
+      		<b>
+       			<strong>
+       			</strong>
+      		</b>
     </h1>
     
     <footer id="bioinformatics" class="page-footer font-small blue">
-        <div class="footer-copyright text-center py-3">
-            <label> <b><strong>© 2020 Copyright: BioInformatics.com</strong></b></label>
-        </div>
-    </footer>
+  		<div class="footer-copyright text-center py-3">
+   	 		<label> <b><strong>© 2020 Copyright: BioInformatics.com</strong></b></label>
+  		</div>
+	</footer>
     
  </body>
 </html>
