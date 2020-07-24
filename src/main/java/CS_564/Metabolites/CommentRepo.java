@@ -10,4 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface CommentRepo extends JpaRepository<Comment, Integer> {
 
+    @Query(value = "SELECT * FROM comment WHERE id = :id",  nativeQuery = true)
+    public  List<Comment> findAllComment(@Param("id") String id);
 }

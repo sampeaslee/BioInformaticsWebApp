@@ -1,39 +1,25 @@
 package CS_564.Metabolites;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 
 @Entity
-
-@Table(name= "comment")
+@Table(name = "comment")
 public class Comment {
+    @EmbeddedId
+    CommentComb CommentComb;
 
-    @Id
-    public String id;
-
-    public String email;
-
-    public String name;
-
-    @Column(length  = 10000)
-    public String content;
-
-    public int score;
+    @Column(name = "content", nullable = false, length  = 10000)
+    String content;
 
     public Comment() {
         //Need default constructor for JPA to function correctly
     }
 
-    public Comment( String id, String name, String email,
-                     String content, int score) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
+    public Comment( CommentComb Commentid, String content) {
+        this.CommentComb = Commentid;
         this.content = content;
-        this.score = score;
+
     }
 
 }

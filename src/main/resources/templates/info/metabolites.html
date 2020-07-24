@@ -292,11 +292,50 @@ table, tr, th, td {
 
 	</div>
 
+	<div>
+		<h1 class="text-center">See What people say:</h1>
+		<div class="Column">
+			<table style="width:100%" >
+
+				<tbody>
+				<span class="Column">
+                <tr th:each="comm:${message}">
+
+                    <td th:text="${comm.name}"></td>
+                    <td th:text="${comm.email}"></td>
+                    <td th:text="${comm.comment}"></td>
+
+                </tr>
+                </span>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<div>
+	<h2 class="text-center">Leave what you know about it!</h2>
+	<div class="row">
+		<div class="col-sm-6 form-group">
+			<input class="form-control" id="name" name="name" placeholder="Name" type="text" required>
+		</div>
+		<div class="col-sm-6 form-group">
+			<input class="form-control" id="email"  name="email" placeholder="Email" type="email" required>
+		</div>
+	</div>
+	<textarea class="form-control" id="comment" name="comments" placeholder="Description" rows="5"></textarea>
+	<br>
+	<div class="row">
+		<div class="col-md-12 form-group">
+			<button class="btn pull-right" type="submit" onclick="sendToBackEndToComment()">Send</button>
+		</div>
+	</div>
+	</div>
 
 
 
 
-	<script>
+
+	<script   th:inline="javascript">
 		$("#home").click(function() {
 			window.location.assign("http://localhost:8080/home")
 		});
@@ -304,6 +343,40 @@ table, tr, th, td {
 		function backToMainSearch() {
 		    
 	        window.location.assign("http://localhost:8080/metabolites")
+		}
+
+
+
+		function sendToBackEndToComment()
+		{
+
+			var comment = document.getElementById("comment").value;
+			//
+			if (comment === "")
+			{
+				alert("Please Select A Gene Or Add a New Gene ID");
+			}
+			else
+			{
+				alert("Please wait");
+				var new_comment_obj = {
+					comment: document.getElementById("comment").value,
+					name: document.getElementById("name").value,
+					email: document.getElementById("email").value,
+				};
+
+				var new_comment = JSON.stringify(new_comment_obj);
+
+
+				alert(new_comment + "Leave comment successfully!!!");
+				/*<![CDATA[*/
+				var metabolite = [[${meta}]]
+				/*]]>*/
+
+				$.post("/info/metabolites/".concat(metabolite), {add_comment: new_comment})
+
+				location.reload();
+			}
 		}
 	</script>
 

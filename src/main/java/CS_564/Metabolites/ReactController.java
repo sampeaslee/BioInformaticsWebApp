@@ -2,6 +2,8 @@ package CS_564.Metabolites;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,8 @@ public class ReactController {
     ReactionRepo ReactionRepo;
     @Autowired
     StoichiometryRepo StoichiometryRepo;
+    @Autowired
+    CommentRepo CommentRepo;
 
     @GetMapping("/tryBS")
     public String sendToFrontend2(String name, Model model) {
@@ -85,8 +89,22 @@ public class ReactController {
         if( reaction != null ) {
             model.addAttribute("reaction", reaction);
             model.addAttribute( "stoichiometry", stoichiometry);
+
+
+
+            List<Comment> comment2 = CommentRepo.findAllComment(id);
+
+            List<CommentToString> commentToString = new ArrayList();
+            for (Comment c : comment2) {
+                CommentToString temp = new CommentToString(c.CommentComb.name, c.CommentComb.email,c.content);
+                commentToString.add(temp);
+            }
+            model.addAttribute("message", commentToString);
             return "info/reactions";
         } else return null;
+
+
+
     }
 
 

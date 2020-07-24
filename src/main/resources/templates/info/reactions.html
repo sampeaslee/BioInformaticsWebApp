@@ -251,34 +251,54 @@ text-align: center;
 
 </div>
 
-<div>
 
 
 <div class="displaydata" >
     <p th:text="'Reaction Name: ' + ${reaction.name}"></p>
     <p th:text="'Reaaction ID:  ' + ${reaction.reactionID}"> </p>
     <p th:text="'Stoichiometry: ' + ${stoichiometry}"></p>
-    <div >
-          
-    <h1 class="text-center">Comment on this reaction!</h1>
-        <div class="row">
-            <div class="col-sm-6 form-group">
-                <input class="form-control" id="name" name="name" placeholder="Name" type="text" required>
-            </div>
-            <div class="col-sm-6 form-group">
-                <input class="form-control" id="email" maxlength="4" name="email" placeholder="Email" type="email" required>
-            </div>
-        </div>
-        <textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea>
-        <br>
-        <div class="row">
-            <div class="col-md-12 form-group">
-                <button class="btn pull-right" type="submit">Send</button>
-            </div>
-        </div>
-    </div>
+
 
 </div>
+
+<div>
+    <h1 class="text-center">See What people say:</h1>
+    <div class="Column">
+        <table style="width:100%" >
+
+            <tbody>
+                <span class="Column">
+                <tr th:each="comm:${message}">
+
+                    <td th:text="${comm.name}"></td>
+                    <td th:text="${comm.email}"></td>
+                    <td th:text="${comm.comment}"></td>
+
+                </tr>
+                </span>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div >
+    <h1 class="text-center">Leave what you know about it!</h1>
+    <div class="row">
+        <div class="col-sm-6 form-group">
+            <input class="form-control" id="name" name="name" placeholder="Name" type="text" required>
+        </div>
+        <div class="col-sm-6 form-group">
+            <input class="form-control" id="email"  name="email" placeholder="Email" type="email" required>
+        </div>
+    </div>
+    <textarea class="form-control" id="comment" name="comments" placeholder="Description" rows="5"></textarea>
+    <br>
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <button class="btn pull-right" type="submit" onclick="sendToBackEndToComment()">Send</button>
+        </div>
+    </div>
 </div>
 
 <footer id="bioinformatics" class="page-footer font-small blue">
@@ -287,14 +307,43 @@ text-align: center;
     </div>
 </footer>
 
-<script>
+<script   th:inline="javascript" >
 $("#home").click(function(){
     window.location.assign("http://localhost:8080/home")
 });
 
+function sendToBackEndToComment()
+{
+
+  var comment = document.getElementById("comment").value;
+  //
+  if (comment === "")
+  {
+    alert("Please Select A Gene Or Add a New Gene ID");
+  }
+  else
+  {
+    var new_comment_obj = {
+      comment: document.getElementById("comment").value,
+      name: document.getElementById("name").value,
+      email: document.getElementById("email").value,
+    };
+
+    var new_comment = JSON.stringify(new_comment_obj);
 
 
-    
+    alert(new_comment + "Leave comment successfully!!!");
+    /*<![CDATA[*/
+    var reactionid = [[${reaction.reactionID}]]
+    /*]]>*/
+
+    $.post("/info/reactions/".concat(reactionid), {add_comment: new_comment})
+
+    location.reload();
+  }
+}
+
+
 
 </script>
 

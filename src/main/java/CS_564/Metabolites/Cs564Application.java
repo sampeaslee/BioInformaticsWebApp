@@ -228,24 +228,25 @@ public class Cs564Application {
 
 
 	// this is for creating a comment repo in the mysql;
-	@Bean
-	public String CommandLineRunner(CommentRepo repository) throws Exception
-	{
+//	@Bean
+//	public String CommandLineRunner(CommentRepo repository) throws Exception
+//	{
+//
+//		//Create a UserLogin Object to store the data
+//		CommentComb CommentComb = new CommentComb("","","");
+//		Comment comment = new Comment(CommentComb,"");
+//		//Send that data to MySQL
+//		repository.save(comment);
+//
+//		System.out.println("DONE LOADING IN Comment DATA!!!");
+//		return "Has to have non void return type";
+//	}
 
-		//Create a UserLogin Object to store the data
-		Comment comment = new Comment("", null, null, null, 0);
-		//Send that data to MySQL
-		repository.save(comment);
 
-		System.out.println("DONE LOADING IN Comment DATA!!!");
-		return "Has to have non void return type";
-	}
-	
-	
-	
-	
-	
-        
+
+
+
+
 	//THIRD METHOD TO RUN (THIS ONE TAKES LONGER)
 	
 	/*
