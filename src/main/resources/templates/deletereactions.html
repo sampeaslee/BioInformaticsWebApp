@@ -126,7 +126,7 @@
 		{			 
 			$.post("/deletereactions", {reactions_to_delete: reaction_for_deletion}, function(data, status){
 				alert(status+": "+reaction_for_deletion+" has been deleted from Reaction database!");
-				location.assign("/deletereactions?delete");
+				location.assign("/deletereactions");
 			});
 		
 		}  

@@ -116,7 +116,7 @@
 		{			 
 			$.post("/deletemetabolites", {metabolites_to_delete: metabolite_for_deletion}, function(data, status){
 				alert(status+": "+metabolite_for_deletion+" has been deleted from metabolites database!");
-				location.assign("/deletemetabolites?delete");
+				location.assign("/deletemetabolites");
 			});
 		}  
 	}

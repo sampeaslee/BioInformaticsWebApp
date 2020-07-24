@@ -121,10 +121,16 @@
 	{ 
 		var add_or_update = addOrUpdate();
 		var metabolite_to_add = document.getElementById("MetaboliteID").value;
+		
+		var compound_to_add = document.getElementById("Compounds").value;
 		//
 		if (metabolite_to_add === "")
 		{
-			document.getElementById("record").innerHTML = "Please Select A Metabolite Or Add a New Metabolite ID";
+			document.getElementById("record").innerHTML = "Please Select A Metabolite!";
+		}
+		else if (compound_to_add === "")
+		{
+			document.getElementById("record").innerHTML = "Please Select A Compound!";
 		}
 		else
 		{			
