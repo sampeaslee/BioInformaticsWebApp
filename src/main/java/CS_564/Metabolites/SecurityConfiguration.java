@@ -57,7 +57,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
           	.usernameParameter("username")
           	.passwordParameter("password")
           	 //.loginProcessingUrl("/update");
-          	.defaultSuccessUrl("/update")
+          	.defaultSuccessUrl("/update",true)
           	//.failureUrl("/accessdenied")
           	//.permitAll();
         .and()

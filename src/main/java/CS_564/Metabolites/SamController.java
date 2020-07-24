@@ -184,7 +184,7 @@ public class SamController {
 
         }else {
             javax.persistence.Query queryCompound = em.createQuery(""
-                + "Select distinct  c, m FROM Metabolite m, Compound c where c.BiggmetaboliteID = m.bigg_compoundID "
+                + "Select distinct  c, m FROM Metabolite m, Compound c where c.biggmetaboliteID = m.bigg_compoundID "
                 + "AND m.metaboliteID = :search", Object[].class);
             queryCompound.setParameter("search", id  );
             ArrayList<Object[]> results = (ArrayList<Object[]>) queryCompound.getResultList();
