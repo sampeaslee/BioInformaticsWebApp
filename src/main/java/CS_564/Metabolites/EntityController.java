@@ -4,8 +4,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -30,9 +33,12 @@ public class EntityController{
       
       @Autowired
       UserLoginRepo userRepo;
-        
-      public static String user_name_login = "Hi! BioInformatics";
       
+      @Autowired
+      StoichiometryRepo stoichiometryRepo;
+      
+      @PersistenceContext protected EntityManager em;
+              
       /**
          * @GetMapping is used to map HTTP get request  to certain webpages
          * 
@@ -47,11 +53,11 @@ public class EntityController{
             return "login";    
         }
         
-        @GetMapping("/accessdenied")
-        public String accessDenied() 
-        {
-            return "accessdenied";   
-        }
+//        @GetMapping("/accessdenied")
+//        public String accessDenied() 
+//        {
+//            return "accessdenied";   
+//        }
       
     /**
      * @GetMapping is used to map HTTP get request  to certain webpages
@@ -64,7 +70,6 @@ public class EntityController{
     @GetMapping("/update")
     public String sendToFrontend(Model model) 
     {
-        model.addAttribute("usernamelogin", user_name_login);
         return "update";      
     }
     
@@ -78,12 +83,10 @@ public class EntityController{
      */
     
     @GetMapping("/addgenes")
-    public String getAddGenes(@RequestParam(value = "add", defaultValue = "")
-                                        String add, Model model)
+    public String getAddGenes(Model model)
     {
         ArrayList <Gene> list_of_genes = (ArrayList<Gene>) genesRepo.getListOfGenes();
         model.addAttribute("listofgenes", list_of_genes);
-        model.addAttribute("usernamelogin", user_name_login);
             
         return "addgenes";
     }
@@ -97,13 +100,11 @@ public class EntityController{
      */
     
     @GetMapping("/deletegenes")
-    public String getDeleteGenes(@RequestParam(value = "delete", defaultValue = "")
-                            String delete, Model model)
+    public String getDeleteGenes(Model model)
     {
         
         ArrayList <Gene> list_of_genes = (ArrayList<Gene>) genesRepo.getListOfGenes();
         model.addAttribute("listofgenes", list_of_genes);
-        model.addAttribute("usernamelogin", user_name_login);
                     
         return "deletegenes";  
     }
@@ -182,12 +183,24 @@ public class EntityController{
      */
     
     @GetMapping("/addreactions")
-    public String getAddReactions(@RequestParam(value = "add", defaultValue = "")
-                                        String add, Model model)
+    public String getAddReactions(Model model)
     {
-        ArrayList <Reaction> list_of_reactions = (ArrayList<Reaction>) reactionRepo.getListOfReactions();
-        model.addAttribute("listofreactions", list_of_reactions);
-        model.addAttribute("usernamelogin", user_name_login);
+      javax.persistence.Query queryCompound = em.createQuery("Select r, s FROM Reaction r, Stoichiometry s where r.ReactionID = s.reactionID", Object[].class);
+    	        
+	  ArrayList<Object[]> results = (ArrayList<Object[]>) queryCompound.getResultList();
+        
+        
+        ArrayList<Reaction> reaction_objects = new ArrayList<Reaction>();
+        ArrayList<Stoichiometry> stoichiometry_objects = new ArrayList<Stoichiometry>();
+
+        for (Object[] obj : results) {
+        	reaction_objects.add((Reaction) obj[0]);
+        	stoichiometry_objects.add((Stoichiometry) obj[1]);
+        }            	
+    	
+       // ArrayList <Reaction> list_of_reactions = (ArrayList<Reaction>) reactionRepo.getListOfReactions();
+        model.addAttribute("listofreactions", reaction_objects);
+        model.addAttribute("listofstoichiometry", stoichiometry_objects);
         
         return "addreactions";
     }
@@ -201,13 +214,11 @@ public class EntityController{
      */
     
     @GetMapping("/deletereactions")
-    public String getDeleteReactions(@RequestParam(value = "delete", defaultValue = "")
-                            String delete, Model model)
+    public String getDeleteReactions(Model model)
     {
         ArrayList <Reaction> list_of_reactions = (ArrayList<Reaction>) reactionRepo.getListOfReactions();
         model.addAttribute("listofreactions", list_of_reactions);
-        model.addAttribute("usernamelogin", user_name_login);
-                    
+        
         return "deletereactions";  
     }
     
@@ -233,6 +244,9 @@ public class EntityController{
          String reaction_subsystem = ((String)convert_to_json.get("Subsystem"));
          String reaction_signature = ((String)convert_to_json.get("signature"));
          String reaction_rule = ((String)convert_to_json.get("gene_reaction_rule"));
+         
+         String stoichiometry_start_Metabolites = ((String)convert_to_json.get("startMetabolites"));
+         String stoichiometry_end_Metabolites = ((String)convert_to_json.get("endMetabolites"));
 
         if (reactionRepo.getReactionID(reaction_reactionID) != null)
         {
@@ -277,10 +291,32 @@ public class EntityController{
             reactionRepo.save(addReactionObj);
         }
         
+        //
+        if (stoichiometryRepo.queryExampleTwo(reaction_reactionID) != null)
+        {
+            Stoichiometry update_stoichiometry_object = stoichiometryRepo.queryExampleTwo(reaction_reactionID);
+                        
+            if(!update_stoichiometry_object.startMetabolites.equals(stoichiometry_start_Metabolites))
+            {
+            	stoichiometryRepo.updateStartMetabolites(reaction_reactionID, stoichiometry_start_Metabolites);
+            }
+            
+            if(!update_stoichiometry_object.endMetabolites.equals(stoichiometry_end_Metabolites))
+            {
+            	System.out.println(stoichiometry_end_Metabolites);
+            	stoichiometryRepo.updateEndMetabolites(reaction_reactionID, stoichiometry_end_Metabolites);
+            }
+        }
+        else
+        {
+             // create a stoichiometry object
+        	Stoichiometry addStiochiometryObj = new Stoichiometry(reaction_reactionID, stoichiometry_start_Metabolites,
+        												stoichiometry_end_Metabolites);
+        	stoichiometryRepo.save(addStiochiometryObj);
+        }
+        
         return "addreactions";
-    }
-    
-    
+    }      
     
     /**
      * @GetMapping is used to map HTTP get request  to certain webpages
@@ -291,15 +327,13 @@ public class EntityController{
      */
     
     @GetMapping("/addmetabolites")
-    public String getAddMetabolites(@RequestParam(value = "add", defaultValue = "")
-                                        String add, Model model)
+    public String getAddMetabolites(Model model)
     {
         ArrayList <Metabolite> list_of_metabolites = (ArrayList<Metabolite>) metaboliteRepo.getListOfMetabolites();
         ArrayList <String> list_of_compounds= (ArrayList<String>) metaboliteRepo.getListOfCompounds();      
         
         model.addAttribute("listofmetabolites", list_of_metabolites);
         model.addAttribute("listofcompounds", list_of_compounds);
-        model.addAttribute("usernamelogin", user_name_login);
         
         return "addmetabolites";
     }
@@ -313,12 +347,10 @@ public class EntityController{
      */
     
     @GetMapping("/deletemetabolites")
-    public String getDeleteMetabolites(@RequestParam(value = "delete", defaultValue = "")
-                            String delete, Model model)
+    public String getDeleteMetabolites(Model model)
     {
         ArrayList <Metabolite> list_of_metabolites = (ArrayList<Metabolite>) metaboliteRepo.getListOfMetabolites();
         model.addAttribute("listofmetabolites", list_of_metabolites);
-        model.addAttribute("usernamelogin", user_name_login);
                     
         return "deletemetabolites";  
     }
@@ -377,60 +409,55 @@ public class EntityController{
      * where is can be displayed
      */
     
-    @GetMapping("/addmodels")
-    public String getAddModel(@RequestParam(value = "add", defaultValue = "")
-                                        String add, Model model)
-    {
-        ArrayList<String> list_of_model = (ArrayList<String>) modelsRepo.getListOfModel();
-        
-        model.addAttribute("listofmodel", list_of_model);
-        model.addAttribute("usernamelogin", user_name_login);
-        
-        return "addmodels";
-    }
-    
-    /**
-     * @GetMapping is used to map HTTP get request  to certain webpages
-     * 
-     * When you visit the url http://localhost:8080/homepage this method is 
-     * called and the String "Text sent from backend" is sent to the html page
-     * where is can be displayed
-     */
-    
-    @GetMapping("/deletemodels")
-    public String getDeleteModel(@RequestParam(value = "delete", defaultValue = "")
-                            String delete, Model model)
-    {
-        ArrayList <String> list_of_model = (ArrayList<String>) modelsRepo.getListOfModel();
-        model.addAttribute("listofmodel", list_of_model);
-        model.addAttribute("usernamelogin", user_name_login);
-                    
-        return "deletemodels";  
-    }
-    
-    @PostMapping("/deletemodels")
-    public String deleteModel(String models_to_delete) throws ParseException
-    {    
-        modelsRepo.deleteAModel(models_to_delete);
-                         
-        return "deletemodels";
-    }
-    
-    @PostMapping("/addmodels")
-    public String postModel(String models_to_add) throws ParseException
-    {
-        JSONParser parser = new JSONParser();
-        JSONObject convert_to_json = (JSONObject) parser.parse(models_to_add); 
-        
-         String models_nameID = ((String)convert_to_json.get("name"));
-         
-         if (modelsRepo.getModelID(models_nameID) == null)
-         {
-             //System.out.println(models_nameID);
-             modelsRepo.insertModel(models_nameID);
-         }
-                
-        return "addmodels";
-    }
+//    @GetMapping("/addmodels")
+//    public String getAddModel(Model model)
+//    {
+//        ArrayList<String> list_of_model = (ArrayList<String>) modelsRepo.getListOfModel();
+//        
+//        model.addAttribute("listofmodel", list_of_model);
+//        
+//        return "addmodels";
+//    }
+//    
+//    /**
+//     * @GetMapping is used to map HTTP get request  to certain webpages
+//     * 
+//     * When you visit the url http://localhost:8080/homepage this method is 
+//     * called and the String "Text sent from backend" is sent to the html page
+//     * where is can be displayed
+//     */
+//    
+//    @GetMapping("/deletemodels")
+//    public String getDeleteModel(Model model)
+//    {
+//        ArrayList <String> list_of_model = (ArrayList<String>) modelsRepo.getListOfModel();
+//        model.addAttribute("listofmodel", list_of_model);
+//                    
+//        return "deletemodels";  
+//    }
+//    
+//    @PostMapping("/deletemodels")
+//    public String deleteModel(String models_to_delete) throws ParseException
+//    {    
+//        modelsRepo.deleteAModel(models_to_delete);
+//                         
+//        return "deletemodels";
+//    }
+//    
+//    @PostMapping("/addmodels")
+//    public String postModel(String models_to_add) throws ParseException
+//    {
+//        JSONParser parser = new JSONParser();
+//        JSONObject convert_to_json = (JSONObject) parser.parse(models_to_add); 
+//        
+//         String models_nameID = ((String)convert_to_json.get("name"));
+//         
+//         if (modelsRepo.getModelID(models_nameID) == null)
+//         {
+//             modelsRepo.insertModel(models_nameID);
+//         }
+//                
+//        return "addmodels";
+//    }
 
 }

@@ -283,7 +283,7 @@ div.b {
 
 <script>
 $("#metapage").click(function(){
-	window.location.assign("http://localhost:8080/metabolites")
+    window.location.assign("http://localhost:8080/metabolites")
 });
 $("#genepage").click(function(){
     window.location.assign("http://localhost:8080/genes")
@@ -294,7 +294,7 @@ $("#reactionpage").click(function(){
 });
 
 $("#pathway").click(function(){
-	 window.location.assign("http://localhost:8080/functionality/find_pathway")
+     window.location.assign("http://localhost:8080/functionality/find_pathway")
 });
 
 $("#product").click(function(){
@@ -307,22 +307,22 @@ $("#modify").click(function(){
 });
 
 function test(){
-	
-	searchValue = document.getElementById("search").value
-	x =   $(".dropdown-menu li a").parents(".dropdown").find('.btn').val($(".dropdown-menu li a").data('value')).text();
+    
+    searchValue = document.getElementById("search").value
+    x =   $(".dropdown-menu li a").parents(".dropdown").find('.btn').val($(".dropdown-menu li a").data('value')).text();
     
 
-	goTo = "http://localhost:8080/" + x.toLowerCase().trim() +"?name=" + searchValue
+    goTo = "http://localhost:8080/" + x.toLowerCase().trim() +"?name=" + searchValue
     
     window.location.assign(goTo)
-	
-	
+    
+    
 }
 
 $(".dropdown-menu li a").click(function(){
-	  $(this).parents(".dropdown").find('.btn').html($(this).text() + ' <span class="caret"></span>');
-	  $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
-	});
+      $(this).parents(".dropdown").find('.btn').html($(this).text() + ' <span class="caret"></span>');
+      $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
+    });
 
 
 </script>
