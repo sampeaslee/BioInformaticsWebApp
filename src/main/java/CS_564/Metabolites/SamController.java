@@ -152,7 +152,7 @@ public class SamController {
         HashMap<String, String> meta = new HashMap<String, String>();
         if (query_results.size() != 0) {
             Object[] data = query_results.get(0);
-
+            System.out.println("##############################################" + query_results.size());
             HashMap<String, String> model_reaction = new HashMap<String, String>();
      
             meta.put("meta", "" + data[2]);
@@ -164,7 +164,7 @@ public class SamController {
             meta.put("compound_name", "" + data[8]);
             meta.put("metanetx", "" + data[9]);
             for(Object[] obj: query_results) {
-                model_reaction.put("" + obj[0], " " + obj[1]);
+                model_reaction.put( " " + obj[1],"" + obj[0]);
             }
   
             for (Map.Entry<String, String> entry : meta.entrySet()) {

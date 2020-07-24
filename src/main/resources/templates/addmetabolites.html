@@ -111,10 +111,19 @@
             document.getElementById("MetaboliteID").value = metabolite_object.metaboliteID;
             document.getElementById("Compartment").value = metabolite_object.compartment;
             document.getElementById("Compounds").value = metabolite_object.bigg_compoundID;
+            document.getElementById("search").value = "";   
+            document.getElementById("record").innerHTML = "";
         }
         else
         {
-            alert(search_value + " Not Found In Database!");
+            document.getElementById("MetaboliteID").value = "";
+            document.getElementById("Compartment").value = "";
+            document.getElementById("Compounds").value = "";
+            if (search_value != "")
+            {
+              document.getElementById("record").innerHTML = search_value+" not found in Metabolite table!";
+            }
+            document.getElementById("search").value = "";
         }       
     }
     
@@ -124,7 +133,7 @@
         //
         if (metabolite_to_add === "")
         {
-            alert("Please Select A Metabolite Or Add a New Metabolite ID");
+            document.getElementById("record").innerHTML = "Please Select A Metabolite Or Add a New Metabolite ID";
         }
         else
         {           
@@ -136,17 +145,13 @@
                  
             var new_metabolites = JSON.stringify(new_metabolite_obj);
          
-             $.post("/addmetabolites", {metabolites_to_add: new_metabolites})
+             $.post("/addmetabolites", {metabolites_to_add: new_metabolites}, function(data, status){
+                    alert(status);
+                });
             
-             location.assign("/addmetabolites?add");
+             location.assign("/addmetabolites");
            
         }
-    }
-    
-    function signOut()
-    {
-        $.post("/login", {username: "", password: ""})
-         location.assign("/login");
     }
 </script>
 
@@ -187,6 +192,12 @@
     border-radius: 0;
     font-family: Montserrat, sans-serif;
   }
+  
+ #record
+ {
+    color: red;
+    text-align: center;
+ }
   
   #log_out
   {
@@ -297,7 +308,7 @@
             </b>
         </h1>
     
-    <form class="form-inline" action="/">
+    <form class="form-inline" id="mysearch" onsubmit="selectMetabolitesToUpdateBySearch();return false">
         <div class="form-group">
             <input  class="form-control" id="search">
         </div>
@@ -417,6 +428,13 @@
     </div>
     
     </div>
+    
+    <h1 id="record">
+            <b>
+                <strong>
+                </strong>
+            </b>
+    </h1>
     
     <footer id="bioinformatics" class="page-footer font-small blue">
         <div class="footer-copyright text-center py-3">

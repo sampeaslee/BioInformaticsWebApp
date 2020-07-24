@@ -12,42 +12,42 @@
  <script th:inline="javascript">
  function getGeneDatabaseToAdd()
  {      
-    location.assign("/addgenes?add");
+    location.assign("/addgenes");
  }
      
  function getGeneDatabaseToDelete()
  {         
-    location.assign("/deletegenes?delete");
+    location.assign("/deletegenes");
  }
     
  function getModelDatabaseToAdd()
  {  
-    location.assign("/addmodels?add");
+    location.assign("/addmodels");
  }
     
  function getModelDatabaseToDelete()
  {  
-    location.assign("/deletemodels?delete");
+    location.assign("/deletemodels");
  }
     
  function getMetabolitesDatabaseToAdd()
  {  
-    location.assign("/addmetabolites?add");
+    location.assign("/addmetabolites");
  }
      
  function getMetabolitesDatabaseToDelete()
  { 
-    location.assign("/deletemetabolites?delete");
+    location.assign("/deletemetabolites");
  }
 
  function getReactionDatabaseToAdd()
  {      
-    location.assign("/addreactions?add");
+    location.assign("/addreactions");
  }
      
  function getReactionDatabaseToDelete()
  {              
-    location.assign("/deletereactions?delete");
+    location.assign("/deletereactions");
  }
     
     function selectModelsToDelete()
@@ -94,34 +94,37 @@
         if (string_found_index !== -1)
         {
             document.getElementById("Name").value = models_object;
+            document.getElementById("search").value = "";   
+            document.getElementById("record").innerHTML = "";
         }
         else
         {
-            alert(search_value + " Not Found In Database!");
+            document.getElementById("Name").value = "";
+            if (search_value != "")
+            {
+              document.getElementById("record").innerHTML = search_value+" not found in Models table!";
+            }
+            document.getElementById("search").value = "";
         }       
     }
     
     function sendToBackEndToDeleteAModel()
     { 
         var model_for_deletion = document.getElementById("Name").value;
-        alert(model_for_deletion);
         //
         if (model_for_deletion === "")
         {
-            alert("Please Select A Model To Delete");
+            document.getElementById("record").innerHTML = "Please Select A Model to delete!";
         }
         else
         {               
-            $.post("/deletemodels", {models_to_delete: model_for_deletion})
-             location.assign("/deletemodels?delete");
+            $.post("/deletemodels", {models_to_delete: model_for_deletion}, function(data, status){
+                alert(status);
+            });
+            
+             location.assign("/deletemodels");
            
         }  
-    }
-    
-    function signOut()
-    {
-        $.post("/login", {username: "", password: ""})
-         location.assign("/login");
     }
 </script>
 
@@ -144,6 +147,12 @@
     color: #fff;
     font-family: Montserrat, sans-serif;
   }
+  
+ #record
+ {
+    color: red;
+    text-align: center;
+ }
   
   .navbar {
     margin-bottom: 0;
@@ -171,7 +180,7 @@
   
  #delete_model_database
  {
-    padding: 210px 800px;
+    padding: 110px 600px;
     font: 400 15px Lato, sans-serif;
     color: blue;
     font-family: Montserrat, sans-serif; 
@@ -210,7 +219,7 @@
   justify-content: center;
  }
  
- #search
+#search
  {
     width: 400px;
  }
@@ -262,12 +271,12 @@
         <h1>
             <b>
                 <strong>
-                    Delete A Metabolite
+                    Delete A Model
                 </strong>
             </b>
         </h1>
     
-    <form class="form-inline" action="/">
+    <form class="form-inline" id="mysearch" onsubmit="selectModelsToDeleteBySearch();return false">
         <div class="form-group">
             <input  class="form-control" id="search">
         </div>
@@ -345,11 +354,18 @@
     </div>
     
     <div id="delete_model_database">
-        <button type="button" onClick="getModelsDatabaseToDelete()" class="btn btn-default"><b><strong>Clear</strong></b></button>
-        <button type="button" onClick="sendToBackEndToDeleteAModel()" class="btn btn-default"><b><strong>Delete</strong></button>
+        <button type="button" onClick="getModelDatabaseToDelete()" class="btn btn-default"><b><strong>Clear</strong></b></button>
+        <button type="button" onClick="sendToBackEndToDeleteAModel()" class="btn btn-default"><b><strong>Delete</strong></b></button>
     </div>
     
  </div>
+ 
+ <h1 id="record">
+            <b>
+                <strong>
+                </strong>
+            </b>
+    </h1>
     
     <footer id="bioinformatics" class="page-footer font-small blue">
         <div class="footer-copyright text-center py-3">

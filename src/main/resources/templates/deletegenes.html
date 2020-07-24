@@ -118,7 +118,7 @@
             document.getElementById("Model").value = "";
             if (search_value != "")
             {
-              document.getElementById("record").innerHTML = search_value+" not found in gene table!";
+              document.getElementById("record").innerHTML = search_value+" not found in Gene table!";
             }
             document.getElementById("search").value = "";
         }       
@@ -134,11 +134,10 @@
         }
         else
         {            
-            $.post("/deletegenes", {genes_to_delete: gene_for_deletion})
-            
-             location.assign("/deletegenes");
-            document.getElementById("record").innerHTML = gene_for_deletion+" DELETED!";
-            
+            $.post("/deletegenes", {genes_to_delete: gene_for_deletion}, function(data, status){
+                alert(status);
+            });
+             location.assign("/deletegenes");           
         }  
     }
     

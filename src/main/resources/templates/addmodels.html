@@ -94,10 +94,17 @@
         if (string_found_index !== -1)
         {
             document.getElementById("Name").value = models_object;
+            document.getElementById("search").value = "";   
+            document.getElementById("record").innerHTML = "";
         }
         else
         {
-            alert(search_value + " Not Found In Database!");
+            document.getElementById("Name").value = "";
+            if (search_value != "")
+            {
+              document.getElementById("record").innerHTML = search_value+" not found in Models table!";
+            }
+            document.getElementById("search").value = "";
         }       
     }
     
@@ -107,7 +114,7 @@
         //
         if (models_to_add === "")
         {
-            alert("Please Select A Model Or Add a New Model ID");
+            document.getElementById("record").innerHTML = "Please Select A Model Or Add a New Model ID";
         }
         else
         {           
@@ -117,18 +124,15 @@
                  
             var new_models = JSON.stringify(new_models_obj);
          
-             $.post("/addmodels", {models_to_add: new_models})
-            
+             $.post("/addmodels", {models_to_add: new_models}, function(data, status){
+                    alert(status);
+                });
+             
              location.assign("/addmodels?add");
            
         }
     }
     
-    function signOut()
-    {
-        $.post("/login", {username: "", password: ""})
-         location.assign("/login");
-    }
 </script>
 
 <style>
@@ -176,6 +180,12 @@
     border-color: transparent;
     color: #fff !important;
   }
+  
+ #record
+ {
+    color: red;
+    text-align: center;
+ }
   
  #add_models_database
  {
@@ -274,7 +284,7 @@
             </b>
         </h1>
     
-    <form class="form-inline" action="/">
+    <form class="form-inline" id="mysearch" onsubmit="selectModelsToUpdateBySearch();return false">
         <div class="form-group">
             <input  class="form-control" id="search">
         </div>
@@ -360,6 +370,13 @@
     </div>
     
     </div>
+    
+    <h1 id="record">
+            <b>
+                <strong>
+                </strong>
+            </b>
+    </h1>
     
     <footer id="bioinformatics" class="page-footer font-small blue">
         <div class="footer-copyright text-center py-3">

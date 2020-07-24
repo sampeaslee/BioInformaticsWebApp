@@ -12,42 +12,42 @@
  <script th:inline="javascript">
  function getGeneDatabaseToAdd()
  {      
-    location.assign("/addgenes?add");
+    location.assign("/addgenes");
  }
      
  function getGeneDatabaseToDelete()
  {         
-    location.assign("/deletegenes?delete");
+    location.assign("/deletegenes");
  }
     
  function getModelDatabaseToAdd()
  {  
-    location.assign("/addmodels?add");
+    location.assign("/addmodels");
  }
     
  function getModelDatabaseToDelete()
  {  
-    location.assign("/deletemodels?delete");
+    location.assign("/deletemodels");
  }
     
  function getMetabolitesDatabaseToAdd()
  {  
-    location.assign("/addmetabolites?add");
+    location.assign("/addmetabolites");
  }
      
  function getMetabolitesDatabaseToDelete()
  { 
-    location.assign("/deletemetabolites?delete");
+    location.assign("/deletemetabolites");
  }
 
  function getReactionDatabaseToAdd()
  {      
-    location.assign("/addreactions?add");
+    location.assign("/addreactions");
  }
      
  function getReactionDatabaseToDelete()
  {              
-    location.assign("/deletereactions?delete");
+    location.assign("/deletereactions");
  }
     
     function selectReactionsToDelete()
@@ -76,9 +76,9 @@
         
         var search_value = document.getElementById("search").value;
         
-
+        /*<![CDATA[*/
             var array_reactions = [[${listofreactions}]]  
-
+        /*]]>*/
         
         var array_length = array_reactions.length;
                 
@@ -99,17 +99,28 @@
         
         if (string_found_index !== -1)
         {
-            document.getElementById("ReactionID").value = reaction_object.ReactionID
-            document.getElementById("Name").value = reaction_object.name
-            document.getElementById("HigherBound:").value = reaction_object.HigherBound
-            document.getElementById("LowerBound").value = reaction_object.LowerBound
-            document.getElementById("Subsystem").value = reaction_object.Subsystem
-            document.getElementById("Signature").value = reaction_object.signature
-            document.getElementById("GeneReactionRule").value = reaction_object.gene_reaction_rule
+            document.getElementById("ReactionID").value = reaction_object.ReactionID;
+            document.getElementById("Name").value = reaction_object.name;
+            document.getElementById("HigherBound").value = reaction_object.HigherBound;
+            document.getElementById("LowerBound").value = reaction_object.LowerBound;
+            document.getElementById("Subsystem").value = reaction_object.Subsystem;
+            document.getElementById("Signature").value = reaction_object.signature;
+            document.getElementById("GeneReactionRule").value = reaction_object.gene_reaction_rule;
         }
         else
         {
-            alert(search_value + " Not Found In Database!");
+            document.getElementById("ReactionID").value = "";
+            document.getElementById("Name").value = "";
+            document.getElementById("HigherBound").value = "";
+            document.getElementById("LowerBound").value = "";
+            document.getElementById("Subsystem").value = "";
+            document.getElementById("Signature").value = "";
+            document.getElementById("GeneReactionRule").value = "";
+            if (search_value != "")
+            {
+              document.getElementById("record").innerHTML = search_value+" not found in Reaction table!";
+            }
+            document.getElementById("search").value = "";
         }       
     }
     
@@ -119,11 +130,14 @@
         //
         if (reaction_for_deletion === "")
         {
-            alert("Please Select A Reaction To Delete");
+            document.getElementById("record").innerHTML = "Please Select A Reaction To Delete";
         }
         else
         {            
-            $.post("/deletereactions", {reactions_to_delete: reaction_for_deletion})
+            $.post("/deletereactions", {reactions_to_delete: reaction_for_deletion}, function(data, status){
+                alert(status);
+            });
+            
              location.assign("/deletereactions?delete");
            
         }  
@@ -180,9 +194,15 @@
     color: #fff !important;
   }
   
+  #record
+ {
+    color: red;
+    text-align: center;
+ }
+  
  #delete_reaction_database
  {
-    padding: 210px 800px;
+    padding: 110px 600px;
     font: 400 15px Lato, sans-serif;
     color: blue;
     font-family: Montserrat, sans-serif; 
@@ -278,7 +298,7 @@
             </b>
         </h1>
     
-    <form class="form-inline" action="/">
+    <form class="form-inline" id="mysearch" onsubmit="selectReactionToDeleteBySearch();return false">
         <div class="form-group">
             <input  class="form-control" id="search">
         </div>
@@ -410,6 +430,13 @@
     </div>
     
  </div>
+ 
+ <h1 id="record">
+            <b>
+                <strong>
+                </strong>
+            </b>
+    </h1>
     
     <footer id="bioinformatics" class="page-footer font-small blue">
         <div class="footer-copyright text-center py-3">
