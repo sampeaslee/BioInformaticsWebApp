@@ -4,8 +4,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 //This class it used to interact directly with the frontend 
 @Controller
 public class EntityController{    
+<<<<<<< Updated upstream
 	  @Autowired
 	   GeneRepo genesRepo;
 	  
@@ -53,6 +57,48 @@ public class EntityController{
 	        return "accessdenied";   
 	    }
 	  
+=======
+      @Autowired
+       GeneRepo genesRepo;
+      
+      @Autowired
+       ReactionRepo reactionRepo;
+      
+      @Autowired
+      MetaboliteRepo metaboliteRepo;
+      
+      @Autowired
+      ModelRepo modelsRepo;
+      
+      @Autowired
+      UserLoginRepo userRepo;
+      
+      @Autowired
+      StoichiometryRepo stoichiometryRepo;
+      
+      @PersistenceContext protected EntityManager em;
+              
+      /**
+         * @GetMapping is used to map HTTP get request  to certain webpages
+         * 
+         * When you visit the url http://localhost@ModelAttribute:8080/homepage this method is 
+         * called and the String "Text sent from backend" is sent to thLet's say that we have an endpoint /api/foos that takes a query parame html page
+         * where is can be displayed
+         */
+        
+        @GetMapping("/login")
+        public String loginToAdmin() 
+        {           
+            return "login";    
+        }
+        
+//        @GetMapping("/accessdenied")
+//        public String accessDenied() 
+//        {
+//            return "accessdenied";   
+//        }
+      
+>>>>>>> Stashed changes
     /**
      * @GetMapping is used to map HTTP get request  to certain webpages
      * 
@@ -64,7 +110,10 @@ public class EntityController{
     @GetMapping("/update")
     public String sendToFrontend(Model model) 
     {
+<<<<<<< Updated upstream
     	model.addAttribute("usernamelogin", user_name_login);
+=======
+>>>>>>> Stashed changes
         return "update";      
     }
     
@@ -78,12 +127,19 @@ public class EntityController{
      */
     
     @GetMapping("/addgenes")
+<<<<<<< Updated upstream
     public String getAddGenes(@RequestParam(value = "add", defaultValue = "")
 										String add, Model model)
+=======
+    public String getAddGenes(Model model)
+>>>>>>> Stashed changes
     {
     	ArrayList <Gene> list_of_genes = (ArrayList<Gene>) genesRepo.getListOfGenes();
         model.addAttribute("listofgenes", list_of_genes);
+<<<<<<< Updated upstream
     	model.addAttribute("usernamelogin", user_name_login);
+=======
+>>>>>>> Stashed changes
             
     	return "addgenes";
     }
@@ -97,14 +153,22 @@ public class EntityController{
      */
     
     @GetMapping("/deletegenes")
+<<<<<<< Updated upstream
     public String getDeleteGenes(@RequestParam(value = "delete", defaultValue = "")
     						String delete, Model model)
+=======
+    public String getDeleteGenes(Model model)
+>>>>>>> Stashed changes
     {
     	
     	ArrayList <Gene> list_of_genes = (ArrayList<Gene>) genesRepo.getListOfGenes();
         model.addAttribute("listofgenes", list_of_genes);
+<<<<<<< Updated upstream
     	model.addAttribute("usernamelogin", user_name_login);
     		    	
+=======
+                    
+>>>>>>> Stashed changes
         return "deletegenes";  
     }
     
@@ -182,6 +246,7 @@ public class EntityController{
      */
     
     @GetMapping("/addreactions")
+<<<<<<< Updated upstream
     public String getAddReactions(@RequestParam(value = "add", defaultValue = "")
 										String add, Model model)
     {
@@ -190,6 +255,28 @@ public class EntityController{
     	model.addAttribute("usernamelogin", user_name_login);
     	
     	return "addreactions";
+=======
+    public String getAddReactions(Model model)
+    {
+      javax.persistence.Query queryCompound = em.createQuery("Select r, s FROM Reaction r, Stoichiometry s where r.ReactionID = s.reactionID", Object[].class);
+    	        
+	  ArrayList<Object[]> results = (ArrayList<Object[]>) queryCompound.getResultList();
+        
+        
+        ArrayList<Reaction> reaction_objects = new ArrayList<Reaction>();
+        ArrayList<Stoichiometry> stoichiometry_objects = new ArrayList<Stoichiometry>();
+
+        for (Object[] obj : results) {
+        	reaction_objects.add((Reaction) obj[0]);
+        	stoichiometry_objects.add((Stoichiometry) obj[1]);
+        }            	
+    	
+       // ArrayList <Reaction> list_of_reactions = (ArrayList<Reaction>) reactionRepo.getListOfReactions();
+        model.addAttribute("listofreactions", reaction_objects);
+        model.addAttribute("listofstoichiometry", stoichiometry_objects);
+        
+        return "addreactions";
+>>>>>>> Stashed changes
     }
     
     /**
@@ -201,13 +288,21 @@ public class EntityController{
      */
     
     @GetMapping("/deletereactions")
+<<<<<<< Updated upstream
     public String getDeleteReactions(@RequestParam(value = "delete", defaultValue = "")
     						String delete, Model model)
+=======
+    public String getDeleteReactions(Model model)
+>>>>>>> Stashed changes
     {
     	ArrayList <Reaction> list_of_reactions = (ArrayList<Reaction>) reactionRepo.getListOfReactions();
         model.addAttribute("listofreactions", list_of_reactions);
+<<<<<<< Updated upstream
     	model.addAttribute("usernamelogin", user_name_login);
     		    	
+=======
+        
+>>>>>>> Stashed changes
         return "deletereactions";  
     }
     
@@ -223,6 +318,7 @@ public class EntityController{
     @PostMapping("/addreactions")
     public String postReactions(String reaction_to_add) throws ParseException
     {
+<<<<<<< Updated upstream
     	JSONParser parser = new JSONParser();
     	JSONObject convert_to_json = (JSONObject) parser.parse(reaction_to_add); 
     	
@@ -281,6 +377,93 @@ public class EntityController{
     }
     
     
+=======
+        JSONParser parser = new JSONParser();
+        JSONObject convert_to_json = (JSONObject) parser.parse(reaction_to_add); 
+        
+         String reaction_reactionID = ((String)convert_to_json.get("ReactionID"));
+         String reaction_name = ((String)convert_to_json.get("name"));
+         String reaction_higher_bound = ((String)convert_to_json.get("HigherBound"));
+         String reaction_lower_bound = ((String)convert_to_json.get("LowerBound"));
+         String reaction_subsystem = ((String)convert_to_json.get("Subsystem"));
+         String reaction_signature = ((String)convert_to_json.get("signature"));
+         String reaction_rule = ((String)convert_to_json.get("gene_reaction_rule"));
+         
+         String stoichiometry_start_Metabolites = ((String)convert_to_json.get("startMetabolites"));
+         String stoichiometry_end_Metabolites = ((String)convert_to_json.get("endMetabolites"));
+
+        if (reactionRepo.getReactionID(reaction_reactionID) != null)
+        {
+            Reaction update_reaction_object = reactionRepo.getAReaction(reaction_reactionID);
+            
+            if(!update_reaction_object.name.equals(reaction_name))
+            {
+                reactionRepo.updateReactionName(reaction_reactionID, reaction_name);
+            }
+            
+            if(!update_reaction_object.HigherBound.equals(reaction_higher_bound))
+            {
+                reactionRepo.updateReactionHigherBound(reaction_reactionID, reaction_higher_bound);
+            }
+            
+            if(!update_reaction_object.LowerBound.equals(reaction_lower_bound))
+            {
+                reactionRepo.updateReactionsLowerBound(reaction_reactionID, reaction_lower_bound);
+            }
+            
+            if(!update_reaction_object.Subsystem.equals(reaction_subsystem))
+            {
+                reactionRepo.updateReactionSubsystem(reaction_reactionID, reaction_subsystem);
+            }
+            
+            if(!update_reaction_object.signature.equals(reaction_signature))
+            {
+                reactionRepo.updateReactionSignature(reaction_reactionID, reaction_signature);
+            }
+            
+            if(!update_reaction_object.gene_reaction_rule.equals(reaction_rule))
+            {
+                reactionRepo.updateReactionRule(reaction_reactionID, reaction_rule);
+            }
+        }
+        else
+        {
+             // create a reaction object
+             Reaction addReactionObj = new Reaction(reaction_reactionID, reaction_name, reaction_higher_bound, 
+                                                    reaction_lower_bound, reaction_subsystem, reaction_signature,
+                                                    reaction_rule);
+            reactionRepo.save(addReactionObj);
+        }
+        
+        //
+        if (stoichiometryRepo.queryExampleTwo(reaction_reactionID) != null)
+        {
+            Stoichiometry update_stoichiometry_object = stoichiometryRepo.queryExampleTwo(reaction_reactionID);
+            
+            System.out.println("RAMMMM");
+            
+            if(!update_stoichiometry_object.startMetabolites.equals(stoichiometry_start_Metabolites))
+            {
+            	stoichiometryRepo.updateStartMetabolites(reaction_reactionID, stoichiometry_start_Metabolites);
+            }
+            
+            if(!update_stoichiometry_object.endMetabolites.equals(stoichiometry_end_Metabolites))
+            {
+            	System.out.println(stoichiometry_end_Metabolites);
+            	stoichiometryRepo.updateEndMetabolites(reaction_reactionID, stoichiometry_end_Metabolites);
+            }
+        }
+        else
+        {
+             // create a stoichiometry object
+        	Stoichiometry addStiochiometryObj = new Stoichiometry(reaction_reactionID, stoichiometry_start_Metabolites,
+        												stoichiometry_end_Metabolites);
+        	stoichiometryRepo.save(addStiochiometryObj);
+        }
+        
+        return "addreactions";
+    }      
+>>>>>>> Stashed changes
     
     /**
      * @GetMapping is used to map HTTP get request  to certain webpages
@@ -291,17 +474,26 @@ public class EntityController{
      */
     
     @GetMapping("/addmetabolites")
+<<<<<<< Updated upstream
     public String getAddMetabolites(@RequestParam(value = "add", defaultValue = "")
 										String add, Model model)
+=======
+    public String getAddMetabolites(Model model)
+>>>>>>> Stashed changes
     {
     	ArrayList <Metabolite> list_of_metabolites = (ArrayList<Metabolite>) metaboliteRepo.getListOfMetabolites();
     	ArrayList <String> list_of_compounds= (ArrayList<String>) metaboliteRepo.getListOfCompounds();   	
     	
         model.addAttribute("listofmetabolites", list_of_metabolites);
         model.addAttribute("listofcompounds", list_of_compounds);
+<<<<<<< Updated upstream
     	model.addAttribute("usernamelogin", user_name_login);
     	
     	return "addmetabolites";
+=======
+        
+        return "addmetabolites";
+>>>>>>> Stashed changes
     }
     
     /**
@@ -313,13 +505,21 @@ public class EntityController{
      */
     
     @GetMapping("/deletemetabolites")
+<<<<<<< Updated upstream
     public String getDeleteMetabolites(@RequestParam(value = "delete", defaultValue = "")
     						String delete, Model model)
+=======
+    public String getDeleteMetabolites(Model model)
+>>>>>>> Stashed changes
     {
     	ArrayList <Metabolite> list_of_metabolites = (ArrayList<Metabolite>) metaboliteRepo.getListOfMetabolites();
         model.addAttribute("listofmetabolites", list_of_metabolites);
+<<<<<<< Updated upstream
     	model.addAttribute("usernamelogin", user_name_login);
     		    	
+=======
+                    
+>>>>>>> Stashed changes
         return "deletemetabolites";  
     }
     
@@ -377,6 +577,7 @@ public class EntityController{
      * where is can be displayed
      */
     
+<<<<<<< Updated upstream
     @GetMapping("/addmodels")
     public String getAddModel(@RequestParam(value = "add", defaultValue = "")
 										String add, Model model)
@@ -432,5 +633,57 @@ public class EntityController{
     	 		
     	return "addmodels";
     }
+=======
+//    @GetMapping("/addmodels")
+//    public String getAddModel(Model model)
+//    {
+//        ArrayList<String> list_of_model = (ArrayList<String>) modelsRepo.getListOfModel();
+//        
+//        model.addAttribute("listofmodel", list_of_model);
+//        
+//        return "addmodels";
+//    }
+//    
+//    /**
+//     * @GetMapping is used to map HTTP get request  to certain webpages
+//     * 
+//     * When you visit the url http://localhost:8080/homepage this method is 
+//     * called and the String "Text sent from backend" is sent to the html page
+//     * where is can be displayed
+//     */
+//    
+//    @GetMapping("/deletemodels")
+//    public String getDeleteModel(Model model)
+//    {
+//        ArrayList <String> list_of_model = (ArrayList<String>) modelsRepo.getListOfModel();
+//        model.addAttribute("listofmodel", list_of_model);
+//                    
+//        return "deletemodels";  
+//    }
+//    
+//    @PostMapping("/deletemodels")
+//    public String deleteModel(String models_to_delete) throws ParseException
+//    {    
+//        modelsRepo.deleteAModel(models_to_delete);
+//                         
+//        return "deletemodels";
+//    }
+//    
+//    @PostMapping("/addmodels")
+//    public String postModel(String models_to_add) throws ParseException
+//    {
+//        JSONParser parser = new JSONParser();
+//        JSONObject convert_to_json = (JSONObject) parser.parse(models_to_add); 
+//        
+//         String models_nameID = ((String)convert_to_json.get("name"));
+//         
+//         if (modelsRepo.getModelID(models_nameID) == null)
+//         {
+//             modelsRepo.insertModel(models_nameID);
+//         }
+//                
+//        return "addmodels";
+//    }
+>>>>>>> Stashed changes
 
 }

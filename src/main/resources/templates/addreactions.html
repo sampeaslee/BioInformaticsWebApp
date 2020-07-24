@@ -20,6 +20,7 @@
 	location.assign("/deletegenes");
  }
 	
+<<<<<<< Updated upstream
  function getModelDatabaseToAdd()
  { 	
 	location.assign("/addmodels");
@@ -30,6 +31,8 @@
 	location.assign("/deletemodels");
  }
 	
+=======
+>>>>>>> Stashed changes
  function getMetabolitesDatabaseToAdd()
  { 	
 	location.assign("/addmetabolites");
@@ -50,6 +53,7 @@
 	location.assign("/deletereactions");
  }
 	
+<<<<<<< Updated upstream
 	function selectReactionsToAdd(val)
 	{ 
 		var index= (document.getElementById("select_add_reactions_dropdown").selectedIndex);
@@ -68,6 +72,40 @@
 		document.getElementById("Signature").value = reaction_object.signature
 		document.getElementById("GeneReactionRule").value = reaction_object.gene_reaction_rule
 	}
+=======
+ function selectReactionsToAdd(val)
+ { 
+	var index= (document.getElementById("select_add_reactions_dropdown").selectedIndex);
+			  	
+	/*<![CDATA[*/
+	  var array_reactions = [[${listofreactions}]]  
+	/*]]>*/	
+	
+	/*<![CDATA[*/
+	  var array_stoichiometry = [[${listofstoichiometry}]]  
+	/*]]>*/
+	    
+	var reaction_object = array_reactions[index - 1];
+	
+	var stoichiometry_object = array_stoichiometry[index -1];
+	    
+	document.getElementById("ReactionID").value = reaction_object.ReactionID;
+	document.getElementById("Name").value = reaction_object.name;
+	document.getElementById("HigherBound:").value = reaction_object.HigherBound;
+	document.getElementById("LowerBound").value = reaction_object.LowerBound;
+	document.getElementById("Subsystem").value = reaction_object.Subsystem;
+	document.getElementById("Signature").value = reaction_object.signature;
+	document.getElementById("GeneReactionRule").value = reaction_object.gene_reaction_rule;	
+	
+	document.getElementById("StartMetabolites").value = stoichiometry_object.startMetabolites;
+	document.getElementById("EndMetabolites").value = stoichiometry_object.endMetabolites;
+	
+	document.getElementById("search").value = "";	
+	document.getElementById("record").innerHTML = "";
+	
+	
+ }
+>>>>>>> Stashed changes
 	
 	function selectReactionToUpdateBySearch() 
 	{ 
@@ -81,12 +119,23 @@
     		var array_reactions = [[${listofreactions}]]  
     	/*]]>*/
     	
+<<<<<<< Updated upstream
+=======
+    	/*<![CDATA[*/
+    		var array_stoichiometry = [[${listofstoichiometry}]]  
+    	/*]]>*/
+    	
+>>>>>>> Stashed changes
     	var array_length = array_reactions.length;
     	     	
     	while(string_found_index == -1 && index < array_length)
     	{
     		
     		var reaction_object = array_reactions[index];
+<<<<<<< Updated upstream
+=======
+    		var stoichiometry_object = array_stoichiometry[index];
+>>>>>>> Stashed changes
     		
     		if (reaction_object.ReactionID === search_value)
     		{
@@ -100,13 +149,24 @@
     	
     	if (string_found_index !== -1)
     	{
+<<<<<<< Updated upstream
     		document.getElementById("ReactionID").value = reaction_object.ReactionID
+=======
+    		document.getElementById("ReactionID").value = reaction_object.ReactionID;
+>>>>>>> Stashed changes
     		document.getElementById("Name").value = reaction_object.name;
     		document.getElementById("HigherBound:").value = reaction_object.HigherBound;
     		document.getElementById("LowerBound").value = reaction_object.LowerBound;
     		document.getElementById("Subsystem").value = reaction_object.Subsystem;
     		document.getElementById("Signature").value = reaction_object.signature;
     		document.getElementById("GeneReactionRule").value = reaction_object.gene_reaction_rule;
+<<<<<<< Updated upstream
+=======
+    		
+    		document.getElementById("StartMetabolites").value = stoichiometry_object.startMetabolites;
+    		document.getElementById("EndMetabolites").value = stoichiometry_object.endMetabolites;
+    		
+>>>>>>> Stashed changes
     		document.getElementById("search").value = "";	
     		document.getElementById("record").innerHTML = "";
     	}
@@ -119,6 +179,13 @@
     		document.getElementById("Subsystem").value = "";
     		document.getElementById("Signature").value = "";
     		document.getElementById("GeneReactionRule").value = "";
+<<<<<<< Updated upstream
+=======
+    		
+    		document.getElementById("StartMetabolites").value = "";
+    		document.getElementById("EndMetabolites").value = "";
+    		
+>>>>>>> Stashed changes
     		if (search_value != "")
     		{
     		  document.getElementById("record").innerHTML = search_value+" not found in Reaction table!";
@@ -131,6 +198,11 @@
 	
 	function sendToBackEndToAddAReaction()
 	{ 
+<<<<<<< Updated upstream
+=======
+		var add_or_update = addOrUpdate();
+		
+>>>>>>> Stashed changes
 		var reaction_to_add = document.getElementById("ReactionID").value;
 		//
 		if (reaction_to_add === "")
@@ -146,13 +218,21 @@
 				LowerBound: document.getElementById("LowerBound").value,
 				Subsystem: document.getElementById("Subsystem").value,
 				signature: document.getElementById("Signature").value,
+<<<<<<< Updated upstream
 				gene_reaction_rule: document.getElementById("GeneReactionRule").value
+=======
+				gene_reaction_rule: document.getElementById("GeneReactionRule").value,
+				
+				startMetabolites: document.getElementById("StartMetabolites").value,
+				endMetabolites: document.getElementById("EndMetabolites").value
+>>>>>>> Stashed changes
 
 			};
 				 
 			var new_reaction = JSON.stringify(new_reaction_obj);
 		 
 			 $.post("/addreactions", {reaction_to_add: new_reaction}, function(data, status){
+<<<<<<< Updated upstream
 					alert(status);
 				});
 			
@@ -160,6 +240,53 @@
 		   
 		}
 	}
+=======
+					
+				if (add_or_update === 0)
+				{
+					 alert(status+": "+reaction_to_add+" has been updated in Reaction database!");		
+				}
+				else
+				{
+					alert(status+": "+reaction_to_add+" has been added to Reaction database!");
+				}
+				
+						location.assign("/addreactions");
+				});
+					   
+		}
+	}
+	
+	function addOrUpdate()
+	{
+	    var string_found_index = -1;
+		var index = 0;
+			
+		var data_to_find = document.getElementById("ReactionID").value;
+			
+		/*<![CDATA[*/
+	    	var array_list = [[${listofreactions}]]  
+	    /*]]>*/
+
+	    var array_length = array_list.length;
+	    	     	
+	    while(string_found_index == -1 && index < array_length)
+	    {
+	    	var data_object = array_list[index];
+	    		
+	    	if (data_object.ReactionID === data_to_find)
+	    	{
+	    		string_found_index = 0;
+	    	}
+	    	else
+	    	{
+	    		index++;
+	    	}
+	    }
+	    	
+	    return string_found_index;
+	}
+>>>>>>> Stashed changes
 
 </script>
 
@@ -264,12 +391,15 @@
  {
  	 font-weight: bold;
  	 font-size: 25px;
+<<<<<<< Updated upstream
  }
  
  #modelslink
  {
   	font-weight: bold;
  	font-size: 25px;
+=======
+>>>>>>> Stashed changes
  }
  
  #metaboliteslink
@@ -292,8 +422,11 @@
     <div class="navbar-header"> </div>
     <ul class="nav navbar-nav navbar-right">
  		<li><a href="#home">Home</a></li>
+<<<<<<< Updated upstream
         <li><a href="#functionality">FUNCTIONALITY</a></li>
         <li><a href="/update" th:text = "${usernamelogin}"></a></li>
+=======
+>>>>>>> Stashed changes
         <form id="log_out" th:action="@{/logout}" method="post">
         	<button type="submit">LogOut</button>
 		</form>
@@ -341,6 +474,7 @@
 		</div>
 			
 		<div class="container">
+<<<<<<< Updated upstream
 			<a href="#model" id="modelslink" class="btn btn-link" data-toggle="collapse">Models</a>
 				<div id="model" class="collapse">
 					<button id="add_model" type="button" onClick="getModelDatabaseToAdd()" class="btn btn-default">Add Model</button>
@@ -349,6 +483,8 @@
 		</div>	
 			
 		<div class="container">
+=======
+>>>>>>> Stashed changes
 			<a href="#reactions" id="reactionslink" class="btn btn-link" data-toggle="collapse">Reactions</a>
 				<div id="reactions" class="collapse">
 					<button id="add_reactions" type="button" onClick="getReactionDatabaseToAdd()" class="btn btn-default">Add Reactions</button>
@@ -409,6 +545,23 @@
     			<input type="text" class="form-control" id="LowerBound">
     		</div>
   		</div>
+<<<<<<< Updated upstream
+=======
+  		
+  		 <div class="form-group">
+ 		 	<div class="col-lg-6 offset-lg-3">
+    			<label for="StartMetabolites">Start Metabolites:</label>
+    			<input type="text" class="form-control" id="StartMetabolites">
+    		</div>
+ 		 </div>
+ 		 
+  		<div class="form-group">
+  			<div class="col-lg-6 offset-lg-3">
+    			<label for="StartMetabolites">End Metabolites:</label>
+    			<input type="text" class="form-control" id="EndMetabolites">
+    		</div>
+  		</div>
+>>>>>>> Stashed changes
 	</form>
 	
 	<form class="form-inline">
@@ -437,7 +590,11 @@
     
     <div id="add_reaction_database">
 		<button type="button" onClick="getReactionDatabaseToAdd()" class="btn btn-default"><b><strong>Clear</strong></b></button>
+<<<<<<< Updated upstream
     	<button type="button" onClick="sendToBackEndToAddAReaction()" class="btn btn-default"><b><strong>ADD</strong></b></button>
+=======
+    	<button type="button" onClick="sendToBackEndToAddAReaction()" class="btn btn-default"><b><strong>Update</strong></b></button>
+>>>>>>> Stashed changes
   	</div>
     
     </div>

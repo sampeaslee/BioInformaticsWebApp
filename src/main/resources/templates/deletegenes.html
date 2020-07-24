@@ -20,6 +20,7 @@
 	location.assign("/deletegenes");
  }
 	
+<<<<<<< Updated upstream
  function getModelDatabaseToAdd()
  { 	
 	location.assign("/addmodels");
@@ -30,6 +31,8 @@
 	location.assign("/deletemodels");
  }
 	
+=======
+>>>>>>> Stashed changes
  function getMetabolitesDatabaseToAdd()
  { 	
 	location.assign("/addmetabolites");
@@ -135,9 +138,16 @@
 		else
 		{			 
 			$.post("/deletegenes", {genes_to_delete: gene_for_deletion}, function(data, status){
+<<<<<<< Updated upstream
 				alert(status);
 			});
 			 location.assign("/deletegenes");			
+=======
+				alert(status+": "+gene_for_deletion+" has been deleted from Gene database!");
+				location.assign("/deletegenes");
+			});
+			 			
+>>>>>>> Stashed changes
 		}  
 	}
 	
@@ -244,12 +254,15 @@
  {
  	 font-weight: bold;
  	 font-size: 25px;
+<<<<<<< Updated upstream
  }
  
  #modelslink
  {
   	font-weight: bold;
  	font-size: 25px;
+=======
+>>>>>>> Stashed changes
  }
  
  #metaboliteslink
@@ -273,8 +286,11 @@
     <div class="navbar-header"> </div>
     <ul class="nav navbar-nav navbar-right">
  		<li><a href="#home">Home</a></li>
+<<<<<<< Updated upstream
         <li><a href="#functionality">FUNCTIONALITY</a></li>
         <li><a href="/update" th:text = "${usernamelogin}"></a></li>
+=======
+>>>>>>> Stashed changes
         <form id="log_out" th:action="@{/logout}" method="post">
         	<button type="submit">LogOut</button>
 		</form>
@@ -322,6 +338,7 @@
 		</div>
 		
 		<div class="container">
+<<<<<<< Updated upstream
 			<a href="#model" id="modelslink" class="btn btn-link" data-toggle="collapse">Models</a>
 				<div id="model" class="collapse">
 					<button id="add_model" type="button" onClick="getModelDatabaseToAdd()" class="btn btn-default">Add Model</button>
@@ -330,6 +347,8 @@
 		</div>
 			
 		<div class="container">
+=======
+>>>>>>> Stashed changes
 			<a href="#reactions" id="reactionslink" class="btn btn-link" data-toggle="collapse">Reactions</a>
 				<div id="reactions" class="collapse">
 					<button id="add_reactions" type="button" onClick="getReactionDatabaseToAdd()" class="btn btn-default">Add Reactions</button>

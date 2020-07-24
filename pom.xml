@@ -42,9 +42,14 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
             <version>${spring-security.version}</version>
+<<<<<<< Updated upstream
         </dependency>
 
         <dependency>
+=======
+        </dependency>       
+         <dependency>
+>>>>>>> Stashed changes
              <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
             <version>${spring-security.version}</version>

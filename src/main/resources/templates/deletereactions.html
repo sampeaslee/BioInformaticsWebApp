@@ -4,7 +4,7 @@
   <title>BioInformatics</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https:///maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
@@ -20,6 +20,7 @@
 	location.assign("/deletegenes");
  }
 	
+<<<<<<< Updated upstream
  function getModelDatabaseToAdd()
  { 	
 	location.assign("/addmodels");
@@ -30,6 +31,8 @@
 	location.assign("/deletemodels");
  }
 	
+=======
+>>>>>>> Stashed changes
  function getMetabolitesDatabaseToAdd()
  { 	
 	location.assign("/addmetabolites");
@@ -135,6 +138,7 @@
 		else
 		{			 
 			$.post("/deletereactions", {reactions_to_delete: reaction_for_deletion}, function(data, status){
+<<<<<<< Updated upstream
 				alert(status);
 			});
 			
@@ -148,6 +152,14 @@
 		$.post("/login", {username: "", password: ""})
 		 location.assign("/login");
 	}
+=======
+				alert(status+": "+reaction_for_deletion+" has been deleted from Reaction database!");
+				location.assign("/deletereactions?delete");
+			});
+		
+		}  
+	}		
+>>>>>>> Stashed changes
 </script>
 
 <style>  
@@ -279,8 +291,11 @@
     <div class="navbar-header"> </div>
     <ul class="nav navbar-nav navbar-right">
  		<li><a href="#home">Home</a></li>
+<<<<<<< Updated upstream
         <li><a href="#functionality">FUNCTIONALITY</a></li>
         <li><a href="/update" th:text = "${usernamelogin}"></a></li>
+=======
+>>>>>>> Stashed changes
         <form id="log_out" th:action="@{/logout}" method="post">
         	<button type="submit">LogOut</button>
 		</form>
@@ -328,6 +343,7 @@
 		</div>
 		
 		<div class="container">
+<<<<<<< Updated upstream
 			<a href="#model" id="modelslink" class="btn btn-link" data-toggle="collapse">Models</a>
 				<div id="model" class="collapse">
 					<button id="add_model" type="button" onClick="getModelDatabaseToAdd()" class="btn btn-default">Add Model</button>
@@ -336,6 +352,8 @@
 		</div>
 			
 		<div class="container">
+=======
+>>>>>>> Stashed changes
 			<a href="#reactions" id="reactionslink" class="btn btn-link" data-toggle="collapse">Reactions</a>
 				<div id="reactions" class="collapse">
 					<button id="add_reactions" type="button" onClick="getReactionDatabaseToAdd()" class="btn btn-default">Add Reactions</button>

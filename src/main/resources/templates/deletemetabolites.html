@@ -20,6 +20,7 @@
 	location.assign("/deletegenes");
  }
 	
+<<<<<<< Updated upstream
  function getModelDatabaseToAdd()
  { 	
 	location.assign("/addmodels");
@@ -30,6 +31,8 @@
 	location.assign("/deletemodels");
  }
 	
+=======
+>>>>>>> Stashed changes
  function getMetabolitesDatabaseToAdd()
  { 	
 	location.assign("/addmetabolites");
@@ -125,11 +128,17 @@
 		else
 		{			 
 			$.post("/deletemetabolites", {metabolites_to_delete: metabolite_for_deletion}, function(data, status){
+<<<<<<< Updated upstream
 				alert(status);
 			});
 			
 			 location.assign("/deletemetabolites?delete");
 		   
+=======
+				alert(status+": "+metabolite_for_deletion+" has been deleted from metabolites database!");
+				location.assign("/deletemetabolites?delete");
+			});
+>>>>>>> Stashed changes
 		}  
 	}
 </script>
@@ -234,12 +243,15 @@
  {
  	 font-weight: bold;
  	 font-size: 25px;
+<<<<<<< Updated upstream
  }
  
  #modelslink
  {
   	font-weight: bold;
  	font-size: 25px;
+=======
+>>>>>>> Stashed changes
  }
  
  #metaboliteslink
@@ -263,8 +275,11 @@
     <div class="navbar-header"> </div>
     <ul class="nav navbar-nav navbar-right">
  		<li><a href="#home">Home</a></li>
+<<<<<<< Updated upstream
         <li><a href="#functionality">FUNCTIONALITY</a></li>
         <li><a href="/update" th:text = "${usernamelogin}"></a></li>
+=======
+>>>>>>> Stashed changes
         <form id="log_out" th:action="@{/logout}" method="post">
         	<button type="submit">LogOut</button>
 		</form>
@@ -310,6 +325,7 @@
     				<button id="delete_metabolite" type="button" onClick="getMetabolitesDatabaseToDelete()" class="btn btn-default">Delete Metabolite</button>
     			</div>
 		</div>
+<<<<<<< Updated upstream
 		
 		<div class="container">
 			<a href="#model" id="modelslink" class="btn btn-link" data-toggle="collapse">Models</a>
@@ -318,6 +334,8 @@
     				<button id="delete_model" type="button" onClick="getModelDatabaseToDelete()" class="btn btn-default">Delete Model</button>
     			</div>
 		</div>
+=======
+>>>>>>> Stashed changes
 			
 		<div class="container">
 			<a href="#reactions" id="reactionslink" class="btn btn-link" data-toggle="collapse">Reactions</a>
