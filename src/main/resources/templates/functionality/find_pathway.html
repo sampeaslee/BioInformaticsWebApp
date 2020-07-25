@@ -145,7 +145,23 @@
     line-height: 60px; /* Vertically center the text there */
     background-color: #2E8B57;
   }
- 
+   .commentTable {
+
+     background-color: LightBlue;
+    display: table;
+    width: 50%;
+
+    border-spacing: 10px;
+    margin: 0 auto;   
+    border-collapse:separate;
+    border:solid black 1px;
+    border-radius:6px;
+    -moz-border-radius:6px;  
+                   box-shadow: 5px 5px #888888;     
+}
+th{
+   text-align: center;
+}
   </style>
 </head>
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
@@ -205,7 +221,7 @@
     <div id = "reactiontable" style = "padding:10px"  class="container-fluid text-center">
 
 
-    <table style="width:100%" >
+    <table class = "commentTable">
         <tr>
             <th>Source</th>
             <th>Product</th>
@@ -220,9 +236,6 @@
             <td th:text="${start}">
             <td>
                 <a th:text="${next.getKey()[0]}" th:href="@{'../info/metabolites/'+ ${next.getKey()[0]}}"/>
-            </td>
-            <td>
-                <!--                 <a th:text="${next.getKey()[1]}" th:href="@{'../info/reactions/' + ${next.getKey()[1]}}"/>-->
             </td>
             <td th:text="${next.getValue()}">
 

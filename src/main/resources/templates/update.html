@@ -11,33 +11,33 @@
 
  <script th:inline="javascript">
  function getGeneDatabaseToAdd()
- { 		
-	location.assign("/addgenes");
+ {      
+    location.assign("/addgenes");
  }
-	 
+     
  function getGeneDatabaseToDelete()
- { 		   
-	location.assign("/deletegenes");
+ {         
+    location.assign("/deletegenes");
  }
-	
+    
  function getMetabolitesDatabaseToAdd()
- { 	
-	location.assign("/addmetabolites");
+ {  
+    location.assign("/addmetabolites");
  }
-	 
+     
  function getMetabolitesDatabaseToDelete()
  { 
-	location.assign("/deletemetabolites");
+    location.assign("/deletemetabolites");
  }
 
  function getReactionDatabaseToAdd()
- { 		
-	location.assign("/addreactions");
+ {      
+    location.assign("/addreactions");
  }
-	 
+     
  function getReactionDatabaseToDelete()
- { 				
-	location.assign("/deletereactions");
+ {              
+    location.assign("/deletereactions");
  }
 </script>
 
@@ -98,36 +98,36 @@
     border-radius: 0;
     font-family: Montserrat, sans-serif;
     position: absolute;
-  	bottom: 0;
-  	width: 100%;
-  	/* Set the fixed height of the footer here */
-  	height: 60px;
-  	line-height: 60px; /* Vertically center the text there */
-  	background-color: #2E8B57;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    line-height: 60px; /* Vertically center the text there */
+    background-color: #2E8B57;
   }
  
  #geneslink
  {
- 	 font-weight: bold;
- 	 font-size: 25px;
+     font-weight: bold;
+     font-size: 25px;
  }
  
  #modelslink
  {
-  	font-weight: bold;
- 	font-size: 25px;
+    font-weight: bold;
+    font-size: 25px;
  }
  
  #metaboliteslink
  {
-  	font-weight: bold;
- 	font-size: 25px;
+    font-weight: bold;
+    font-size: 25px;
  }
  
  #reactionslink
  {
-  	font-weight: bold;
- 	font-size: 25px;
+    font-weight: bold;
+    font-size: 25px;
  }
  
 </style>
@@ -157,7 +157,7 @@
       <h1>
       <b>
        <strong>
-        	Update Database
+            Update Database
        </strong>
       </b>
     </h1> 
@@ -169,49 +169,48 @@
     <div class="col-lg-2">
     <ul class="nav nav-pills nav-stacked" align = "center"> 
       <div class="container">
-			<a href="#gene" id="geneslink" class="btn btn-link" data-toggle="collapse">Gene</a>
-				<div id="gene" class="collapse">
-					<button id="add_gene" type="button" onClick="getGeneDatabaseToAdd()" class="btn btn-default">Add Gene</button>
-    				<button id="delete_gene" type="button" onClick="getGeneDatabaseToDelete()" class="btn btn-default">Delete Gene</button>
-    			</div>
-		</div>
-		
-		<div class="container">
-			<a href="#metabolites" id="metaboliteslink" class="btn btn-link" data-toggle="collapse">Metabolites</a>
-				<div id="metabolites" class="collapse">
-					<button id="add_metabolite" type="button" onClick="getMetabolitesDatabaseToAdd()" class="btn btn-default">Add Metabolite</button>
-    				<button id="delete_metabolite" type="button" onClick="getMetabolitesDatabaseToDelete()" class="btn btn-default">Delete Metabolite</button>
-    			</div>
-		</div>
-			
-		<div class="container">
-			<a href="#reactions" id="reactionslink" class="btn btn-link" data-toggle="collapse">Reactions</a>
-				<div id="reactions" class="collapse">
-					<button id="add_reactions" type="button" onClick="getReactionDatabaseToAdd()" class="btn btn-default">Add Reactions</button>
-    				<button id="delete_reactions" type="button" onClick="getReactionDatabaseToDelete()" class="btn btn-default">Delete Reactions</button>
-    			</div>
-		</div>
-		
-		 
-	 </ul>	     
+            <a href="#gene" id="geneslink" class="btn btn-link" data-toggle="collapse">Gene</a>
+                <div id="gene" class="collapse">
+                    <button id="add_gene" type="button" onClick="getGeneDatabaseToAdd()" class="btn btn-default">Add Gene</button>
+                    <button id="delete_gene" type="button" onClick="getGeneDatabaseToDelete()" class="btn btn-default">Delete Gene</button>
+                </div>
+        </div>
+        
+        <div class="container">
+            <a href="#metabolites" id="metaboliteslink" class="btn btn-link" data-toggle="collapse">Metabolites</a>
+                <div id="metabolites" class="collapse">
+                    <button id="add_metabolite" type="button" onClick="getMetabolitesDatabaseToAdd()" class="btn btn-default">Add Metabolite</button>
+                    <button id="delete_metabolite" type="button" onClick="getMetabolitesDatabaseToDelete()" class="btn btn-default">Delete Metabolite</button>
+                </div>
+        </div>
+            
+        <div class="container">
+            <a href="#reactions" id="reactionslink" class="btn btn-link" data-toggle="collapse">Reactions</a>
+                <div id="reactions" class="collapse">
+                    <button id="add_reactions" type="button" onClick="getReactionDatabaseToAdd()" class="btn btn-default">Add Reactions</button>
+                    <button id="delete_reactions" type="button" onClick="getReactionDatabaseToDelete()" class="btn btn-default">Delete Reactions</button>
+                </div>
+        </div>
+        
+         
+     </ul>       
     </div> 
   
     </div>
    </div>
     
     <footer id="bioinformatics" class="page-footer font-small blue">
-  		<div class="footer-copyright text-center py-3">
-   	 		<label> <b><strong>© 2020 Copyright: BioInformatics.com</strong></b></label>
-  		</div>
-	</footer>
-	<script>    $("#home").click(function(){
+        <div class="footer-copyright text-center py-3">
+            <label> <b><strong>© 2020 Copyright: BioInformatics.com</strong></b></label>
+        </div>
+    </footer>
+    <script>    $("#home").click(function(){
     window.location.assign("http://localhost:8080/home")
 });
 </script>
     
  </body>
 </html>
-
 
 
 

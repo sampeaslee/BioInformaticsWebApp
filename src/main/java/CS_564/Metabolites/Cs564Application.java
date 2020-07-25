@@ -172,12 +172,12 @@ public class Cs564Application {
 	
 	//SECOND METHOD TO RUN (THIS ONE IS QUICK)
 	
-	/*
+	
     @Bean
     public String CommandLineRunner(GeneRepo repository) throws Exception{
         //Reading in the JSON File 
         Object obj = new JSONParser().parse(new FileReader
-            ("/home/charasi/eclipse-web/CS_564/JSON/genes_from_bigg.json"));
+            ("JSON\\genes_from_bigg.json"));
         //Casting to JSONObject
         JSONObject jsonObj = (JSONObject) obj;
         //keySet() returns a set of all the keys in the JSON 
@@ -210,7 +210,7 @@ public class Cs564Application {
         }
         System.out.println("DONE LOADING IN GENE DATA!!!");
         return "Has to have non void return type";
-    }*/
+    }
 	
 //    @Bean
 //    public String CommandLineRunner(UserLoginRepo repository) throws Exception
@@ -226,8 +226,7 @@ public class Cs564Application {
 //    }
 
 
-
-	// this is for creating a comment repo in the mysql;
+/*// this is for creating a comment repo in the mysql;
 	@Bean
 	public String CommandLineRunner(CommentRepo repository) throws Exception
 	{
@@ -241,8 +240,7 @@ public class Cs564Application {
 		System.out.println("DONE LOADING IN Comment DATA!!!");
 		return "Has to have non void return type";
 	}
-
-
+*/
 
 
 

@@ -399,14 +399,22 @@ color : black;
 		{
 
 			var comment = document.getElementById("comment").value;
-			//
-			if (comment === "")
-			{
-				alert("Please Select A Gene Or Add a New Gene ID");
-			}
+			  var name = document.getElementById("name").value;
+			  var email = document.getElementById("email").value;
+			  
+			  
+			  //
+			  if (comment.trim() === "")
+			  {
+			    alert("Looks like you forgot to add a comment!");
+			  }else if (name.trim() === ""){
+			        alert("Please add your name to the comment!");
+			  }else if (email.trim() === ""){
+			        alert("Please add your email to the comment!");
+			  }
 			else
 			{
-				alert("Please wait");
+	
 				var new_comment_obj = {
 					comment: document.getElementById("comment").value,
 					name: document.getElementById("name").value,
@@ -414,17 +422,26 @@ color : black;
 				};
 
 				var new_comment = JSON.stringify(new_comment_obj);
-
-
-				alert(new_comment + "Leave comment successfully!!!");
-				/*<![CDATA[*/
-				var metabolite = [[${meta}]]
-				/*]]>*/
-
-				$.post("/info/metabolites/".concat(metabolite), {add_comment: new_comment})
+                /*<![CDATA[*/
+                var metabolite = [[${meta}]]
+                /*]]>*/
+                $.post("/info/metabolites/".concat(metabolite), {add_comment: new_comment})
+               
+                setTimeout(function(){
+                    window.location.reload();
+                },100); 
 
 		
 			}
+		}
+		
+		
+		function stateChange(newState) {
+		    setTimeout(function () {
+		        if (newState == -1) {
+		            alert('VIDEO HAS STOPPED');
+		        }
+		    }, 5000);
 		}
 	</script>
 
