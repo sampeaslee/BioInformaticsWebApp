@@ -106,22 +106,7 @@
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
   }
-  .panel-footer {
-    background-color: white !important;
-  }
 
-  .panel-footer h3 {
-    font-size: 32px;
-  }
-  .panel-footer h4 {
-    color: #aaa;
-    font-size: 14px;
-  }
-  .panel-footer .btn {
-    margin: 15px 0;
-    background-color: #f4511e;
-    color: #fff;
-  }
   .navbar {
     margin-bottom: 0;
     background-color: #2E8B57;
@@ -144,53 +129,7 @@
     border-color: transparent;
     color: #fff !important;
   }
-  footer .glyphicon {
-    font-size: 20px;
-    margin-bottom: 20px;
-    color: #f4511e;
-  }
 
-div.b {
-  text-align: left;
-}
-
-  @keyframes slide {
-    0% {
-      opacity: 0;
-      transform: translateY(70%);
-    } 
-    100% {
-      opacity: 1;
-      transform: translateY(0%);
-    }
-  }
-  @-webkit-keyframes slide {
-    0% {
-      opacity: 0;
-      -webkit-transform: translateY(70%);
-    } 
-    100% {
-      opacity: 1;
-      -webkit-transform: translateY(0%);
-    }
-  }
-  @media screen and (max-width: 768px) {
-    .col-sm-4 {
-      text-align: center;
-      margin: 25px 0;
-    }
-    .btn-lg {
-      width: 100%;
-      margin-bottom: 35px;
-    }
-  }
-  @media screen and (max-width: 480px) {
-    .logo {
-      font-size: 150px;
-    }
-  }
-  
-    
  #bioinformatics
  {
     border: 0;
@@ -198,7 +137,7 @@ div.b {
     letter-spacing: 4px;
     border-radius: 0;
     font-family: Montserrat, sans-serif;
-
+    color: black;
     bottom: 0;
     width: 100%;
     /* Set the fixed height of the footer here */
@@ -212,41 +151,36 @@ div.b {
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
 
 <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#myPage"></a>
-        </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#about">Home</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
+     <img  th:src="@{/images/pathway.png}" 
+      width="75" height="75" align = "left" ></img>
+  <div class="container">
+  
 
+    <div class="collapse navbar-collapse" id="myNavbar">
+
+      <ul class="nav navbar-nav navbar-right">
+        <li id = "home"><a href="#about">Home</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
 <div class="jumbotron text-center">
 
-    <h1>Reaction Graph</h1>
+    <h1>Reaction Pathways</h1>
     <h3>Search to see if there is a reaction pathway between two metabolites</h3>
 </div>
 
 
-<div id = "reactiontable" style = "padding:10px"  class="container-fluid text-center">
+<div id = "reactiontable" style = "padding:10px; color: black;"  class="container-fluid text-center">
 
-    <p th:text = "${test}"/>
-    <h4 th:text = "'This is a functionality that find the pathway starting from the ' + ${start} + ' and ending with ' + ${end} "/>
+
     <table style="width:100%" >
         <tr>
             <th>Source</th>
             <th>Product</th>
-            <th>Find Pathway</th>
-            <!--            <th>Stoichiometry</th>-->
+         
+       
         </tr>
         <tbody>
 
@@ -266,7 +200,7 @@ div.b {
     </table>
 </div>
 
-<div id="First_Functionality" class="container-fluid text-center">
+<div id="First_Functionality" class="container-fluid text-center" style = "padding:10px; color: black;">
 
 
     <div id="metabolites_add_one" class="col-lg-5 ">
@@ -351,6 +285,9 @@ div.b {
   function sendTextToBackend2(){
     location.assign("/functionality/find_pathway?start=".concat(search2.value).concat("&end=").concat(search3.value).concat("&knock=").concat(search4.value))
   }
+  $("#home").click(function() {
+      window.location.assign("http://localhost:8080/home")
+  });
 
 </script>
 

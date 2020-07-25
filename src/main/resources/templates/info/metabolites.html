@@ -194,10 +194,13 @@ div.b {
 }
 
 table, tr, th, td {
-	border: 1px solid black;
-	border-collapse: collapse;
+background-color: MediumSeaGreen;
+color : black;
+    border: 1px solid black;
 	text-align: center;
 	width: 50%;
+    
+
 }
 
 .Row {
@@ -223,7 +226,35 @@ table, tr, th, td {
    top:0;
    left:0;
   }
+.commentTable {
 
+     background-color: LightBlue;
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    border-spacing: 10px;
+    margin: 0 auto;   
+    border-collapse:separate;
+    border:solid black 1px;
+    border-radius:6px;
+    -moz-border-radius:6px;    
+    box-shadow: 5px 5px #888888;        
+
+}
+.modelTable{
+    box-shadow: 5px 5px #888888;     
+}
+
+.text{
+    color: black;
+}
+
+.commentBox {
+  width: 500px;
+  margin: auto;
+
+}
+   
 </style>
 </head>
 <body id="myPage" data-spy="scroll" data-target=".navbar"
@@ -257,10 +288,10 @@ table, tr, th, td {
     </div>
 
 
-	<div id="genetable" style="padding: 10px">
+	<div id="genetable" style="padding: 10px" >
 
 		<p th:text="${test}" />
-		<div class="Row">
+		<div class="Row" style = "color: black">
 
 			<p th:text="'Metabolite ID:  ' + ${meta}" />
             <p th:text="'Compound Name: ' + ${compound_name}" />			
@@ -271,7 +302,7 @@ table, tr, th, td {
 			<p th:text="'Metanetx Chemical:  ' + ${metanetx}" />
 			<div class="Column">
 			    <p th:text = "${reaction_text}" align = "center"></p>
-				<table align="center">
+				<table align="center" class = "modelTable">
 
 
             
@@ -296,12 +327,18 @@ table, tr, th, td {
 	</div>
 
 	<div>
-		<h1 class="text-center">See What people say:</h1>
-		<div class="Column">
-			<table style="width:100%" >
+		<h1 class="text-center"  style = "color: black">See What People Say:</h1>
+		<div >
+			<table style="width:50%" class = "commentTable" >
+                    <tr>
+                        <th>User</th>
+                        <th>Email</th>
+                        <th>User's Thoughts</th>
 
+
+                    </tr>
 				<tbody>
-				<span class="Column">
+		
                 <tr th:each="comm:${message}">
 
                     <td th:text="${comm.name}"></td>
@@ -309,17 +346,17 @@ table, tr, th, td {
                     <td th:text="${comm.comment}"></td>
 
                 </tr>
-                </span>
+            
 				</tbody>
 			</table>
 		</div>
 	</div>
 
-	<div>
-	<h2 class="text-center">Leave what you know about it!</h2>
+	<div class = "commentBox">
+	<h2 class="text-center">Feel Free To Leave A Comment!</h2>
 	<div class="row">
 		<div class="col-sm-6 form-group">
-			<input class="form-control" id="name" name="name" placeholder="Name" type="text" required>
+			<input size="50" class="form-control" id="name" name="name" placeholder="Name" type="text" required>
 		</div>
 		<div class="col-sm-6 form-group">
 			<input class="form-control" id="email"  name="email" placeholder="Email" type="email" required>
@@ -335,7 +372,11 @@ table, tr, th, td {
 	</div>
 
 
-
+    <footer id="bioinformatics" class="page-footer font-small blue">
+        <div class="footer-copyright text-center py-3">
+            <label> <b><strong>© 2020 Copyright: BioInformatics.com</strong></b></label>
+        </div>
+    </footer>
 
 
 	<script   th:inline="javascript">
@@ -378,7 +419,7 @@ table, tr, th, td {
 
 				$.post("/info/metabolites/".concat(metabolite), {add_comment: new_comment})
 
-				location.reload();
+		
 			}
 		}
 	</script>

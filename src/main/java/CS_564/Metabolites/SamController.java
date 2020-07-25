@@ -33,6 +33,9 @@ public class SamController {
     @Autowired
     CommentRepo CommentRepo;
 
+
+
+    
     @PersistenceContext protected EntityManager em;
 
     @GetMapping("/home")
@@ -239,6 +242,7 @@ public class SamController {
 
         return "info/metabolites";
     }
+
 
 
 }

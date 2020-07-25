@@ -42,7 +42,7 @@
 </script>
 
 <style>
-  <style>
+
   
 .body{
     font: 400 15px Lato, sans-serif;
@@ -129,23 +129,27 @@
   	font-weight: bold;
  	font-size: 25px;
  }
+ 
 </style>
 
 
 <body>
 
-<nav id="Navigation" class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-default navbar-fixed-top">
+     <img src = "images/modify.png"  width="75" height="75" align = "left" ></img>
   <div class="container">
-    <div class="navbar-header"> </div>
-    <ul class="nav navbar-nav navbar-right">
- 		<li><a href="#home">Home</a></li>
-        <form id="log_out" th:action="@{/logout}" method="post">
-        	<button type="submit">LogOut</button>
-		</form>
-    </ul>
+    <div class="collapse navbar-collapse" id="myNavbar">
+
+      <ul class="nav navbar-nav navbar-right">
+              <form id="log_out" th:action="@{/logout}" method="post">
+            <button type="submit">LogOut</button>
+            </form>
+        <li id = "home"><a>Home</a></li>
+      </ul>
+    </div>
   </div>
 </nav>
-        
+
 
 <header id="subject" class="jumbotron text-center">
  <div class="container">
@@ -163,7 +167,7 @@
  <div class="container-fluid">
   <div class="row content">
     <div class="col-lg-2">
-    <ul class="nav nav-pills nav-stacked"> 
+    <ul class="nav nav-pills nav-stacked" align = "center"> 
       <div class="container">
 			<a href="#gene" id="geneslink" class="btn btn-link" data-toggle="collapse">Gene</a>
 				<div id="gene" class="collapse">
@@ -200,6 +204,10 @@
    	 		<label> <b><strong>© 2020 Copyright: BioInformatics.com</strong></b></label>
   		</div>
 	</footer>
+	<script>    $("#home").click(function(){
+    window.location.assign("http://localhost:8080/home")
+});
+</script>
     
  </body>
 </html>
