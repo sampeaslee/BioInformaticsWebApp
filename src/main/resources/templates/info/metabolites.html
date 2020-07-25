@@ -299,7 +299,11 @@ color : black;
 			<p th:text="'Charge: ' + ${charge}" />
 			<p th:text="'Formula ' + ${formula}" />
 			<p th:text="'Inchi Key:  ' + ${inchi}" />
-			<p th:text="'Metanetx Chemical:  ' + ${metanetx}" />
+			<p>
+				<a th:text="'Metanetx Chemical:  ' + ${metanetx}" th:href=" 'https://www.metanetx.org/chem_info/' +  ${metanetx} " />
+			</p>
+
+
 			<div class="Column">
 			    <p th:text = "${reaction_text}" align = "center"></p>
 				<table align="center" class = "modelTable">

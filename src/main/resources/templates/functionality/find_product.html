@@ -194,52 +194,57 @@
 
 
 <div id="First_Functionality" class="center"  style = "color: black;">
+   <div id="metabolites_add_one" class="col-lg-5 ">
 
-    <div id="metabolites_add_one" class="col-lg-5 ">
         <p> Source</p>
         <div class="form-group">
-
             <input  class="form-control" type = "search"
-                    id="search2" value="g6p_c" >
-
+                    id="search2"  >
         </div>
 
-        <div id="metabolites_add_two" class="col-lg-5 ">
-            <p> Number of reaction steps</p>
-            <div class="form-group">
-                <input  class="form-control" type = "search"
-                        id="search3" >
-            </div>
+        <p> Number of reaction steps</p>
+        <div class="form-group">
+            <input  class="form-control" type = "search"
+                    id="search3"  >
         </div>
-        <button type="submit" onClick = "sendTextToBackend2()" class="btn btn-default">Search</button>
+
+    <button type="submit" onClick = "sendTextToBackend2()" class="btn btn-default">Search</button>
+</div>
+
+
+
+
+
+
+    <div id = "reactiontable" style = "padding:10px"  class="container-fluid text-center">
+
+
+            <table class = "commentTable" >
+                <tr>
+                    <th align="center">Product</th>
+                    <th align="center">Pathway</th>
+
+                </tr>
+                <tbody>
+
+                <tr th:each="next:${nextMetabolites}">
+                    <td>
+                        <a th:text="${next.getKey()[0]}" th:href="@{'../info/metabolites/'+ ${next.getKey()[0]}}"/>
+                    </td>
+                    <td>
+                        <!--                 <a th:text="${next.getKey()[1]}" th:href="@{'../info/reactions/' + ${next.getKey()[1]}}"/>-->
+                    </td>
+                    <td th:text="${next.getValue()}">
+
+
+                </tr>
+                </tbody>
+            </table>
     </div>
 </div>
 
-<div id = "reactiontable" style = "padding:10px"  class="container-fluid text-center">
-
-  
-    <table class = "commentTable">
-        <tr>
-            <th>Product</th>
-            <th>Pathway</th>
-
-        </tr>
-        <tbody>
-
-        <tr th:each="next:${nextMetabolites}">
-            <td>
-                <a th:text="${next.getKey()[0]}" th:href="@{'../info/metabolites/'+ ${next.getKey()[0]}}"/>
-            </td>
-            <td>
-<!--                 <a th:text="${next.getKey()[1]}" th:href="@{'../info/reactions/' + ${next.getKey()[1]}}"/>-->
-            </td>
-            <td th:text="${next.getValue()}">
 
 
-        </tr>
-        </tbody>
-    </table>
-</div>
 
 <footer id="bioinformatics" class="page-footer font-small blue">
     <div class="footer-copyright text-center py-3">
