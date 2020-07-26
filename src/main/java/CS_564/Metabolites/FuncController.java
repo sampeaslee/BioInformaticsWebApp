@@ -2,6 +2,8 @@ package CS_564.Metabolites;
 
 import java.util.*;
 import java.util.List;
+import java.text.ParseException;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -94,6 +96,7 @@ public class FuncController {
             model.addAttribute("test", "No Search Specifed");
         }else {
             /// Initial the search bar;
+            long startTime = System.nanoTime();
             ArrayList<String[]>  m =  (ArrayList<String[]>) StartMetaReactionRepo.findByMetaboliteId(name);
             HashMap<String[], ArrayList<String>> seen = new HashMap<>();
             HashSet<String> set = new HashSet();
@@ -168,6 +171,10 @@ public class FuncController {
                 System.out.println("Finished############");
                 n ++;
             }
+            long endTime = System.nanoTime();
+
+            long duration = (endTime - startTime);
+            System.out.println("Finished in " + duration/1000000 + " ms");
 
             model.addAttribute("nextMetabolites", nextMetabolites);
             model.addAttribute("name", name);
@@ -191,6 +198,8 @@ public class FuncController {
 
         model.addAttribute("listofmetabolites", list_of_metabolites);
         model.addAttribute("listofcompounds", list_of_compounds);
+        long startTime = System.nanoTime();
+
 
 
         if( start.equals("") ) {
@@ -272,6 +281,11 @@ public class FuncController {
                 System.out.println("Finished############");
                 n ++;
             }
+            long endTime = System.nanoTime();
+
+            long duration = (endTime - startTime);
+            System.out.println("Finished in " + duration/1000000 + " ms");
+
 
             model.addAttribute("nextMetabolites", nextMetabolites);
             model.addAttribute("start", start);

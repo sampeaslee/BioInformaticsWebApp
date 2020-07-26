@@ -88,7 +88,7 @@ public class SamController {
         Model model) {
 
         System.out.println("-- executing query --");
-
+        long startTime = System.nanoTime();
 
         /*
          * This code uses javax.persisstence framework to make an sql query that that then maps to
@@ -100,6 +100,12 @@ public class SamController {
         queryCompound.setParameter("search", name + "%");
         //queryCompound.setMaxResults(1000);
         ArrayList<Object[]> results = (ArrayList<Object[]>) queryCompound.getResultList();
+
+        javax.persistence.Query queryCompound2 = em.createQuery(""
+                + "Select distinct  c, m FROM Metabolite m, Compound c where c.biggmetaboliteID = m.bigg_compoundID "
+                + "AND c.name LIKE :search", Object[].class);
+        queryCompound2.setParameter("search", "%"+ name + "%");
+        results.addAll(queryCompound2.getResultList());
 
         if (results.size() > 0) {
 
@@ -130,6 +136,10 @@ public class SamController {
             String search = "No Metabolite IDs Start With: " + name;
             model.addAttribute("current", search);
         }
+        long endTime = System.nanoTime();
+
+        long duration = (endTime - startTime);
+        System.out.println("Finished in " + duration/1000000 + " ms");
         return "metabolites";
 
     }
