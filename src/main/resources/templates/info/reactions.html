@@ -315,11 +315,20 @@ function sendToBackEndToComment()
 {
 
   var comment = document.getElementById("comment").value;
+  var name = document.getElementById("name").value;
+  var email = document.getElementById("email").value;
+  
+  
   //
-  if (comment === "")
+  if (comment.trim() === "")
   {
-    alert("Please Select A Gene Or Add a New Gene ID");
+    alert("Looks like you forgot to add a comment!");
+  }else if (name.trim() === ""){
+	    alert("Please add your name to the comment!");
+  }else if (email.trim() === ""){
+        alert("Please add your email to the comment!");
   }
+  
   else
   {
     var new_comment_obj = {
@@ -331,12 +340,17 @@ function sendToBackEndToComment()
     var new_comment = JSON.stringify(new_comment_obj);
 
 
-    alert(new_comment + "Leave comment successfully!!!");
+
     /*<![CDATA[*/
     var reactionid = [[${reaction.reactionID}]]
     /*]]>*/
 
-    $.post("/info/reactions/".concat(reactionid), {add_comment: new_comment})
+    $.post("/info/reactions/".concat(reactionid), {add_comment: new_comment});
+    
+
+    setTimeout(function(){
+        window.location.reload();
+    },100); 
 
 
   }

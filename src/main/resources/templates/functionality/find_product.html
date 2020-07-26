@@ -161,6 +161,9 @@
     -moz-border-radius:6px;  
                    box-shadow: 5px 5px #888888;     
 }
+th{
+   text-align: center;
+}
 .center {
   margin: auto;
    padding: 10px;
@@ -231,9 +234,7 @@
                     <td>
                         <a th:text="${next.getKey()[0]}" th:href="@{'../info/metabolites/'+ ${next.getKey()[0]}}"/>
                     </td>
-                    <td>
-                        <!--                 <a th:text="${next.getKey()[1]}" th:href="@{'../info/reactions/' + ${next.getKey()[1]}}"/>-->
-                    </td>
+
                     <td th:text="${next.getValue()}">
 
 

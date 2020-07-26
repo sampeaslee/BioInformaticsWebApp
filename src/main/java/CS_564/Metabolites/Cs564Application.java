@@ -172,45 +172,45 @@ public class Cs564Application {
 	
 	//SECOND METHOD TO RUN (THIS ONE IS QUICK)
 	
-	/*
-    @Bean
-    public String CommandLineRunner(GeneRepo repository) throws Exception{
-        //Reading in the JSON File 
-        Object obj = new JSONParser().parse(new FileReader
-            ("/home/charasi/eclipse-web/CS_564/JSON/genes_from_bigg.json"));
-        //Casting to JSONObject
-        JSONObject jsonObj = (JSONObject) obj;
-        //keySet() returns a set of all the keys in the JSON 
-        Set<String> GeneIDs = jsonObj.keySet();
-        
-        //Iterate through the set of keys and parse the JSON data associated 
-        //with each key(GeneID).
-        for(String idKey: GeneIDs) {
-            //Parsing the JSON
-            JSONObject geneData =(JSONObject)  jsonObj.get(idKey);
-            JSONObject annotation = (JSONObject) geneData.get("annotation");
-            String ncbigi = "" + annotation.get("ncbigi");
-            String refseq_name = "" + annotation.get("refseq_name");
-            String sbo = "" + annotation.get("sbo");
-            JSONArray model = (JSONArray) geneData.get("model"); 
-            String modelName;
-      
-            Iterator itr = model.iterator();
-            modelName = "" + itr.next(); 
-
-            String name = "" + geneData.get("name");
-            
-            //Create a Gene Object to store the data 
-            Gene gene = new Gene(idKey, name, ncbigi, refseq_name, 
-                sbo, modelName);
-            
-            //Send that data to MySQL
-            repository.save(gene);
-
-        }
-        System.out.println("DONE LOADING IN GENE DATA!!!");
-        return "Has to have non void return type";
-    }*/
+	
+//    @Bean
+//    public String CommandLineRunner(GeneRepo repository) throws Exception{
+//        //Reading in the JSON File 
+//        Object obj = new JSONParser().parse(new FileReader
+//            ("JSON\\genes_from_bigg.json"));
+//        //Casting to JSONObject
+//        JSONObject jsonObj = (JSONObject) obj;
+//        //keySet() returns a set of all the keys in the JSON 
+//        Set<String> GeneIDs = jsonObj.keySet();
+//        
+//        //Iterate through the set of keys and parse the JSON data associated 
+//        //with each key(GeneID).
+//        for(String idKey: GeneIDs) {
+//            //Parsing the JSON
+//            JSONObject geneData =(JSONObject)  jsonObj.get(idKey);
+//            JSONObject annotation = (JSONObject) geneData.get("annotation");
+//            String ncbigi = "" + annotation.get("ncbigi");
+//            String refseq_name = "" + annotation.get("refseq_name");
+//            String sbo = "" + annotation.get("sbo");
+//            JSONArray model = (JSONArray) geneData.get("model"); 
+//            String modelName;
+//      
+//            Iterator itr = model.iterator();
+//            modelName = "" + itr.next(); 
+//
+//            String name = "" + geneData.get("name");
+//            
+//            //Create a Gene Object to store the data 
+//            Gene gene = new Gene(idKey, name, ncbigi, refseq_name, 
+//                sbo, modelName);
+//            
+//            //Send that data to MySQL
+//            repository.save(gene);
+//
+//        }
+//        System.out.println("DONE LOADING IN GENE DATA!!!");
+//        return "Has to have non void return type";
+//    }
 	
 //    @Bean
 //    public String CommandLineRunner(UserLoginRepo repository) throws Exception
@@ -226,8 +226,7 @@ public class Cs564Application {
 //    }
 
 
-
-	// this is for creating a comment repo in the mysql;
+/*// this is for creating a comment repo in the mysql;
 	@Bean
 	public String CommandLineRunner(CommentRepo repository) throws Exception
 	{
@@ -241,8 +240,7 @@ public class Cs564Application {
 		System.out.println("DONE LOADING IN Comment DATA!!!");
 		return "Has to have non void return type";
 	}
-
-
+*/
 
 
 
