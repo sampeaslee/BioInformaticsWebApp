@@ -18,13 +18,13 @@ class Cs564ApplicationTests {
     @PersistenceContext protected EntityManager em;
 	
     @Autowired
-    HasRepo hasrepo;
+    HasRepo has_repo;
     
     @Autowired
-    ReactionRepo reactionrepo;
+    ReactionRepo react_repo;
     
     @Autowired
-    StoichiometryRepo storepo; 
+    StoichiometryRepo sto_repo; 
     
     @Autowired 
     MetaboliteRepo meta_repo;
@@ -46,7 +46,7 @@ class Cs564ApplicationTests {
 	}
 	
     @Test
-    void test_gene_procedure() {
+    void geneLikeSearch() {
         ArrayList<Gene> procedure = (ArrayList<Gene>)gene_repo.geneProcedure("dad");
         
         ArrayList<String> expected_geneids = new ArrayList<String>();
@@ -73,10 +73,6 @@ class Cs564ApplicationTests {
                 System.out.println("Procedure: " + procedure.get(i).geneID);
             }
         }
-        System.out.println("Correct Genes Found with LIKE SQL Statment!!! Test Passed");
-        System.out.println("#############################################");
-        
-        System.out.println();
     }	
     
     @Test 
@@ -131,7 +127,7 @@ class Cs564ApplicationTests {
     
     
     @Test
-    void join_compound_meta() {
+    void joinCompoundMetabolites() {
         
         String meta = "samprot_c";
         
@@ -156,8 +152,6 @@ class Cs564ApplicationTests {
             + "Test passed!");
                
     }
-//////////////////////////////////////////////////////////////////////////////
-    //Modification Tests
     
     @Test
     void addGene() {
@@ -254,9 +248,6 @@ class Cs564ApplicationTests {
         
         }
         
-
-        
-        
     }
     
     
@@ -329,7 +320,289 @@ class Cs564ApplicationTests {
     }
     
     
+    @Test
+    void getReactionID() {
+        
+        String reactid = react_repo.getReactionID("10FTHF5GLUtl");
+  
+        if(!reactid.equals("10FTHF5GLUtl")){
+            fail();
+        }
     
+    }
     
+
+    @Test
+    void getReaction() {
+
+        Reaction react = react_repo.getAReaction("10FTHF5GLUtl");
+
+        if (!react.ReactionID.equals("10FTHF5GLUtl")) {
+            System.out.println(react.ReactionID);
+            fail();
+        }
+        if (react.HigherBound.equals("100000.0 ")) {
+            System.out.println(react.HigherBound);
+            fail();
+        }
+        if (!react.LowerBound.equals("0.0")) {
+            System.out.println(react.LowerBound);
+            fail();
+        }
+
+        if (!react.Subsystem.equals("Transport, Lysosomal")) {
+            System.out.println(react.Subsystem);
+            fail();
+
+        }
+        if (!react.gene_reaction_rule.equals("")) {
+
+            System.out.println(react.gene_reaction_rule);
+            fail();
+        }
+        if (!react.name.equals("5-glutamyl-10FTHF transport, lysosomal")) {
+            System.out.println(react.name);
+            fail();
+        }
+        if (!react.signature.equals("NA")) {
+            System.out.println(react.signature);
+            fail();
+        }
+    }
+     
+    @Test
+    void insertNewReaction() {
+        Reaction new_react = new Reaction("SALMO","SALMO","SALMO","SALMO",
+            "SALMO","SALMO","SALMO");
+        react_repo.save(new_react);
+        Reaction react = react_repo.getAReaction("SALMO");
+        react_repo.delete(new_react);
+        if (!react.ReactionID.equals("SALMO")) {
+            System.out.println(react.ReactionID);
+            fail();
+        }
+        if (react.HigherBound.equals("SALMO ")) {
+            System.out.println(react.HigherBound);
+            fail();
+        }
+        if (!react.LowerBound.equals("SALMO")) {
+            System.out.println(react.LowerBound);
+            fail();
+        }
+
+        if (!react.Subsystem.equals("SALMO")) {
+            System.out.println(react.Subsystem);
+            fail();
+
+        }
+        if (!react.gene_reaction_rule.equals("SALMO")) {
+
+            System.out.println(react.gene_reaction_rule);
+            fail();
+        }
+        if (!react.name.equals("SALMO")) {
+            System.out.println(react.name);
+            fail();
+        }
+        if (!react.signature.equals("SALMO")) {
+            System.out.println(react.signature);
+            fail();
+        }
+    }
+     
+    @Test
+    void deleteNewReaction() {
+        Reaction new_react = new Reaction("SALMO","SALMO","SALMO","SALMO",
+            "SALMO","SALMO","SALMO");
+        react_repo.save(new_react);
+        react_repo.delete(new_react);
+        Reaction react = react_repo.getAReaction("SALMO");
+        if (react != null) {
+            fail();
+        }
+
+    }
+     
+    @Test
+    void updateAReaction() {
+        Reaction new_react = new Reaction("SALMO","SALMO","SALMO","SALMO",
+            "SALMO","SALMO","SALMO");
+        react_repo.save(new_react);
+        react_repo.updateReactionHigherBound("SALMO", "SAM");
+        react_repo.updateReactionName("SALMO", "SAM");
+        react_repo.updateReactionRule("SALMO", "SAM");
+        react_repo.updateReactionSignature("SALMO", "SAM");
+        react_repo.updateReactionsLowerBound("SALMO", "SAM");
+        react_repo.updateReactionSubsystem("SALMO", "SAM");
+        Reaction react = react_repo.getAReaction("SALMO");
+        react_repo.delete(new_react);
+        if (!react.ReactionID.equals("SALMO")) {
+            System.out.println(react.ReactionID);
+            fail();
+        }
+        if (react.HigherBound.equals("SAM ")) {
+            System.out.println(react.HigherBound);
+            fail();
+        }
+        if (!react.LowerBound.equals("SAM")) {
+            System.out.println(react.LowerBound);
+            fail();
+        }
+
+        if (!react.Subsystem.equals("SAM")) {
+            System.out.println(react.Subsystem);
+            fail();
+
+        }
+        if (!react.gene_reaction_rule.equals("SAM")) {
+
+            System.out.println(react.gene_reaction_rule);
+            fail();
+        }
+        if (!react.name.equals("SAM")) {
+            System.out.println(react.name);
+            fail();
+        }
+        if (!react.signature.equals("SAM")) {
+            System.out.println(react.signature);
+            fail();
+        }
+    }
+     
     
+   @Test
+   void reactionLIKESearch() {
+      ArrayList<Reaction> reacts = (ArrayList<Reaction> ) react_repo.autoSearch("sam");
+      ArrayList<String> expected = new ArrayList<String>();
+      expected.add("SAMHISTAe");
+      expected.add("SAMU3");
+      expected.add("SAM24MT");
+      expected.add("SAM_MT");
+      expected.add("SAMHISTA");
+      
+      for(Reaction r: reacts) {
+          if(!expected.contains(r.ReactionID)) {
+              fail();
+          }
+      }
+   }
+    
+
+   @Test
+   void getStoichiometryByID() {
+       Stoichiometry sto = sto_repo.findByReactionID("10FTHF5GLUtl");
+
+       if (!sto.reactionID.equals("10FTHF5GLUtl")) {
+           fail();
+       }
+
+       if (sto.endMetabolites.equals("#10fthf5glu_l:1.0 ")) {
+           fail();
+       }
+       if (sto.startMetabolites.equals("#10fthf5glu_c:-1.0 ")) {
+           fail();
+       }
+   }
+
+   @Test 
+   void insertNewStoichimetry() {
+       Reaction new_react = new Reaction("SALMO","SALMO","SALMO","SALMO",
+           "SALMO","SALMO","SALMO");
+       react_repo.save(new_react);
+       Stoichiometry new_sto = new Stoichiometry("SALMO","#thf5glu_l:2.0 ", "#10fthf5glu_c:-1.0 ");
+       sto_repo.save(new_sto);
+       Stoichiometry sto = sto_repo.queryExampleTwo("SALMO");
+      
+       sto_repo.delete(sto);
+      
+       react_repo.delete(new_react);
+      
+       if (!sto.reactionID.equals("SALMO")) {
+           fail();
+       }
+
+       if (sto.endMetabolites.equals("#thf5glu_l:2.0 ")) {
+           fail();
+       }
+       if (sto.startMetabolites.equals("#10fthf5glu_c:-1.0 ")) {
+           fail();
+       }
+       
+   }
+   
+   
+   @Test
+   void insertStoichiometryForgeinKeyDoesNotExitsInReactions() {
+       
+       Stoichiometry new_sto = new Stoichiometry
+           ("SALMO","#thf5glu_l:2.0 ", "#10fthf5glu_c:-1.0 ");     
+      try{
+          sto_repo.save(new_sto);
+          fail();
+      }catch(Exception e) {
+          System.out.println("Forgien Key Constraint worked");
+      }
+      
+   
+   
+   }
+   
+
+   @Test 
+   void deleteReactionCheckStochiomeryDeletedAsWell() {
+       Reaction new_react = new Reaction("SALMO","SALMO","SALMO","SALMO",
+           "SALMO","SALMO","SALMO");
+       react_repo.save(new_react);
+       Stoichiometry new_sto = new Stoichiometry("SALMO","#thf5glu_l:2.0 ", "#10fthf5glu_c:-1.0 ");
+       sto_repo.save(new_sto);
+       react_repo.delete(new_react);
+       Stoichiometry sto = sto_repo.queryExampleTwo("SALMO");
+      if(sto != null) {
+          fail();
+      }
+
+       
+   }
+   
+   @Test 
+   void updateStoichimetry() {
+       Reaction new_react = new Reaction("SALMO","SALMO","SALMO","SALMO",
+           "SALMO","SALMO","SALMO");
+       react_repo.save(new_react);
+       Stoichiometry new_sto = new Stoichiometry("SALMO","#thf5glu_l:2.0 ", "#10fthf5glu_c:-1.0 ");
+       sto_repo.save(new_sto);
+       sto_repo.updateStartMetabolites("SALMO", "UPDATED_START");
+       sto_repo.updateEndMetabolites("SALMO", "UPDATED_END");
+       
+       Stoichiometry sto = sto_repo.queryExampleTwo("SALMO");
+     
+       react_repo.delete(new_react);
+       
+       if (!sto.reactionID.equals("SALMO")) {
+           fail();
+       }
+
+       if (sto.endMetabolites.equals("UPDATED_START")) {
+           fail();
+       }
+       if (sto.startMetabolites.equals("UPDATED_END")) {
+           fail();
+       }
+       
+       
+   }
+   
+   @Test 
+   void updateStoichimetryEntryNotInTable() {
+      
+       sto_repo.updateStartMetabolites("SALMO", "UPDATED_START");
+       sto_repo.updateEndMetabolites("SALMO", "UPDATED_END");
+       
+       Stoichiometry sto = sto_repo.queryExampleTwo("SALMO");
+       if(sto != null) {
+           fail();
+       }
+       
+       
+   }
 }
