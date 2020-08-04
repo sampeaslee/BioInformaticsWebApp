@@ -1,1 +1,1 @@
-Bioinformatics web application created with Java, Spring Boot, MySQL, HTM:, JavaScript and CSS.
+Bioinformatics web application created with Java, Spring Boot, MySQL, HTML, JavaScript and CSS.
