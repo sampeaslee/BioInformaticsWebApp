@@ -127,44 +127,75 @@ class Cs564ApplicationTests {
     
     
     @Test
-    void joinCompoundMetabolites() {
+    void joinCompoundMetabolitesMetaID() {
         
-        String meta = "samprot_c";
+        String meta = "sam";
         
         javax.persistence.Query queryCompound = em.createQuery(""
             + "Select distinct  c, m FROM Metabolite m, Compound c where c.biggmetaboliteID = m.bigg_compoundID "
             + "AND m.metaboliteID LIKE :search", Object[].class);
         queryCompound.setParameter("search", meta + "%");
         
+        @SuppressWarnings("unchecked")
         ArrayList<Object[]> results = (ArrayList<Object[]>) queryCompound.getResultList();
-        
 
         Compound c = (Compound) results.get(0)[0];
         Metabolite m = (Metabolite) results.get(0)[1];
-        
+
         if(!m.bigg_compoundID.equals("samprot") || !m.metaboliteID.equals("samprot_c") 
             || !c.name.equals("S-Aminomethyldihydrolipoylprotein")) {
             fail();
         }
-            
+         
         
         System.out.println("All metabolite and compound information found is correct. "
             + "Test passed!");
                
     }
-    
+    @Test
+    void joinCompoundMetabolitesLikeSearchCompoundName() {
+        
+        String meta = "sam";
+
+        javax.persistence.Query queryCompound = em.createQuery(""
+            + "Select distinct  c, m FROM Metabolite m, Compound c where c.biggmetaboliteID = m.bigg_compoundID "
+            + "AND c.name LIKE :search", Object[].class);
+        queryCompound.setParameter("search", "%"+ meta + "%");
+
+        
+        ArrayList<Object[]> results = (ArrayList<Object[]>) queryCompound.getResultList();
+
+        Compound c = (Compound) results.get(0)[0];
+        Metabolite m = (Metabolite) results.get(0)[1];
+        
+        if(!m.bigg_compoundID.equals("3_rhma13unaga")){
+            fail();
+        }
+        if(!m.metaboliteID.equals("3_rhma13unaga_c")){ 
+            fail();
+        }
+          if(!c.name.equals("3n Rhamnosyl alfa 1  3   N acetyl glucosamine undecaprenyl diphosphate")) {
+            fail();
+        }
+        
+        
+        System.out.println("All metabolite and compound information found is correct. "
+            + "Test passed!");
+               
+    }
     @Test
     void addGene() {
         
-        Gene gene = new Gene("sam","sam","sam","sam","sam","sam");
+        Gene gene = new Gene("newGeneID","newName","newNcbigi","newRefseq_name","newSbo","newModel");
         
         gene_repo.save(gene);
         
-        Gene new_gene = gene_repo.getAGene("sam");
+        Gene new_gene = gene_repo.getAGene("newGeneID");
+        System.out.println(new_gene.geneID);
         
-        if(!new_gene.geneID.equals("sam")|| !new_gene.model.equals("sam") ||
-            !new_gene.refseq_name.equals("sam")||!new_gene.ncbigi.equals("sam")
-            ||!new_gene.sbo.equals("sam")|| !new_gene.refseq_name.equals("sam")) {
+        if(!new_gene.geneID.equals("newGeneID")|| !new_gene.model.equals("newModel") ||
+            !new_gene.name.equals("newName")||!new_gene.ncbigi.equals("newNcbigi")
+            ||!new_gene.sbo.equals("newSbo")|| !new_gene.refseq_name.equals("newRefseq_name")) {
             fail();
         }
         gene_repo.delete(gene);
@@ -371,7 +402,7 @@ class Cs564ApplicationTests {
     }
      
     @Test
-    void insertNewReaction() {
+    void addReaction() {
         Reaction new_react = new Reaction("SALMO","SALMO","SALMO","SALMO",
             "SALMO","SALMO","SALMO");
         react_repo.save(new_react);
@@ -411,7 +442,7 @@ class Cs564ApplicationTests {
     }
      
     @Test
-    void deleteNewReaction() {
+    void deleteReaction() {
         Reaction new_react = new Reaction("SALMO","SALMO","SALMO","SALMO",
             "SALMO","SALMO","SALMO");
         react_repo.save(new_react);
@@ -424,7 +455,7 @@ class Cs564ApplicationTests {
     }
      
     @Test
-    void updateAReaction() {
+    void updateReaction() {
         Reaction new_react = new Reaction("SALMO","SALMO","SALMO","SALMO",
             "SALMO","SALMO","SALMO");
         react_repo.save(new_react);
@@ -563,6 +594,28 @@ class Cs564ApplicationTests {
 
        
    }
+   
+   
+
+   @Test 
+   void deleteReactionCheckHasDeletedAsWell() {
+       Reaction new_react = new Reaction("SALMO","SALMO","SALMO","SALMO",
+           "SALMO","SALMO","SALMO");
+       react_repo.save(new_react);
+       ReactionModel rm = new ReactionModel("SALMO","SALMO");
+       Has h = new Has(rm);
+       has_repo.save(h);
+       react_repo.delete(new_react);
+       ArrayList<Has> results = has_repo.queryExample();
+
+       
+      if(results.size() != 0) {
+          fail();
+      }
+
+       
+   }
+   
    
    @Test 
    void updateStoichimetry() {

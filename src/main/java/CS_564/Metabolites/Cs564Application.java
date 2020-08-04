@@ -226,8 +226,8 @@ public class Cs564Application {
 //    }
 
 
-/*// this is for creating a comment repo in the mysql;
-	@Bean
+// this is for creating a comment repo in the mysql;
+/*	@Bean
 	public String CommandLineRunner(CommentRepo repository) throws Exception
 	{
 
@@ -240,9 +240,9 @@ public class Cs564Application {
 		System.out.println("DONE LOADING IN Comment DATA!!!");
 		return "Has to have non void return type";
 	}
-*/
 
 
+/
 
 
 	//THIRD METHOD TO RUN (THIS ONE TAKES LONGER)

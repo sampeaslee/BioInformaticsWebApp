@@ -101,8 +101,14 @@ public class SamController {
         //queryCompound.setMaxResults(1000);
         ArrayList<Object[]> results = (ArrayList<Object[]>) queryCompound.getResultList();
 
-        if (results.size() > 0) {
 
+
+        if (results.size() > 0) {
+            javax.persistence.Query queryCompound2 = em.createQuery(""
+                + "Select distinct  c, m FROM Metabolite m, Compound c where c.biggmetaboliteID = m.bigg_compoundID "
+                + "AND c.name LIKE :search", Object[].class);
+        queryCompound2.setParameter("search", "%"+ name + "%");
+        results.addAll(queryCompound2.getResultList());
             Compound c = (Compound) results.get(0)[0];
             ArrayList<Metabolite> meta = new ArrayList<Metabolite>();
             ArrayList<Compound> compound = new ArrayList<Compound>();
@@ -130,10 +136,11 @@ public class SamController {
             String search = "No Metabolite IDs Start With: " + name;
             model.addAttribute("current", search);
         }
+
+
         return "metabolites";
 
     }
-
 
     
  ////////////////////////////////////////////////////////////////////////////////   

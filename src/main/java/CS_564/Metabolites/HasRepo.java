@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface HasRepo extends JpaRepository<Has, ReactionModel> {
     
-    @Query(value = " select * from has where reactionid = '10FTHF6GLUtl' ;", nativeQuery = true)
+    @Query(value = " select * from has where reactionid = 'SALMO' ;", nativeQuery = true)
     public ArrayList<Has> queryExample();
 
 }

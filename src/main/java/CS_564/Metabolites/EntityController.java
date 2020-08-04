@@ -373,6 +373,7 @@ public class EntityController{
          String metabolites_metaboliteID = ((String)convert_to_json.get("metaboliteID"));
          String metabolites_compartment = ((String)convert_to_json.get("compartment"));
          String metabolites_bigg_compoundID = ((String)convert_to_json.get("bigg_compoundID"));
+         System.out.println("###############################" + metabolites_bigg_compoundID);
 
 
         if (metaboliteRepo.getMetabolitesID(metabolites_metaboliteID) != null)
