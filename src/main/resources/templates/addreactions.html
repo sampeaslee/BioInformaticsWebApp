@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://www.thymeleaf.org" lang="en">
+<head>
+  <title>BioInformatics</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+ <script th:inline="javascript">
+ function getGeneDatabaseToAdd()
+ { 		
+	location.assign("/addgenes");
+ }
+	 
+ function getGeneDatabaseToDelete()
+ { 		   
+	location.assign("/deletegenes");
+ }
+	
+ function getMetabolitesDatabaseToAdd()
+ { 	
+	location.assign("/addmetabolites");
+ }
+	 
+ function getMetabolitesDatabaseToDelete()
+ { 
+	location.assign("/deletemetabolites");
+ }
+
+ function getReactionDatabaseToAdd()
+ { 		
+	location.assign("/addreactions");
+ }
+	 
+ function getReactionDatabaseToDelete()
+ { 				
+	location.assign("/deletereactions");
+ }
+	
+ function selectReactionsToAdd(val)
+ { 
+	var index= (document.getElementById("select_add_reactions_dropdown").selectedIndex);
+			  	
+	/*<![CDATA[*/
+	  var array_reactions = [[${listofreactions}]]  
+	/*]]>*/	
+	
+	/*<![CDATA[*/
+	  var array_stoichiometry = [[${listofstoichiometry}]]  
+	/*]]>*/
+	    
+	var reaction_object = array_reactions[index - 1];
+	
+	var stoichiometry_object = array_stoichiometry[index -1];
+	    
+	document.getElementById("ReactionID").value = reaction_object.ReactionID;
+	document.getElementById("Name").value = reaction_object.name;
+	document.getElementById("HigherBound:").value = reaction_object.HigherBound;
+	document.getElementById("LowerBound").value = reaction_object.LowerBound;
+	document.getElementById("Subsystem").value = reaction_object.Subsystem;
+	document.getElementById("Signature").value = reaction_object.signature;
+	document.getElementById("GeneReactionRule").value = reaction_object.gene_reaction_rule;	
+	
+	document.getElementById("StartMetabolites").value = stoichiometry_object.startMetabolites;
+	document.getElementById("EndMetabolites").value = stoichiometry_object.endMetabolites;
+	
+	document.getElementById("search").value = "";	
+	document.getElementById("record").innerHTML = "";
+	
+	
+ }
+	
+	function selectReactionToUpdateBySearch() 
+	{ 
+		
+		var string_found_index = -1;
+		var index = 0;
+		
+		var search_value = document.getElementById("search").value;
+		
+		/*<![CDATA[*/
+    		var array_reactions = [[${listofreactions}]]  
+    	/*]]>*/
+    	
+    	/*<![CDATA[*/
+    		var array_stoichiometry = [[${listofstoichiometry}]]  
+    	/*]]>*/
+    	
+    	var array_length = array_reactions.length;
+    	     	
+    	while(string_found_index == -1 && index < array_length)
+    	{
+    		
+    		var reaction_object = array_reactions[index];
+    		var stoichiometry_object = array_stoichiometry[index];
+    		
+    		if (reaction_object.ReactionID === search_value)
+    		{
+    			string_found_index = 0;
+    		}
+    		else
+    		{
+    			index++;
+    		}
+    	}
+    	
+    	if (string_found_index !== -1)
+    	{
+    		document.getElementById("ReactionID").value = reaction_object.ReactionID;
+    		document.getElementById("Name").value = reaction_object.name;
+    		document.getElementById("HigherBound:").value = reaction_object.HigherBound;
+    		document.getElementById("LowerBound").value = reaction_object.LowerBound;
+    		document.getElementById("Subsystem").value = reaction_object.Subsystem;
+    		document.getElementById("Signature").value = reaction_object.signature;
+    		document.getElementById("GeneReactionRule").value = reaction_object.gene_reaction_rule;
+    		
+    		document.getElementById("StartMetabolites").value = stoichiometry_object.startMetabolites;
+    		document.getElementById("EndMetabolites").value = stoichiometry_object.endMetabolites;
+    		
+    		document.getElementById("search").value = "";	
+    		document.getElementById("record").innerHTML = "";
+    	}
+    	else
+    	{
+    		document.getElementById("ReactionID").value = "";
+    		document.getElementById("Name").value = "";
+    		document.getElementById("HigherBound:").value = "";
+    		document.getElementById("LowerBound").value = "";
+    		document.getElementById("Subsystem").value = "";
+    		document.getElementById("Signature").value = "";
+    		document.getElementById("GeneReactionRule").value = "";
+    		
+    		document.getElementById("StartMetabolites").value = "";
+    		document.getElementById("EndMetabolites").value = "";
+    		
+    		if (search_value != "")
+    		{
+    		  document.getElementById("record").innerHTML = search_value+" not found in Reaction table!";
+    		}
+    		document.getElementById("search").value = "";
+    		
+    		
+    	}		
+	}
+	
+	function sendToBackEndToAddAReaction()
+	{ 
+		var add_or_update = addOrUpdate();
+		
+		var reaction_to_add = document.getElementById("ReactionID").value;
+		//
+		if (reaction_to_add === "")
+		{
+			document.getElementById("record").innerHTML = "Please Select A Reaction Or Add a New Reaction ID";
+		}
+		else
+		{			
+			var new_reaction_obj = {
+				ReactionID: document.getElementById("ReactionID").value,
+				name: document.getElementById("Name").value,
+				HigherBound: document.getElementById("HigherBound:").value,
+				LowerBound: document.getElementById("LowerBound").value,
+				Subsystem: document.getElementById("Subsystem").value,
+				signature: document.getElementById("Signature").value,
+				gene_reaction_rule: document.getElementById("GeneReactionRule").value,
+				
+				startMetabolites: document.getElementById("StartMetabolites").value,
+				endMetabolites: document.getElementById("EndMetabolites").value
+
+			};
+				 
+			var new_reaction = JSON.stringify(new_reaction_obj);
+		 
+			 $.post("/addreactions", {reaction_to_add: new_reaction}, function(data, status){
+					
+				if (add_or_update === 0)
+				{
+					 alert(status+": "+reaction_to_add+" has been updated in Reaction database!");		
+				}
+				else
+				{
+					alert(status+": "+reaction_to_add+" has been added to Reaction database!");
+				}
+				
+						location.assign("/addreactions");
+				});
+					   
+		}
+	}
+	
+	function addOrUpdate()
+	{
+	    var string_found_index = -1;
+		var index = 0;
+			
+		var data_to_find = document.getElementById("ReactionID").value;
+			
+		/*<![CDATA[*/
+	    	var array_list = [[${listofreactions}]]  
+	    /*]]>*/
+
+	    var array_length = array_list.length;
+	    	     	
+	    while(string_found_index == -1 && index < array_length)
+	    {
+	    	var data_object = array_list[index];
+	    		
+	    	if (data_object.ReactionID === data_to_find)
+	    	{
+	    		string_found_index = 0;
+	    	}
+	    	else
+	    	{
+	    		index++;
+	    	}
+	    }
+	    	
+	    return string_found_index;
+	}
+
+</script>
+
+<style>
+
+  #select_add_reactions_dropdown
+  {
+    width: 500px !important;
+  }
+  
+.body{
+    font: 400 15px Lato, sans-serif;
+    line-height: 1.8;
+    color: black;
+    font-family: Montserrat, sans-serif;;
+    text-align: left;
+  }
+  
+  .jumbotron {
+    background-color: #4682B4;
+    color: #fff;
+    font-family: Montserrat, sans-serif;
+  }
+  
+  .navbar {
+    margin-bottom: 0;
+    background-color: #2E8B57;
+    z-index: 9999;
+    border: 0;
+    font-size: 12px !important;
+    line-height: 1.42857143 !important;
+    letter-spacing: 4px;
+    border-radius: 0;
+    font-family: Montserrat, sans-serif;
+  }
+  
+  .navbar li a, .navbar .navbar-brand {
+    color: #fff !important;
+  }
+  .navbar-nav li a:hover, .navbar-nav li.active a {
+    color: #f4511e !important;
+    background-color: #fff !important;
+  }
+  .navbar-default .navbar-toggle {
+    border-color: transparent;
+    color: #fff !important;
+  }
+  
+ #record
+ {
+    color: red;
+    text-align: center;
+ }
+  
+ #add_reaction_database
+ {
+ 	padding: 210px 800px;
+    font: 400 15px Lato, sans-serif;
+    color: blue;
+    font-family: Montserrat, sans-serif; 
+    text-align: center;
+  	size: 30px;
+  	margin: 4px 2px;
+  }
+  
+ #bioinformatics
+ {
+    border: 0;
+    line-height: 3.5 !important;
+    letter-spacing: 4px;
+    border-radius: 0;
+    font-family: Montserrat, sans-serif;
+    position: absolute;
+  	bottom: 0;
+  	width: 100%;
+  	/* Set the fixed height of the footer here */
+  	height: 60px;
+  	line-height: 60px; /* Vertically center the text there */
+  	background-color: #2E8B57;
+  }
+  
+  #log_out
+  {
+   position:fixed;
+   right:300px;
+   top:15px;
+  }
+  
+ #reaction_add_two
+ {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ }
+ 
+ #search
+ {
+  	width: 400px;
+ }
+ 
+ #geneslink
+ {
+ 	 font-weight: bold;
+ 	 font-size: 25px;
+ }
+ 
+ #metaboliteslink
+ {
+  	font-weight: bold;
+ 	font-size: 25px;
+ }
+ 
+ #reactionslink
+ {
+  	font-weight: bold;
+ 	font-size: 25px;
+ }
+</style>
+
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+     <img src = "images/modify.png"  width="75" height="75" align = "left" ></img>
+  <div class="container">
+    <div class="collapse navbar-collapse" id="myNavbar">
+
+      <ul class="nav navbar-nav navbar-right">
+              <form id="log_out" th:action="@{/logout}" method="post">
+            <button type="submit">LogOut</button>
+            </form>
+        <li id = "home"><a>Home</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<header id="subject" class="jumbotron text-center">
+ 	<div class="container">
+      	<h1>
+      		<b>
+       			<strong>
+        			Add Or Modify A Reaction
+       			</strong>
+      		</b>
+    	</h1>
+    
+    <form class="form-inline" id="mysearch" onsubmit="selectReactionToUpdateBySearch();return false">
+  		<div class="form-group">
+    		<input  class="form-control" id="search">
+  		</div>
+  			<button type="button" onClick="selectReactionToUpdateBySearch()" class="btn btn-default">Search</button>
+	</form> 
+  </div>
+</header>
+
+ <div class="container-fluid">
+  <div class="row content">
+    <div class="col-lg-2">
+      <ul class="nav nav-pills nav-stacked"> 
+         <div class="container">
+			<a href="#gene" id="geneslink" class="btn btn-link" data-toggle="collapse">Genes</a>
+				<div id="gene" class="collapse">
+					<button id="add_gene" type="button" onClick="getGeneDatabaseToAdd()" class="btn btn-default">Add Gene</button>
+    				<button id="delete_gene" type="button" onClick="getGeneDatabaseToDelete()" class="btn btn-default">Delete Gene</button>
+    			</div>
+		</div>
+			
+		<div class="container">
+			<a href="#metabolites" id="metaboliteslink" class="btn btn-link" data-toggle="collapse">Metabolites</a>
+				<div id="metabolites" class="collapse">
+					<button id="add_metabolite" type="button" onClick="getMetabolitesDatabaseToAdd()" class="btn btn-default">Add Metabolite</button>
+    				<button id="delete_metabolite" type="button" onClick="getMetabolitesDatabaseToDelete()" class="btn btn-default">Delete Metabolite</button>
+    			</div>
+		</div>
+			
+		<div class="container">
+			<a href="#reactions" id="reactionslink" class="btn btn-link" data-toggle="collapse">Reactions</a>
+				<div id="reactions" class="collapse">
+					<button id="add_reactions" type="button" onClick="getReactionDatabaseToAdd()" class="btn btn-default">Add Reactions</button>
+    				<button id="delete_reactions" type="button" onClick="getReactionDatabaseToDelete()" class="btn btn-default">Delete Reactions</button>
+    			</div>
+		</div> 
+	 </ul>    
+    </div>
+  
+ 
+    
+    <div id="reaction_add_one" class="col-lg-5">
+    	<div class="container">
+  			<form>
+    			<div class="form-group">
+      				<label id="reactions_label" for="select_reactions">Reactions</label>
+      					<select id="select_add_reactions_dropdown" onchange="selectReactionsToAdd(value)" class="form-control">
+      							<option selected disabled>Choose A Reaction...</option>
+       					 		<option id="select_reactions" th:each="reactionslist : ${listofreactions}"  
+       					 	     		th:value = "${reactionslist.ReactionID}" th:text="${reactionslist.ReactionID}">
+       					 	     </option>
+        				
+      					</select>
+    			</div>
+  			</form>
+		</div>
+    </div>
+    
+    <div id="reaction_add_two" class="col-lg-5">  
+  	  <form class="form-inline">    
+ 		 <div class="form-group">
+ 		 	<div class="col-lg-6 offset-lg-3">
+    			<label for="reactionID">ReactionID:</label>
+    			<input type="text" class=" mb-sm-5 form-control" id="ReactionID">
+    		</div>
+ 		 </div>
+ 		 
+ 		 <div class="form-group">
+  			<div class="col-lg-6 offset-lg-3">
+    			<label for="name">Name:</label>
+    			<input type="text" class="form-control" id="Name">
+    		</div>
+  		</div>
+  		
+	  </form>
+    
+      <form class="form-inline">
+ 		 <div class="form-group">
+ 		 	<div class="col-lg-6 offset-lg-3">
+    			<label for="ncbigi">HigherBound:</label>
+    			<input type="text" class="form-control" id="HigherBound:">
+    		</div>
+ 		 </div>
+ 		 
+  		<div class="form-group">
+  			<div class="col-lg-6 offset-lg-3">
+    			<label for="refseq_name">LowerBound:</label>
+    			<input type="text" class="form-control" id="LowerBound">
+    		</div>
+  		</div>
+  		
+  		 <div class="form-group">
+ 		 	<div class="col-lg-6 offset-lg-3">
+    			<label for="StartMetabolites">Start Metabolites:</label>
+    			<input type="text" class="form-control" id="StartMetabolites">
+    		</div>
+ 		 </div>
+ 		 
+  		<div class="form-group">
+  			<div class="col-lg-6 offset-lg-3">
+    			<label for="StartMetabolites">End Metabolites:</label>
+    			<input type="text" class="form-control" id="EndMetabolites">
+    		</div>
+  		</div>
+	</form>
+	
+	<form class="form-inline">
+ 		 <div class="form-group">
+ 		 	<div class="col-lg-6 offset-lg-3">
+    			<label for="sbo">Subsystem:</label>
+    			<input type="text" class="form-control" id="Subsystem">
+    		</div>
+ 		 </div>
+ 		 
+  		<div class="form-group">
+  			<div class="col-lg-6 offset-lg-3">
+    			<label for="Signature">Signature:</label>
+    			<input type="text" class="form-control" id="Signature">
+    		</div>
+  		</div>
+  		
+  		<div class="form-group">
+  			<div class="col-lg-6 offset-lg-3">
+    			<label for="GeneReactionRule">GeneReactionRule:</label>
+    			<input type="text" class="form-control" id="GeneReactionRule">
+    		</div>
+  		</div>
+	</form>
+ </div>
+    
+    <div id="add_reaction_database">
+		<button type="button" onClick="getReactionDatabaseToAdd()" class="btn btn-default"><b><strong>Clear</strong></b></button>
+    	<button type="button" onClick="sendToBackEndToAddAReaction()" class="btn btn-default"><b><strong>Update</strong></b></button>
+  	</div>
+    
+    </div>
+    
+    </div>
+    
+    <h1 id="record">
+      		<b>
+       			<strong>
+       			</strong>
+      		</b>
+    </h1>
+    
+    <footer id="bioinformatics" class="page-footer font-small blue">
+  		<div class="footer-copyright text-center py-3">
+   	 		<label> <b><strong>© 2020 Copyright: BioInformatics.com</strong></b></label>
+  		</div>
+	</footer>
+    <script>    $("#home").click(function(){
+    window.location.assign("http://localhost:8080/home")
+});
+</script>
+ </body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://www.thymeleaf.org" lang="en">
+<head>
+  <title>BioInformatics</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+ <script th:inline="javascript">
+ function getGeneDatabaseToAdd()
+ {      
+    location.assign("/addgenes");
+ }
+     
+ function getGeneDatabaseToDelete()
+ {         
+    location.assign("/deletegenes");
+ }
+    
+ function getMetabolitesDatabaseToAdd()
+ {  
+    location.assign("/addmetabolites");
+ }
+     
+ function getMetabolitesDatabaseToDelete()
+ { 
+    location.assign("/deletemetabolites");
+ }
+
+ function getReactionDatabaseToAdd()
+ {      
+    location.assign("/addreactions");
+ }
+     
+ function getReactionDatabaseToDelete()
+ {              
+    location.assign("/deletereactions");
+ }
+</script>
+
+<style>
+
+  
+.body{
+    font: 400 15px Lato, sans-serif;
+    line-height: 1.8;
+    color: black;
+    font-family: Montserrat, sans-serif;;
+    text-align: left;
+  }
+  
+  .jumbotron {
+    background-color: #4682B4;
+    color: #fff;
+    font-family: Montserrat, sans-serif;
+  }
+  
+.navbar {
+    margin-bottom: 0;
+    background-color: #2E8B57;
+    z-index: 9999;
+    border: 0;
+    font-size: 12px !important;
+    line-height: 1.42857143 !important;
+    letter-spacing: 4px;
+    border-radius: 0;
+    font-family: Montserrat, sans-serif;
+  }
+  
+  .navbar li a, .navbar .navbar-brand {
+    color: #fff !important;
+  }
+  .navbar-nav li a:hover, .navbar-nav li.active a {
+    color: #f4511e !important;
+    background-color: #fff !important;
+  }
+  .navbar-default .navbar-toggle {
+    border-color: transparent;
+    color: #fff !important;
+  }
+  
+  #log_out
+  {
+   position:fixed;
+   right:300px;
+   top:15px;
+  }
+
+  
+ #bioinformatics
+ {
+    border: 0;
+    line-height: 3.5 !important;
+    letter-spacing: 4px;
+    border-radius: 0;
+    font-family: Montserrat, sans-serif;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    line-height: 60px; /* Vertically center the text there */
+    background-color: #2E8B57;
+  }
+ 
+ #geneslink
+ {
+     font-weight: bold;
+     font-size: 25px;
+ }
+ 
+ #modelslink
+ {
+    font-weight: bold;
+    font-size: 25px;
+ }
+ 
+ #metaboliteslink
+ {
+    font-weight: bold;
+    font-size: 25px;
+ }
+ 
+ #reactionslink
+ {
+    font-weight: bold;
+    font-size: 25px;
+ }
+ 
+</style>
+
+
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+     <img src = "images/modify.png"  width="75" height="75" align = "left" ></img>
+  <div class="container">
+    <div class="collapse navbar-collapse" id="myNavbar">
+
+      <ul class="nav navbar-nav navbar-right">
+              <form id="log_out" th:action="@{/logout}" method="post">
+            <button type="submit">LogOut</button>
+            </form>
+        <li id = "home"><a>Home</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<header id="subject" class="jumbotron text-center">
+ <div class="container">
+    <h1></h1> 
+      <h1>
+      <b>
+       <strong>
+            Update Database
+       </strong>
+      </b>
+    </h1> 
+  </div>
+</header>
+
+ <div class="container-fluid">
+  <div class="row content">
+    <div class="col-lg-2">
+    <ul class="nav nav-pills nav-stacked" > 
+      <div class="container">
+            <a href="#gene" id="geneslink" class="btn btn-link" data-toggle="collapse">Gene</a>
+                <div id="gene" class="collapse">
+                    <button id="add_gene" type="button" onClick="getGeneDatabaseToAdd()" class="btn btn-default">Update Genes</button>
+                    <button id="delete_gene" type="button" onClick="getGeneDatabaseToDelete()" class="btn btn-default">Delete Gene</button>
+                </div>
+        </div>
+        
+        <div class="container">
+            <a href="#metabolites" id="metaboliteslink" class="btn btn-link" data-toggle="collapse">Metabolites</a>
+                <div id="metabolites" class="collapse">
+                    <button id="add_metabolite" type="button" onClick="getMetabolitesDatabaseToAdd()" class="btn btn-default">Update Metabolites</button>
+                    <button id="delete_metabolite" type="button" onClick="getMetabolitesDatabaseToDelete()" class="btn btn-default">Delete Metabolite</button>
+                </div>
+        </div>
+            
+        <div class="container">
+            <a href="#reactions" id="reactionslink" class="btn btn-link" data-toggle="collapse">Reactions</a>
+                <div id="reactions" class="collapse">
+                    <button id="add_reactions" type="button" onClick="getReactionDatabaseToAdd()" class="btn btn-default">Update Reactions</button>
+                    <button id="delete_reactions" type="button" onClick="getReactionDatabaseToDelete()" class="btn btn-default">Delete Reactions</button>
+                </div>
+        </div>
+        
+         
+     </ul>       
+    </div> 
+  
+    </div>
+   </div>
+    
+    <footer id="bioinformatics" class="page-footer font-small blue">
+        <div class="footer-copyright text-center py-3">
+            <label> <b><strong>© 2020 Copyright: BioInformatics.com</strong></b></label>
+        </div>
+    </footer>
+    <script>    $("#home").click(function(){
+    window.location.assign("http://localhost:8080/home")
+});
+</script>
+    
+ </body>
+</html>
+
+
+

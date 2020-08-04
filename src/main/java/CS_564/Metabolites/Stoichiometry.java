@@ -39,8 +39,15 @@ public class Stoichiometry {
         this.startMetabolites = startMetabolites;
         this.endMetabolites = endMetabolites;
     }
-    
-    
+    @Override
+    public String toString() {
+        String stoichiometryString = "";
+        stoichiometryString += startMetabolites;
+        stoichiometryString += " -> ";
+        stoichiometryString += endMetabolites;
+        String a = stoichiometryString.replaceAll("#", " ");
+        String b = a.replaceAll(",", " + ");
+        return b;
 
-
+    }
 }

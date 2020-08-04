@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://www.thymeleaf.org" lang="en">
+<head>
+  <title>BioInformatics</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+ <script th:inline="javascript">	
+ function getGeneDatabaseToAdd()
+ { 		
+	location.assign("/addgenes");
+ }
+	 
+ function getGeneDatabaseToDelete()
+ { 		   
+	location.assign("/deletegenes");
+ }
+	
+ function getMetabolitesDatabaseToAdd()
+ { 	
+	location.assign("/addmetabolites");
+ }
+	 
+ function getMetabolitesDatabaseToDelete()
+ { 
+	location.assign("/deletemetabolites");
+ }
+
+ function getReactionDatabaseToAdd()
+ { 		
+	location.assign("/addreactions");
+ }
+	 
+ function getReactionDatabaseToDelete()
+ { 				
+	location.assign("/deletereactions");
+ }
+	
+	function selectGenesToDelete()
+	{ 
+		var index= (document.getElementById("select_delete_genes_dropdown").selectedIndex);
+	  	
+		 /*<![CDATA[*/
+	    	var array_genes = [[${listofgenes}]]  
+	    /*]]>*/	
+	    
+	    var gene_object = array_genes[index - 1];
+	    
+	    document.getElementById("GeneID").value = gene_object.geneID
+		document.getElementById("Name").value = gene_object.name
+		document.getElementById("Ncbigi:").value = gene_object.ncbigi
+		document.getElementById("Refseq_name").value = gene_object.refseq_name
+		document.getElementById("Sbo").value = gene_object.sbo
+		document.getElementById("Model").value = gene_object.model
+	}
+	
+	function selectGeneToDeleteBySearch() 
+	{ 
+		
+		var string_found_index = -1;
+		var index = 0;
+		
+		var search_value = document.getElementById("search").value;
+		
+		/*<![CDATA[*/
+    		var array_genes = [[${listofgenes}]]  
+    	/*]]>*/
+    	
+    	var array_length = array_genes.length;
+    	     	
+    	while(string_found_index == -1 && index < array_length)
+    	{
+    		
+    		var gene_object = array_genes[index];
+    		
+    		if (gene_object.geneID === search_value)
+    		{
+    			string_found_index = 0;
+    		}
+    		else
+    		{
+    			index++;
+    		}
+    	}
+    	
+    	if (string_found_index !== -1)
+    	{
+    		document.getElementById("GeneID").value = gene_object.geneID
+    		document.getElementById("Name").value = gene_object.name
+    		document.getElementById("Ncbigi:").value = gene_object.ncbigi
+    		document.getElementById("Refseq_name").value = gene_object.refseq_name
+    		document.getElementById("Sbo").value = gene_object.sbo
+    		document.getElementById("Model").value = gene_object.model
+    		document.getElementById("search").value = "";	
+    		document.getElementById("record").innerHTML = "";
+    	}
+    	else
+    	{
+    		document.getElementById("GeneID").value = "";
+    		document.getElementById("Name").value = "";
+    		document.getElementById("Ncbigi:").value = "";
+    		document.getElementById("Refseq_name").value = "";
+    		document.getElementById("Sbo").value = "";
+    		document.getElementById("Model").value = "";
+    		if (search_value != "")
+    		{
+    		  document.getElementById("record").innerHTML = search_value+" not found in Gene table!";
+    		}
+    		document.getElementById("search").value = "";
+    	}		
+	}
+	
+	function sendToBackEndToDeleteAGene()
+	{ 
+		var gene_for_deletion = document.getElementById("GeneID").value;
+		//
+		if (gene_for_deletion === "")
+		{
+			 document.getElementById("record").innerHTML = "Please Select A Gene To Delete";
+		}
+		else
+		{			 
+			$.post("/deletegenes", {genes_to_delete: gene_for_deletion}, function(data, status){
+				alert(status+": "+gene_for_deletion+" has been deleted from Gene database!");
+				location.assign("/deletegenes");
+			});
+			 			
+		}  
+	}
+
+</script>
+
+<style>  
+  #select_delete_genes_dropdown
+  {
+    width: 500px !important;
+  }
+  
+.body{
+    font: 400 15px Lato, sans-serif;
+    line-height: 1.8;
+    color: black;
+    font-family: Montserrat, sans-serif;;
+    text-align: left;
+  }
+  
+  .jumbotron {
+    background-color: #4682B4;
+    color: #fff;
+    font-family: Montserrat, sans-serif;
+  }
+  
+  .navbar {
+    margin-bottom: 0;
+    background-color: #2E8B57;
+    z-index: 9999;
+    border: 0;
+    font-size: 12px !important;
+    line-height: 1.42857143 !important;
+    letter-spacing: 4px;
+    border-radius: 0;
+    font-family: Montserrat, sans-serif;
+  }
+  
+  .navbar li a, .navbar .navbar-brand {
+    color: #fff !important;
+  }
+  .navbar-nav li a:hover, .navbar-nav li.active a {
+    color: #f4511e !important;
+    background-color: #fff !important;
+  }
+  .navbar-default .navbar-toggle {
+    border-color: transparent;
+    color: #fff !important;
+  }
+  
+ #delete_gene_database
+ {
+ 	padding: 110px 600px;
+    font: 400 15px Lato, sans-serif;
+    color: blue;
+    font-family: Montserrat, sans-serif; 
+    text-align: center;
+  	size: 30px;
+  	margin: 4px 2px;
+  }
+  
+  #log_out
+  {
+   position:fixed;
+   right:300px;
+   top:15px;
+  }
+  
+  #record
+ {
+ 	padding: 10px 80px;
+    color: red;
+    text-align: center;
+  }
+  
+ #bioinformatics
+ {
+    border: 0;
+    line-height: 3.5 !important;
+    letter-spacing: 4px;
+    border-radius: 0;
+    font-family: Montserrat, sans-serif;
+    position: absolute;
+  	bottom: 0;
+  	width: 100%;
+  	/* Set the fixed height of the footer here */
+  	height: 60px;
+  	line-height: 60px; /* Vertically center the text there */
+  	background-color: #2E8B57;
+  }
+  
+ #gene_delete_two
+ {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ }
+ 
+ #search
+ {
+  	width: 400px;
+ }
+ 
+ #geneslink
+ {
+ 	 font-weight: bold;
+ 	 font-size: 25px;
+ }
+ 
+ #metaboliteslink
+ {
+  	font-weight: bold;
+ 	font-size: 25px;
+ }
+ 
+ #reactionslink
+ {
+  	font-weight: bold;
+ 	font-size: 25px;
+ }
+  
+</style>
+
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+     <img src = "images/modify.png"  width="75" height="75" align = "left" ></img>
+  <div class="container">
+    <div class="collapse navbar-collapse" id="myNavbar">
+
+      <ul class="nav navbar-nav navbar-right">
+              <form id="log_out" th:action="@{/logout}" method="post">
+            <button type="submit">LogOut</button>
+            </form>
+        <li id = "home"><a>Home</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<header id="subject" class="jumbotron text-center" >
+ 	<div class="container">
+      	<h1>
+      		<b>
+       			<strong>
+        			Delete A Gene
+       			</strong>
+      		</b>
+    	</h1>
+    
+    <form class="form-inline" onsubmit="selectGeneToDeleteBySearch();return false">
+  		<div class="form-group">
+    		<input  class="form-control" id="search">
+    		<button type="button" onClick="selectGeneToDeleteBySearch()" class="btn btn-default">Search</button>
+  		</div>
+	</form> 
+  </div>
+</header>
+
+ <div class="container-fluid">
+  <div class="row content">
+    <div class="col-lg-2">
+      <ul class="nav nav-pills nav-stacked"> 
+         <div class="container">
+			<a href="#gene" id="geneslink" class="btn btn-link" data-toggle="collapse">Genes</a>
+				<div id="gene" class="collapse">
+					<button id="add_gene" type="button" onClick="getGeneDatabaseToAdd()" class="btn btn-default">Add Gene</button>
+    				<button id="delete_gene" type="button" onClick="getGeneDatabaseToDelete()" class="btn btn-default">Delete Gene</button>
+    			</div>
+		</div>
+		
+		<div class="container">
+			<a href="#metabolites" id="metaboliteslink" class="btn btn-link" data-toggle="collapse">Metabolites</a>
+				<div id="metabolites" class="collapse">
+					<button id="add_metabolite" type="button" onClick="getMetabolitesDatabaseToAdd()" class="btn btn-default">Add Metabolite</button>
+    				<button id="delete_metabolite" type="button" onClick="getMetabolitesDatabaseToDelete()" class="btn btn-default">Delete Metabolite</button>
+    			</div>
+		</div>
+		
+		<div class="container">
+			<a href="#reactions" id="reactionslink" class="btn btn-link" data-toggle="collapse">Reactions</a>
+				<div id="reactions" class="collapse">
+					<button id="add_reactions" type="button" onClick="getReactionDatabaseToAdd()" class="btn btn-default">Add Reactions</button>
+    				<button id="delete_reactions" type="button" onClick="getReactionDatabaseToDelete()" class="btn btn-default">Delete Reactions</button>
+    			</div>
+		</div> 
+	 </ul>    
+    </div>
+  
+ 
+    
+    <div id="gene_delete_one" class="col-lg-5">
+    	<div class="container">
+  			<form>
+    			<div class="form-group">
+      				<label id="genes_label" for="select_compounds">Genes</label>
+      					<select id="select_delete_genes_dropdown" onchange="selectGenesToDelete()" class="form-control">
+      							<option selected disabled>Choose A Gene...</option>
+       					 		<option id="select_genes" th:each="geneslist : ${listofgenes}"  
+       					 	     		th:value = "${geneslist.geneID}" th:text="${geneslist.geneID}">
+       					 	     </option>
+        				
+      					</select>
+    			</div>
+  			</form>
+		</div>
+    </div>
+    
+    <div id="gene_delete_two" class="col-lg-5">  
+  	  <form class="form-inline">  
+ 		 <div class="form-group">
+ 		 	<div class="col-lg-6">
+ 		 		<label for="geneID">GeneID:</label>
+    			<input type="text" class=" mb-sm-5 form-control" id="GeneID" readonly>
+    		</div>
+ 		 </div>
+ 		 
+ 		 <div class="form-group">
+  			<div class="col-lg-6">
+    			<label for="name">Name:</label>
+    			<input type="text" class="form-control" id="Name" readonly>
+    		</div>
+  		</div>
+  		
+	  </form>
+    
+      <form class="form-inline">
+ 		 <div class="form-group">
+ 		 	<div class="col-lg-6">
+    			<label for="ncbigi">Ncbigi:</label>
+    			<input type="text" class="form-control" id="Ncbigi:" readonly>
+    		</div>
+ 		 </div>
+ 		 
+  		<div class="form-group">
+  			<div class="col-lg-6">
+    			<label for="refseq_name">RefseqName:</label>
+    			<input type="text" class="form-control" id="Refseq_name" readonly>
+    		</div>
+  		</div>
+	</form>
+	
+	<form class="form-inline">
+ 		 <div class="form-group">
+ 		 	<div class="col-lg-6">
+    			<label for="sbo">Sbo:</label>
+    			<input type="text" class="form-control" id="Sbo" readonly>
+    		</div>
+ 		 </div>
+ 		 
+  		<div class="form-group">
+  			<div class="col-lg-6">
+    			<label for="model">Model:</label>
+    			<input type="text" class="form-control" id="Model" readonly>
+    		</div>
+  		</div>
+	</form>
+ </div>
+   
+    </div>
+    
+    <div id="delete_gene_database">
+		<button type="button" onClick="getGeneDatabaseToDelete()" class="btn btn-default"><b><strong>Clear</strong></b></button>
+    	<button type="button" onClick="sendToBackEndToDeleteAGene()" class="btn btn-default"><b><strong>Delete</strong></button>
+  	</div>
+    
+ </div>
+ 
+  <h1 id="record">
+      		<b>
+       			<strong>
+       			</strong>
+      		</b>
+    </h1>
+    
+    <footer id="bioinformatics" class="page-footer font-small blue">
+  		<div class="footer-copyright text-center py-3">
+   	 		<label> <b><strong>© 2020 Copyright: BioInformatics.com</strong></b></label>
+  		</div>
+	</footer>
+	
+<script>    $("#home").click(function(){
+    window.location.assign("http://localhost:8080/home")
+});
+</script>
+	
+ </body>
+</html>

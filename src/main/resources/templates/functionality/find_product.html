@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <!-- Theme Made By www.w3schools.com -->
+    <title>BioInformatics</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+  <style>
+  body {
+    font: 400 15px Lato, sans-serif;
+    line-height: 1.8;
+    color: #818181;
+  }
+  h2 {
+    font-size: 24px;
+    text-transform: uppercase;
+    color: #303030;
+    font-weight: 600;
+    margin-bottom: 30px;
+  }
+  h4 {
+    font-size: 19px;
+    line-height: 1.375em;
+    color: #303030;
+    font-weight: 400;
+    margin-bottom: 30px;
+  }  
+  .jumbotron {
+    background-color: #4682B4;
+    color: #fff;
+    padding: 100px 25px;
+    font-family: Montserrat, sans-serif;
+  }
+  .container-fluid {
+    padding: 60px 50px;
+  }
+  .bg-grey {
+    background-color: #f6f6f6;
+  }
+  .logo-small {
+    color:#4682B4;
+    font-size: 50px;
+  }
+  .logo {
+    color: #f4511e;
+    font-size: 200px;
+  }
+  .thumbnail {
+    padding: 0 0 15px 0;
+    border: none;
+    border-radius: 0;
+  }
+  .thumbnail img {
+    width: 100%;
+    height: 100%;
+    margin-bottom: 10px;
+  }
+  .carousel-control.right, .carousel-control.left {
+    background-image: none;
+    color: #f4511e;
+  }
+  .carousel-indicators li {
+    border-color: #f4511e;
+  }
+  .carousel-indicators li.active {
+    background-color: #f4511e;
+  }
+  .item h4 {
+    font-size: 19px;
+    line-height: 1.375em;
+    font-weight: 400;
+    font-style: italic;
+    margin: 70px 0;
+  }
+  .item span {
+    font-style: normal;
+  }
+  .panel {
+    border: 1px solid #f4511e; 
+    border-radius:0 !important;
+    transition: box-shadow 0.5s;
+  }
+  .panel:hover {
+    box-shadow: 5px 0px 40px rgba(0,0,0, .2);
+  }
+  .panel-footer .btn:hover {
+    border: 1px solid #f4511e;
+    background-color: #fff !important;
+    color: #f4511e;
+  }
+  .panel-heading {
+    color: #fff !important;
+    background-color: #2E8B57 !important;
+    padding: 25px;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+
+  .navbar {
+    margin-bottom: 0;
+    background-color: #2E8B57;
+    z-index: 9999;
+    border: 0;
+    font-size: 12px !important;
+    line-height: 1.42857143 !important;
+    letter-spacing: 4px;
+    border-radius: 0;
+    font-family: Montserrat, sans-serif;
+  }
+  .navbar li a, .navbar .navbar-brand {
+    color: #fff !important;
+  }
+  .navbar-nav li a:hover, .navbar-nav li.active a {
+    color: #f4511e !important;
+    background-color: #fff !important;
+  }
+  .navbar-default .navbar-toggle {
+    border-color: transparent;
+    color: #fff !important;
+  }
+
+ #bioinformatics
+ {
+    border: 0;
+    line-height: 3.5 !important;
+    letter-spacing: 4px;
+    border-radius: 0;
+    font-family: Montserrat, sans-serif;
+    color: black;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    line-height: 60px; /* Vertically center the text there */
+    background-color: #2E8B57;
+  }
+  
+  .commentTable {
+
+     background-color: LightBlue;
+    display: table;
+    width: 50%;
+
+    border-spacing: 10px;
+    margin: 0 auto;   
+    border-collapse:separate;
+    border:solid black 1px;
+    border-radius:6px;
+    -moz-border-radius:6px;  
+                   box-shadow: 5px 5px #888888;     
+}
+th{
+   text-align: center;
+}
+.center {
+  margin: auto;
+   padding: 10px;
+}
+ </style>
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+
+<nav class="navbar navbar-default navbar-fixed-top">
+     <img  th:src="@{/images/pathway.png}" 
+      width="75" height="75" align = "left" ></img>
+  <div class="container">
+  
+
+    <div class="collapse navbar-collapse" id="myNavbar">
+
+      <ul class="nav navbar-nav navbar-right">
+        <li id = "home"><a href="#about">Home</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+<div class="jumbotron text-center">
+
+       <h1>Reaction Pathways</h1>
+    <p>Search to find the metabolites you can reach in certain amount of reactions and display 
+    the pathways</p>
+</div>
+
+
+<div id="First_Functionality" class="center"  style = "color: black;">
+   <div id="metabolites_add_one" class="col-lg-5 ">
+
+        <p> Source</p>
+        <div class="form-group">
+            <input  class="form-control" type = "search"
+                    id="search2"  >
+        </div>
+
+        <p> Number of reaction steps</p>
+        <div class="form-group">
+            <input  class="form-control" type = "search"
+                    id="search3"  >
+        </div>
+
+    <button type="submit" onClick = "sendTextToBackend2()" class="btn btn-default">Search</button>
+</div>
+
+
+
+
+
+
+    <div id = "reactiontable" style = "padding:10px"  class="container-fluid text-center">
+
+
+            <table class = "commentTable" >
+                <tr>
+                    <th align="center">Product</th>
+                    <th align="center">Pathway</th>
+
+                </tr>
+                <tbody>
+
+                <tr th:each="next:${nextMetabolites}">
+                    <td>
+                        <a th:text="${next.getKey()[0]}" th:href="@{'../info/metabolites/'+ ${next.getKey()[0]}}"/>
+                    </td>
+
+                    <td th:text="${next.getValue()}">
+
+
+                </tr>
+                </tbody>
+            </table>
+    </div>
+</div>
+
+
+
+
+<footer id="bioinformatics" class="page-footer font-small blue">
+    <div class="footer-copyright text-center py-3">
+        <label> <b><strong>© 2020 Copyright: BioInformatics.com</strong></b></label>
+    </div>
+</footer>
+
+
+<script>
+$("#home").click(function(){
+    window.location.assign("http://localhost:8080/home")
+});
+  $("#compare").click(function(){
+    alert('I got a click');
+  });
+
+  $(document).ready(function(){
+    // Add smooth scrolling to all links in navbar + footer link
+    $(".navbar a, footer a[href='#myPage']").on('click', function(event) {
+      // Make sure this.hash has a value before overriding default behavior
+      if (this.hash !== "") {
+        // Prevent default anchor click behavior
+        event.preventDefault();
+
+        // Store hash
+        var hash = this.hash;
+
+        // Using jQuery's animate() method to add smooth page scroll
+        // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
+        $('html, body').animate({
+          scrollTop: $(hash).offset().top
+        }, 900, function(){
+
+          // Add hash (#) to URL when done scrolling (default click behavior)
+          window.location.hash = hash;
+        });
+      } // End if
+    });
+
+    $(window).scroll(function() {
+      $(".slideanim").each(function(){
+        var pos = $(this).offset().top;
+
+        var winTop = $(window).scrollTop();
+        if (pos < winTop + 600) {
+          $(this).addClass("slide");
+        }
+      });
+    });
+  })
+
+  function sendTextToBackend(){
+
+    var textInput2 = document.getElementById("search");
+    location.assign("/reactions?name=".concat(search.value))
+  }
+
+  function sendTextToBackend2(){
+    location.assign("/functionality/find_product?name=".concat(search2.value).concat("&steps=").concat(search3.value))
+  }
+
+</script>
+
+</body>
+</html>
