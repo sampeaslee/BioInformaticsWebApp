@@ -283,7 +283,12 @@ div.b {
 
 <script>
 $("#metapage").click(function(){
-    window.location.assign("http://localhost:8080/metabolites")
+	console.log(window.location.hostname)
+	x = window.location.hostname
+	x = x.concat("/metabolites")
+	window.alert(x);
+	console.log(x)
+    window.location.assign(x)
 });
 $("#genepage").click(function(){
     window.location.assign("https://young-oasis-81207.herokuapp.com/genes")
