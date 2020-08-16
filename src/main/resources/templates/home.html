@@ -204,7 +204,7 @@ div.b {
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
         <li><a href="">Home</a></li>
-        <li><a href="http://localhost:8080/update">ADMIN LOGIN</a></li>
+        <li><a href="/update">ADMIN LOGIN</a></li>
       </ul>
     </div>
   </div>
@@ -247,7 +247,7 @@ div.b {
   <br>
   <div class="row slideanim">
     <div class="col-sm-4">
-    <img src = "images/meta.png"  width="125" height="125" id = "metapage"></img>
+    <img src = "images/meta.png"  width="125" height="125" id = "metapage" href = "/metabolites">
       <h4>Metabolites</h4>
       <p>Click to search metabolites</p>
     </div>
@@ -282,42 +282,31 @@ div.b {
 
 
 <script>
-function changePage(newurl) {
-	   console.log(window.location.hostname)
-	    x = window.location.hostname
-	    x = x.concat(newurl)
-	    x = "https://".concat(x)
-	  return x;   // The function returns the product of p1 and p2
-	}
+
 
 $("#metapage").click(function(){
-    x = changePage("/metabolites")
-    window.location.assign(x)
+    location.assign("/metabolites")  
 });
 $("#genepage").click(function(){
-    x = changePage("/genes")
-    window.location.assign(x)
+    location.assign("/genes")
+
 });
 
 $("#reactionpage").click(function(){
-    x = changePage("/reactions")
-    window.location.assign(x)
+    location.assign("/reactions")
 });
 
 $("#pathway").click(function(){
-    x = changePage("/functionality/find_pathway")
-    window.location.assign(x)
+    location.assign("/functionality/find_pathway")
 });
 
 $("#product").click(function(){
-    x = changePage("/functionality/find_product")
-    window.location.assign(x)
+    location.assign("/functionality/find_product")
 });
 
 
 $("#modify").click(function(){
-    x = changePage("/update")
-    window.location.assign(x)
+    location.assign("/update")
 });
 
 function test(){
@@ -326,7 +315,8 @@ function test(){
     x =   $(".dropdown-menu li a").parents(".dropdown").find('.btn').val($(".dropdown-menu li a").data('value')).text();
     
 
-    goTo = "http://" + window.location.hostname +" /" + x.toLowerCase().trim() +"?name=" + searchValue
+    goTo  = "/"  +  x.toLowerCase().trim() +"?name=" + searchValue
+    	
     window.location.assign(goTo)
     
     
