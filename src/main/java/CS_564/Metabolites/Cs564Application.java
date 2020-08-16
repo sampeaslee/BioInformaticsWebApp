@@ -76,11 +76,11 @@ public class Cs564Application {
 
         //Object obj = new JSONParser().parse(new FileReader("exampleJSON.json"));
         Object reaction_json = new JSONParser().parse(new FileReader
-            ("/home/charasi/eclipse-web/CS_564/JSON/final_compounds_from_bigg.json"));
+            ("JSON\\final_compounds_from_bigg.json"));
         Object compound_json = new JSONParser().parse(new FileReader
-            ("/home/charasi/eclipse-web/CS_564/JSON/final_reactions_from_bigg.json"));
+            ("JSON\\final_reactions_from_bigg.json"));
         Object gene_json = new JSONParser().parse(new FileReader
-            ("/home/charasi/eclipse-web/CS_564/JSON/genes_from_bigg.json"));
+            ("JSON\\genes_from_bigg.json"));
         
         ArrayList<String> allModels = new ArrayList<String>();
         
@@ -186,20 +186,20 @@ public class Cs564Application {
 //        //Iterate through the set of keys and parse the JSON data associated 
 //        //with each key(GeneID).
 //        for(String idKey: GeneIDs) {
-//            //Parsing the JSON
+//           //Parsing the JSON
 //            JSONObject geneData =(JSONObject)  jsonObj.get(idKey);
 //            JSONObject annotation = (JSONObject) geneData.get("annotation");
 //            String ncbigi = "" + annotation.get("ncbigi");
 //            String refseq_name = "" + annotation.get("refseq_name");
-//            String sbo = "" + annotation.get("sbo");
-//            JSONArray model = (JSONArray) geneData.get("model"); 
-//            String modelName;
+//           String sbo = "" + annotation.get("sbo");
+//           JSONArray model = (JSONArray) geneData.get("model"); 
+//           String modelName;
 //      
 //            Iterator itr = model.iterator();
 //            modelName = "" + itr.next(); 
 //
-//            String name = "" + geneData.get("name");
-//            
+//           String name = "" + geneData.get("name");
+//           
 //            //Create a Gene Object to store the data 
 //            Gene gene = new Gene(idKey, name, ncbigi, refseq_name, 
 //                sbo, modelName);
@@ -209,9 +209,9 @@ public class Cs564Application {
 //
 //        }
 //        System.out.println("DONE LOADING IN GENE DATA!!!");
-//        return "Has to have non void return type";
+//       return "Has to have non void return type";
 //    }
-	
+//	
 //    @Bean
 //    public String CommandLineRunner(UserLoginRepo repository) throws Exception
 //    {
@@ -242,17 +242,17 @@ public class Cs564Application {
 	}
 
 
-/
+*/
 
 
 	//THIRD METHOD TO RUN (THIS ONE TAKES LONGER)
-	
 	/*
+	
 	@Bean
 	public String CommandLineRunner(StoichiometryRepo repository) throws Exception{
         
         Object obj = new JSONParser().parse(new FileReader
-            ("/home/charasi/eclipse-web/CS_564/JSON/final_reactions_from_bigg.json"));
+            ("JSON\\final_reactions_from_bigg.json"));
         JSONObject jsonObj = (JSONObject) obj;
         //keySet() returns a set of all the keys in the JSON 
         
@@ -297,8 +297,8 @@ public class Cs564Application {
        
        System.out.println("DONE LOADING IN STOICHOMETRY DATA!!!");
 	   return "Has to have non void return type";
-	}
-	*/
+	}*/
+	
     /** Only one of the @Bean can be run in each time. So it needs three times to store all of json files into a json file.
      * For some reasons, it takes minutes to run the metabolites and reactions. I assume it may be caused by the iterator.
      * */

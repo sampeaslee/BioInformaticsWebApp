@@ -10,8 +10,8 @@
     </parent>
     <groupId>CS_564</groupId>
     <artifactId>Metabolites</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>CS_564</name>
+    <version>1.0</version>
+    <name>bioinformatics</name>
     <description>Project for CS 564 - Database Application </description>
 
     <properties>
@@ -85,6 +85,21 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>build-info</goal>
+            </goals>
+            <configuration>
+              <additionalProperties>
+                <encoding.source>${project.build.sourceEncoding}</encoding.source>
+                <encoding.reporting>${project.reporting.outputEncoding}</encoding.reporting>
+                <java.source>${maven.compiler.source}</java.source>
+                <java.target>${maven.compiler.target}</java.target>
+              </additionalProperties>
+            </configuration>
+          </execution>
+        </executions>
             </plugin>
         </plugins>
     </build>
