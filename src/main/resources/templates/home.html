@@ -282,33 +282,42 @@ div.b {
 
 
 <script>
+function changePage(newurl) {
+	   console.log(window.location.hostname)
+	    x = window.location.hostname
+	    x = x.concat(newurl)
+	    x = "https://".concat(x)
+	  return x;   // The function returns the product of p1 and p2
+	}
+
 $("#metapage").click(function(){
-	console.log(window.location.hostname)
-	x = window.location.hostname
-	x = x.concat("/metabolites")
-	window.alert(x);
-	console.log(x)
+    x = changePage("/metabolites")
     window.location.assign(x)
 });
 $("#genepage").click(function(){
-    window.location.assign("https://young-oasis-81207.herokuapp.com/genes")
+    x = changePage("/genes")
+    window.location.assign(x)
 });
 
 $("#reactionpage").click(function(){
-    window.location.assign("http://localhost:8080/reactions")
+    x = changePage("/reactions")
+    window.location.assign(x)
 });
 
 $("#pathway").click(function(){
-     window.location.assign("http://localhost:8080/functionality/find_pathway")
+    x = changePage("/functionality/find_pathway")
+    window.location.assign(x)
 });
 
 $("#product").click(function(){
-    window.location.assign("http://localhost:8080/functionality/find_product")
+    x = changePage("/functionality/find_product")
+    window.location.assign(x)
 });
 
 
 $("#modify").click(function(){
-    window.location.assign("http://localhost:8080/update")
+    x = changePage("/update")
+    window.location.assign(x)
 });
 
 function test(){
@@ -317,8 +326,7 @@ function test(){
     x =   $(".dropdown-menu li a").parents(".dropdown").find('.btn').val($(".dropdown-menu li a").data('value')).text();
     
 
-    goTo = "http://localhost:8080/" + x.toLowerCase().trim() +"?name=" + searchValue
-    
+    goTo = "http://" + window.location.hostname +" /" + x.toLowerCase().trim() +"?name=" + searchValue
     window.location.assign(goTo)
     
     
