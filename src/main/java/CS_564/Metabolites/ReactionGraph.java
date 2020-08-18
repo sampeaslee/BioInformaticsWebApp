@@ -389,7 +389,7 @@ public class Metabolite {
                 currV.getReactions() );
         }
     }
-    
+
        public static void main(String[] args) throws FileNotFoundException, IOException, ParseException { 
            List<String> list = Arrays.asList("coa_c","nadp_c","nadph_c","nadh_c","nad_c","accoa_c",
                "ac_c","ac_e","ac_p","h2o_c","h2o_e","h2o_p","h_c","h_e","h_p","pi_c","ppi_c","atp_c","h_m",
@@ -397,7 +397,7 @@ public class Metabolite {
                "o2_c","nh4_c","ppi_r","co2_p","h_n","co2_c","pi_m","nad_r","h2o_h","fdxox_c","biomass_pro_c",
                "udpg_c","udp_c","utp_c","q8_c","q8h2_c","itp_c","idp_c","datp_c","dadp_c","cdp_c","ctp_c","");
 
- 
+       
 
        List<String> list2 = Arrays.asList("BIOMASS_pro_c","nadp_c","nadph_c","nadh_c","nad_c","accoa_c",
                "ac_c","ac_e","ac_p","h2o_c","h2o_e","h2o_p","h_c","h_e","h_p","pi_c","ppi_c","atp_c","h_m",
@@ -405,50 +405,9 @@ public class Metabolite {
                "o2_c","nh4_c","ppi_r","co2_p","h_n","co2_c","pi_m","nad_r","h2o_h","fdxox_c","biomass_pro_c",
                "udpg_c","udp_c","utp_c","q8_c","q8h2_c","itp_c","idp_c","datp_c","dadp_c","cdp_c","ctp_c","BIOMASS_WT_lumped");
            
-           Object obj = new JSONParser().parse(new FileReader
-               ("C:\\Users\\peasl\\SalmoPrograms\\Java_Files\\CS_564\\JSON\\final_reactions_from_bigg.json"));
-           JSONObject jsonObj = (JSONObject) obj;
-           //keySet() returns a set of all the keys in the JSON 
-           Set<String> ReactionsIDs = jsonObj.keySet();
-           
-           ReactionGraph g = new ReactionGraph();
-           int i = 0;
-           for(String idKey: ReactionsIDs) {
-               i++;
-               if(i == 2500) {
-                   break;
-               }
-                 
-         
-               JSONObject reactData =(JSONObject)  jsonObj.get(idKey);
-               ArrayList<String> st = new ArrayList<String>();
-               ArrayList<String> e = new ArrayList<String>();
-               reactData  =  (JSONObject) reactData.get("stoichometry");
-               Set<String> metaIDs = reactData.keySet();
-               for(String s: metaIDs) {
-                   Double coef = (Double) reactData.get(s);
-                  if(list.contains(s) || list2.contains(s)) {
-                  }else {
-                  
-                   if(coef < 0) {
-                      st.add(s);
-                   }else {
-                       e.add(s);
-                   }
-                   for(String sp: st) {
-                       for(String en: e) {
-                           g.addEdge(sp,en, idKey);
-                       }
-                     
-                   }
-
-                   
-               }
-               }
-           }
-           g.printGraph();
-        
-
+     System.out.println("#nadph_c:-1.0,#h_c:-1.0,#13m3otdACP_c:-1.0".split(",")[0]);
+     String[] arr = "#nadph_c:-1.0,#h_c:-1.0,#13m3otdACP_c:-1.0".split(",");
+     System.out.println(arr[2].substring(arr[2].indexOf("#") + 1,arr[2].indexOf(":")));
       
 
 //       ReactionGraph g = new ReactionGraph();
@@ -462,12 +421,7 @@ public class Metabolite {
 //           ArrayList<String> visited = new ArrayList<String>();
 //           ArrayList<String> t = g.getShortestPath("A","D");
 //
-//           g.printGraph();
-           ArrayList<Metabolite> t = g.getShortestPath("mercppyr_c", "HC00250_c");
-           System.out.println(t);
-           for(int j = t.size() - 1; j > 0; j--) {
-               System.out.println(t.get(j).reactions.get(t.get(j-1).name));
-           }
+
        } 
        
      

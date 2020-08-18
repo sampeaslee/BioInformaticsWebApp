@@ -195,7 +195,7 @@ th{
         <div class="form-group">
 
             <input  class="form-control" type = "search"
-                    id="search2" value="mercppyr_c" >
+                    id="search2" value="cpgn_p" >
 
         </div>
 
@@ -203,7 +203,7 @@ th{
         <p> target </p>
         <div class="form-group">
             <input  class="form-control" type = "search"
-                    id="search3" value="HC00250_c" >
+                    id="search3" value="cpgn_un_e" >
         </div>
 
 
@@ -297,7 +297,7 @@ th{
   }
 
   function sendTextToBackend2(){
-    location.assign("/functionality/find_pathway?start=".concat(search2.value).concat("&end=").concat(search3.value))
+    location.assign("/functionality/find_pathway?start=".concat(search2.value.trim()).concat("&end=").concat(search3.value.trim()))
   }
   $("#home").click(function() {
 	    window.location.assign("/home")

@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface StoichiometryRepo extends JpaRepository<Stoichiometry, Integer> {
     
     
-    @Query(value = " select * from stoichiometry limit 1000 ;", nativeQuery = true)
+    @Query(value = " select * from stoichiometry limit 5000 ;", nativeQuery = true)
     public ArrayList<Stoichiometry> getStoichiometry();
 
     @Query(value = "SELECT * FROM stoichiometry s WHERE s.reactionid = :reactionid",  nativeQuery = true)
