@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface ReactionRepo extends JpaRepository<Reaction, Integer> {
-	@Query(value = "select * from reactions;", nativeQuery = true)
+	@Query(value = "select * from reactions limit 1000;", nativeQuery = true)
     public List<Reaction> getListOfReactions();
  
 	@Query(value = "select ReactionID from reactions WHERE reactionid = :reaction_ID", nativeQuery = true)

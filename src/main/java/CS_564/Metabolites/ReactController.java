@@ -37,29 +37,22 @@ public class ReactController {
             HashMap<Reaction, String> relation = new HashMap();
             ArrayList <Reaction> s1 =
                     (ArrayList<Reaction>) ReactionRepo.getReactions();
-            for (Reaction r : s1) {
+          /*  for (Reaction r : s1) {
                 Stoichiometry s = StoichiometryRepo.findByReactionID(r.ReactionID);
 
                 String StoichiometryString = s.toString();
 
                 relation.put(r, StoichiometryString);
-            }
-            model.addAttribute("reactions", relation);
+            }*/
+            model.addAttribute("reactions", s1);
         }else {
             ArrayList <Reaction> s1 =
                     (ArrayList<Reaction>) ReactionRepo.autoSearch(name);
             HashMap<Reaction, String> relation = new HashMap();
-            for (Reaction r : s1) {
-                Stoichiometry s = StoichiometryRepo.findByReactionID(r.ReactionID);
-
-                String StoichiometryString = s.toString();
-
-                relation.put(r, StoichiometryString);
-            }
             System.out.println(s1.size());
             String search = "Current Search: " + name;
             model.addAttribute("test", search);
-            model.addAttribute("reactions", relation);
+            model.addAttribute("reactions",  s1);
         }
 
         return "reactions";

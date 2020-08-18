@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface GeneRepo extends JpaRepository<Gene, Integer> {
 
-	@Query(value = "select * from genes;", nativeQuery = true)
+	@Query(value = "select * from genes limit 1000;", nativeQuery = true)
     public List<Gene> getListOfGenes();
  
 	@Query(value = "select geneID from genes WHERE geneID = :gene_ID", nativeQuery = true)
@@ -46,7 +46,7 @@ public interface GeneRepo extends JpaRepository<Gene, Integer> {
     public void updateGeneModel(@Param("gene_ID") String gene_ID, @Param("model_ID") String model_ID);
 
 
-	@Query(value = " select * from genes limit 1000 ;", nativeQuery = true)
+	@Query(value = " select * from genes limit 700 ", nativeQuery = true)
 	public List<Gene> getGenes();
 
 	@Query(value = "SELECT * FROM genes g WHERE g.geneid = :geneid",  nativeQuery = true)

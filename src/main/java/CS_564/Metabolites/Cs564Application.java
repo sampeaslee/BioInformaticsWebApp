@@ -304,13 +304,13 @@ public class Cs564Application {
      * */
 
 	//FOURTH METHOD TO RUN (THIS ONE TAKES A COUPLE MINS)
- /*
- @Bean
+
+/* @Bean
  public String CommandLineRunner(CompoundRepo repository,
      MetaboliteRepo metaRepo, LinkedRepo linkRepo) throws Exception{
      //Reading in the JSON File
      Object obj = new JSONParser().parse(new FileReader
-             ("/home/charasi/eclipse-web/CS_564/JSON/final_compounds_from_bigg.json"));
+             ("JSON\\final_compounds_from_bigg.json"));
      //Casting to JSONObject
      JSONObject jsonObj = (JSONObject) obj;
      //keySet() returns a set of all the keys in the JSON
@@ -375,12 +375,12 @@ public class Cs564Application {
 
 
 //FITH METHOD TO RUN(THIS ONE TAKES A COUPLE MINUTES AS WELL)
- /*
- @Bean
+ 
+ /*@Bean
  public String CommandLineRunner(ReactionRepo repository, HasRepo hasRepo) throws Exception{
      //Reading in the JSON File
      Object obj = new JSONParser().parse(new FileReader
-             ("/home/charasi/eclipse-web/CS_564/JSON/final_reactions_from_bigg.json"));
+             ("JSON\\final_reactions_from_bigg.json"));
      //Casting to JSONObject
      JSONObject jsonObj = (JSONObject) obj;
      //keySet() returns a set of all the keys in the JSON
@@ -404,7 +404,7 @@ public class Cs564Application {
          Iterator itr = model.iterator();
          while (itr.hasNext()) {
              modelName = "" + itr.next();
-             ReactionModel metamodel = new ReactionModel(idKey, modelName);
+             ReactionModel  metamodel = new ReactionModel(idKey, modelName);
              Has has  = new Has(metamodel);
              hasRepo.save(has);
          }
@@ -425,51 +425,51 @@ public class Cs564Application {
      }
      System.out.println("DONE LOADING IN REACTION DATA!!!");
      return "Has to have non void return type";
- }*/
-
+ }
+*/
 
 //Sixth METHOD TO RUN(THIS ONE TAKES 20 MINUTES AS WELL)
-//	@Bean
-//	public String CommandLineRunner(StartMetaReactionRepo startRepo,  EndMetaReactionRepo endRepo) throws Exception{
-//
-//		Object obj = new JSONParser().parse(new FileReader
-//				("JSON\\final_reactions_from_bigg.json"));
-//		JSONObject jsonObj = (JSONObject) obj;
-//		//keySet() returns a set of all the keys in the JSON
-//
-//		Set<String> reactionIDs = jsonObj.keySet();
-//		for(String key: reactionIDs) {
-//
-//			JSONObject j =  (JSONObject) jsonObj.get(key);
-//			j  =  (JSONObject) j.get("stoichometry");
-//			Set<String> metaIDs = j.keySet();
-//			String start = "";
-//			String end= "";
-//			for(String s: metaIDs) {
-//				Double coef = (Double) j.get(s);
-//				if(coef < 0) {
-//					start = start + s + ":"+ coef + ",#" ;
-//					MetaReaction metaReaction = new MetaReaction(s, key);
-//					StartMetaReaction startMetaReaction = new StartMetaReaction(metaReaction);
-//					startRepo.save(startMetaReaction);
-//				}else {
-//					end = end + s + ":"+ coef + ",#" ;
-//					MetaReaction metaReaction = new MetaReaction(s, key);
-//					EndMetaReaction endMetaReaction = new EndMetaReaction(metaReaction);
-//					endRepo.save(endMetaReaction);
-//				}
-//
-//			}
-////			Stoichiometry stoichometry = new Stoichiometry(key, start,end);
-////			startRepo.save(start);
-//
-//
-//		}
-//
-//		System.out.println("DONE LOADING IN STOICHOMETRY DATA!!!");
-//		return "Has to have non void return type";
-//	}
+	/*@Bean
+	public String CommandLineRunner(StartMetaReactionRepo startRepo,  EndMetaReactionRepo endRepo) throws Exception{
 
+		Object obj = new JSONParser().parse(new FileReader
+				("JSON\\final_reactions_from_bigg.json"));
+		JSONObject jsonObj = (JSONObject) obj;
+		//keySet() returns a set of all the keys in the JSON
+
+		Set<String> reactionIDs = jsonObj.keySet();
+		for(String key: reactionIDs) {
+
+			JSONObject j =  (JSONObject) jsonObj.get(key);
+			j  =  (JSONObject) j.get("stoichometry");
+			Set<String> metaIDs = j.keySet();
+			String start = "";
+			String end= "";
+			for(String s: metaIDs) {
+				Double coef = (Double) j.get(s);
+				if(coef < 0) {
+					start = start + s + ":"+ coef + ",#" ;
+					MetaReaction metaReaction = new MetaReaction(s, key);
+					StartMetaReaction startMetaReaction = new StartMetaReaction(metaReaction);
+					startRepo.save(startMetaReaction);
+				}else {
+					end = end + s + ":"+ coef + ",#" ;
+					MetaReaction metaReaction = new MetaReaction(s, key);
+					EndMetaReaction endMetaReaction = new EndMetaReaction(metaReaction);
+					endRepo.save(endMetaReaction);
+				}
+
+			}
+//			Stoichiometry stoichometry = new Stoichiometry(key, start,end);
+//			startRepo.save(start);
+
+
+		}
+
+		System.out.println("DONE LOADING IN STOICHOMETRY DATA!!!");
+		return "Has to have non void return type";
+	}
+*/
 
 
 

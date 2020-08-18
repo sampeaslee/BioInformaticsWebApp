@@ -1,8 +1,9 @@
 package CS_564.Metabolites;
 
+import java.io.FileReader;
 import java.util.*;
-import java.util.List;
-
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +21,8 @@ public class FuncController {
     EndMetaReactionRepo EndMetaReactionRepo;
     @Autowired
     MetaboliteRepo MetaboliteRepo;
+    @Autowired
+    CreateGraph load;
 
     // this part give a ruleout set to get rid of the bad effect on some necessary cofactor or big reactions.
     List<String> list = Arrays.asList("coa_c","nadp_c","nadph_c","nadh_c","nad_c","accoa_c",
@@ -37,6 +40,7 @@ public class FuncController {
             "udpg_c","udp_c","utp_c","q8_c","q8h2_c","itp_c","idp_c","datp_c","dadp_c","cdp_c","ctp_c","BIOMASS_WT_lumped");
 
     Set<String> knockout = new HashSet(list2);
+    
 
 //
 //    @GetMapping("/functionality/first")
@@ -89,6 +93,8 @@ public class FuncController {
 //
 //        model.addAttribute("listofmetabolites", list_of_metabolites);
 //        model.addAttribute("listofcompounds", list_of_compounds);
+        //load.graph.addEdge("A", "B", "C");
+        load.graph.printGraph();
 //
         if( name.equals("") ) {
             model.addAttribute("test", "No Search Specifed");
@@ -149,7 +155,7 @@ public class FuncController {
                                             if (step[2].equals(times)) {
                                                 if (!target.contains(step[0])) {
                                                     target.add(step[0]);
-                                                    String path = step[2] +" steps pathway is : " + this.ArrayListtoString(pathway);
+                                                    String path = step[2] +" steps pathway is : " + this.ArrayListtoString2(pathway);
                                                     nextMetabolites.put(step, path);
                                                 }
                                             } else {
@@ -182,106 +188,139 @@ public class FuncController {
     // this part of the code is using a BFS algortihm to search a pathway between two nodes.
     // the cofactor / knock out set is used to get rid of the bad effect of some node and edge with too much connect.
     // initial part is just a starter, find the edge of the start nodes (actually not necessarily).
-    @GetMapping("/functionality/find_pathway")
-    public String senTo3(@RequestParam(value = "start", defaultValue = "")
-                                 String start, Model model, @RequestParam(value = "end", defaultValue = "")
-                                 String end ,@RequestParam(value = "knock", defaultValue = "") String knock) {
-        ArrayList <Metabolite> list_of_metabolites = (ArrayList<Metabolite>) MetaboliteRepo.getListOfMetabolites();
-        ArrayList <String> list_of_compounds= (ArrayList<String>) MetaboliteRepo.getListOfCompounds();
-
-        model.addAttribute("listofmetabolites", list_of_metabolites);
-        model.addAttribute("listofcompounds", list_of_compounds);
-
-
-        if( start.equals("") ) {
-            model.addAttribute("test", "No Search Specifed");
+//    @GetMapping("/functionality/find_pathway")
+//    public String senTo3(@RequestParam(value = "start", defaultValue = "")
+//                                 String start, Model model, @RequestParam(value = "end", defaultValue = "")
+//                                 String end ,@RequestParam(value = "knock", defaultValue = "") String knock) {
+//        ArrayList <Metabolite> list_of_metabolites = (ArrayList<Metabolite>) MetaboliteRepo.getListOfMetabolites();
+//        ArrayList <String> list_of_compounds= (ArrayList<String>) MetaboliteRepo.getListOfCompounds();
+//
+//        model.addAttribute("listofmetabolites", list_of_metabolites);
+//        model.addAttribute("listofcompounds", list_of_compounds);
+//
+//
+//        if( start.equals("") ) {
+//            model.addAttribute("test", "No Search Specifed");
+//        }else {
+//            /// Initial the search bar;
+//            ArrayList<String[]>  m =  (ArrayList<String[]>) StartMetaReactionRepo.findByMetaboliteId(start);
+//            HashMap<String[], ArrayList<String>> seen = new HashMap<>();
+//            HashSet<String> set = new HashSet();
+//            Queue<String[]> nextMeta = new LinkedList<>();
+//            for (String[] m1 : m) {
+//                String[] step = new String[3];
+//                step[0] = m1[0];
+//                step[1] = m1[1];
+//                step[2] = "0";
+//                if (m1[0]!= null && m1[1]!= null) {
+//                    if (!seen.containsKey(step)) {
+//                        ArrayList<String> pathway = new ArrayList<String>();
+////                        System.out.println("this is initialition" + step[0]);
+//                        seen.put(step,pathway);
+////                        System.out.println("This is providing:   " + step[0]+ "    " + step[1]+"  times  "+step[2]);
+//                        nextMeta.offer(step);
+//
+//                    }
+//                }
+//            }
+//            /// Start searching,
+//            HashMap<String[], String> nextMetabolites = new HashMap();
+//            knockout.add(knock);
+//            {
+//                out:
+//                {
+//                while (nextMeta.peek() != null) {
+//                    String[] Meta = nextMeta.poll();
+//                    if (!knockout.contains(Meta[1])) {
+//                        if (StartMetaReactionRepo.findnextMetabolite(Meta[0], Meta[1]) != null) {
+//                            ArrayList<String> m2 = (ArrayList<String>) StartMetaReactionRepo.findnextMetabolite(Meta[0], Meta[1]);
+//                            for (String nextM : m2) {
+//                                if (!set.contains(nextM)) {
+//                                    ArrayList<String[]> nextMetaboliteslist = (ArrayList<String[]>) StartMetaReactionRepo.findByMetaboliteId(nextM);
+//                                    set.add(nextM);
+//                                    for (String[] next : nextMetaboliteslist) {
+//
+//                                        if (!cofacter.contains(next[0])) {
+//                                            String[] step = new String[3];
+//                                            step[0] = next[0];
+//                                            step[1] = next[1];
+//                                            step[2] = String.valueOf(Integer.valueOf(Meta[2]) + 1);
+//                                            if (!seen.containsKey(step)) {
+//                                                ArrayList<String> pathway = new ArrayList<String>(seen.get(Meta));
+//                                                pathway.add(Meta[1]);
+//                                                seen.put(step, pathway);
+//                                                if (step[0].equals(end)) {
+//                                                    String path = step[2] + " steps pathway is : " + this.ArrayListtoString(pathway);
+//                                                    nextMetabolites.put(step, path);
+//                                                    break out;
+//                                                } else {
+//                                                    nextMeta.offer(step);
+//                                                }
+//                                            }
+//                                        }
+//
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//                    if (nextMeta.peek() == null) {
+//                        model.addAttribute("test", "No Search Specifed");
+//                        return "functionality/find_pathway";
+//                    }
+//                }
+//
+//            }
+//            int n = 0;
+//            while (n < 5) {
+//                System.out.println("Finished############");
+//                System.out.println("Finished############");
+//                n ++;
+//            }
+//
+//            model.addAttribute("nextMetabolites", nextMetabolites);
+//            model.addAttribute("start", start);
+//            model.addAttribute("end", end);
+//        }
+//
+//        return "functionality/find_pathway";
+//
+//    }
+    
+    @GetMapping("/functionality/find_pathway")   
+ public String senTo3(@RequestParam(value = "start", defaultValue = "")
+  String start, Model model, @RequestParam(value = "end", defaultValue = "")
+  String end ) {
+        if(!start.equals("") && !end.equals("")) {
+        ArrayList<CS_564.Metabolites.ReactionGraph.Metabolite> t = load.graph.getShortestPath(start,end);
+            if(t != null) {
+                model.addAttribute("nextMetabolites", this.ArrayListtoString(t));
+                model.addAttribute("start", start);
+                model.addAttribute("end", end);
+                model.addAttribute("error", "Reaction Path Exists!");
+            }else {
+                model.addAttribute("error","No Reaction Path Between Metabolite: " + start +  " And Metabolie: " + end );
+            }
         }else {
-            /// Initial the search bar;
-            ArrayList<String[]>  m =  (ArrayList<String[]>) StartMetaReactionRepo.findByMetaboliteId(start);
-            HashMap<String[], ArrayList<String>> seen = new HashMap<>();
-            HashSet<String> set = new HashSet();
-            Queue<String[]> nextMeta = new LinkedList<>();
-            for (String[] m1 : m) {
-                String[] step = new String[3];
-                step[0] = m1[0];
-                step[1] = m1[1];
-                step[2] = "0";
-                if (m1[0]!= null && m1[1]!= null) {
-                    if (!seen.containsKey(step)) {
-                        ArrayList<String> pathway = new ArrayList<String>();
-//                        System.out.println("this is initialition" + step[0]);
-                        seen.put(step,pathway);
-//                        System.out.println("This is providing:   " + step[0]+ "    " + step[1]+"  times  "+step[2]);
-                        nextMeta.offer(step);
-
-                    }
-                }
-            }
-            /// Start searching,
-            HashMap<String[], String> nextMetabolites = new HashMap();
-            knockout.add(knock);
-            {
-                out:
-                {
-                while (nextMeta.peek() != null) {
-                    String[] Meta = nextMeta.poll();
-                    if (!knockout.contains(Meta[1])) {
-                        if (StartMetaReactionRepo.findnextMetabolite(Meta[0], Meta[1]) != null) {
-                            ArrayList<String> m2 = (ArrayList<String>) StartMetaReactionRepo.findnextMetabolite(Meta[0], Meta[1]);
-                            for (String nextM : m2) {
-                                if (!set.contains(nextM)) {
-                                    ArrayList<String[]> nextMetaboliteslist = (ArrayList<String[]>) StartMetaReactionRepo.findByMetaboliteId(nextM);
-                                    set.add(nextM);
-                                    for (String[] next : nextMetaboliteslist) {
-
-                                        if (!cofacter.contains(next[0])) {
-                                            String[] step = new String[3];
-                                            step[0] = next[0];
-                                            step[1] = next[1];
-                                            step[2] = String.valueOf(Integer.valueOf(Meta[2]) + 1);
-                                            if (!seen.containsKey(step)) {
-                                                ArrayList<String> pathway = new ArrayList<String>(seen.get(Meta));
-                                                pathway.add(Meta[1]);
-                                                seen.put(step, pathway);
-                                                if (step[0].equals(end)) {
-                                                    String path = step[2] + " steps pathway is : " + this.ArrayListtoString(pathway);
-                                                    nextMetabolites.put(step, path);
-                                                    break out;
-                                                } else {
-                                                    nextMeta.offer(step);
-                                                }
-                                            }
-                                        }
-
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                    if (nextMeta.peek() == null) {
-                        model.addAttribute("test", "No Search Specifed");
-                        return "functionality/find_pathway";
-                    }
-                }
-
-            }
-            int n = 0;
-            while (n < 5) {
-                System.out.println("Finished############");
-                System.out.println("Finished############");
-                n ++;
-            }
-
-            model.addAttribute("nextMetabolites", nextMetabolites);
-            model.addAttribute("start", start);
-            model.addAttribute("end", end);
+            model.addAttribute("error", "Click Search To See If A Path Exists");
         }
+      return "functionality/find_pathway";
+  }
+  
+    public String ArrayListtoString(ArrayList<CS_564.Metabolites.ReactionGraph.Metabolite> t) {
+        String res = ""; 
+        
+        for(int j = t.size() - 1; j > 0; j-- ) {
+            res += t.get(j).reactions.get(t.get(j-1).name);
+            res += " -> ";
+        }
+        
 
-        return "functionality/find_pathway";
-
+        res = res.substring(0, res.length() - 4);
+        return res;
     }
-    public String ArrayListtoString(ArrayList<String> pathway) {
+    public String ArrayListtoString2(ArrayList<String> pathway) {
         String res = "";
         for (String step : pathway) {
             res += step;
@@ -290,7 +329,6 @@ public class FuncController {
         res = res.substring(0, res.length() - 4);
         return res;
     }
-
 
 }
 

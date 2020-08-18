@@ -252,18 +252,17 @@
         <tr>
             <th>ID</th>
             <th>NAME</th>
-            <th>Stoichiometry</th>
         </tr>
         <tbody>
 
         <tr th:each="relation:${reactions}">
             <td>
-                <a th:text="${relation.getKey().reactionID}" th:href="@{'../info/reactions/'+${relation.getKey().reactionID}}" />
+                <a th:text="${relation.reactionID}" th:href="@{'../info/reactions/'+${relation.reactionID}}" />
             </td>
 <!--                th:id="${relation.getKey().reactionID}" ${relation.getKey().reactionID}-->
 
-            <td th:text="${relation.getKey().name}"/>
-            <td th:text="${relation.getValue()}"/>
+            <td th:text="${relation.name}"/>
+
 
         </tr>
         </tbody>

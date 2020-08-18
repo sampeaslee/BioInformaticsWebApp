@@ -195,7 +195,7 @@ th{
         <div class="form-group">
 
             <input  class="form-control" type = "search"
-                    id="search2" value="g6p_c" >
+                    id="search2" value="mercppyr_c" >
 
         </div>
 
@@ -203,14 +203,10 @@ th{
         <p> target </p>
         <div class="form-group">
             <input  class="form-control" type = "search"
-                    id="search3" value="pyr_c" >
+                    id="search3" value="HC00250_c" >
         </div>
 
-        <p> Knockout Reaction </p>
-        <div class="form-group">
-            <input  class="form-control" type = "search"
-                    id="search4" value="F6PA" >
-        </div>
+
         <button type="submit" onClick = "sendTextToBackend2()" class="btn btn-default">Search</button>
 
     </div>
@@ -221,12 +217,13 @@ th{
     <div id = "reactiontable" style = "padding:10px"  class="container-fluid text-center">
 
 
+    <p th:text ="${error}">
     <table class = "commentTable">
         <tr>
             <th>Source</th>
             <th>Product</th>
 
-            <th>Pathway</th>
+            <th>Reaction Pathway</th>
          
        
         </tr>
@@ -235,9 +232,9 @@ th{
         <tr th:each="next:${nextMetabolites}">
             <td th:text="${start}">
             <td>
-                <a th:text="${next.getKey()[0]}" th:href="@{'../info/metabolites/'+ ${next.getKey()[0]}}"/>
+                <a th:text="${end}" th:href="@{'../info/metabolites/'+ ${end}}"/>
             </td>
-            <td th:text="${next.getValue()}">
+            <td th:text="${nextMetabolites}">
 
 
         </tr>
@@ -300,7 +297,7 @@ th{
   }
 
   function sendTextToBackend2(){
-    location.assign("/functionality/find_pathway?start=".concat(search2.value).concat("&end=").concat(search3.value).concat("&knock=").concat(search4.value))
+    location.assign("/functionality/find_pathway?start=".concat(search2.value).concat("&end=").concat(search3.value))
   }
   $("#home").click(function() {
 	    window.location.assign("/home")

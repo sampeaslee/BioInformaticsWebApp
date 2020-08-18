@@ -60,7 +60,7 @@ public class SamController {
             ArrayList<Gene> s = (ArrayList<Gene>) GeneRepo.getGenes();
             model.addAttribute("genes", s);
         } else {
-            ArrayList<Gene> s = (ArrayList<Gene>) GeneRepo.geneProcedure(name);
+            ArrayList<Gene> s = (ArrayList<Gene>) GeneRepo.autoSearch(name);
             System.out.println(s.size());
             String search;
             if (s.size() == 0) {
@@ -98,17 +98,14 @@ public class SamController {
             + "Select distinct  c, m FROM Metabolite m, Compound c where c.biggmetaboliteID = m.bigg_compoundID "
             + "AND m.metaboliteID LIKE :search", Object[].class);
         queryCompound.setParameter("search", name + "%");
-        //queryCompound.setMaxResults(1000);
+        queryCompound.setMaxResults(1000);
         ArrayList<Object[]> results = (ArrayList<Object[]>) queryCompound.getResultList();
 
 
 
         if (results.size() > 0) {
-            javax.persistence.Query queryCompound2 = em.createQuery(""
-                + "Select distinct  c, m FROM Metabolite m, Compound c where c.biggmetaboliteID = m.bigg_compoundID "
-                + "AND c.name LIKE :search", Object[].class);
-        queryCompound2.setParameter("search", "%"+ name + "%");
-        results.addAll(queryCompound2.getResultList());
+
+        
             Compound c = (Compound) results.get(0)[0];
             ArrayList<Metabolite> meta = new ArrayList<Metabolite>();
             ArrayList<Compound> compound = new ArrayList<Compound>();
