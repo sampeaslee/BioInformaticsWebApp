@@ -30,7 +30,7 @@ public class CreateGraph {
             "udpg_c","udp_c","utp_c","q8_c","q8h2_c","itp_c","idp_c","datp_c","dadp_c","cdp_c","ctp_c","BIOMASS_WT_lumped");
         
         Object obj = new JSONParser().parse(new FileReader
-            ("C:\\Users\\peasl\\SalmoPrograms\\Java_Files\\CS_564\\JSON\\final_reactions_from_bigg.json"));
+            ("JSON\\final_reactions_from_bigg.json"));
         JSONObject jsonObj = (JSONObject) obj;
         //keySet() returns a set of all the keys in the JSON 
         Set<String> ReactionsIDs = jsonObj.keySet();
@@ -38,7 +38,7 @@ public class CreateGraph {
         int i = 0;
         for(String idKey: ReactionsIDs) {
             i++;
-            if(i == 5000) {
+            if(i == 2500) {
                 break;
             }
               
