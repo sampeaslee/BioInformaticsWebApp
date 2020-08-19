@@ -213,7 +213,8 @@ div.b {
 
 <div class="jumbotron text-center">
 
-  <h1>Metabolites Database</h1> 
+  <h1>Bioinformatics Database:</h1> 
+    <p>Metabolite, Gene and Reaction Data</p> 
 
   <div class="form-inline"  >
   <div class="form-group">
@@ -243,7 +244,7 @@ div.b {
 
 <!-- Container (Services Section) -->
 <div id="Funsctionality" class="container-fluid text-center">
-  <h2>Functionality</h2>
+  <h2>Functionalities</h2>
   <br>
   <div class="row slideanim">
     <div class="col-sm-4">
@@ -266,11 +267,15 @@ div.b {
       <h4>Pathway Between Two Metabolites</h4>
       <p>Find the reaction pathway from one metabolite to another</p>
     </div>
+    <!--
             <div class="col-sm-4">
+            
   <img src ="images/pathway.png"  width="125" height="125" id = "product" ></img>
       <h4>Metabolites Within A Number Of Steps</h4>
       <p>Find all the metabolites you can reach starting from one metabolite in a certain number of steps</p>
     </div>
+        <div class="col-sm-4">
+        -->
         <div class="col-sm-4">
   <img src = "images/modify.png"  width="125" height="125" id = "modify" ></img>
       <h4>Modify Database</h4>
@@ -313,11 +318,14 @@ function test(){
     
     searchValue = document.getElementById("search").value
     x =   $(".dropdown-menu li a").parents(".dropdown").find('.btn').val($(".dropdown-menu li a").data('value')).text();
-    
 
-    goTo  = "/"  +  x.toLowerCase().trim() +"?name=" + searchValue
-    	
-    window.location.assign(goTo)
+    if(String(x).localeCompare("Catalog") === -1){
+    	window.alert("Please Specify: Genes, Metabolites or Reactions")
+    }else{
+        goTo  = "/"  +  x.toLowerCase().trim() +"?name=" + searchValue
+    	console.log(x)
+        window.location.assign(goTo)
+    }
     
     
 }

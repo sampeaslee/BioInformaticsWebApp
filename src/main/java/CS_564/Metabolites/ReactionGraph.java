@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.LinkedHashSet;
@@ -342,12 +343,109 @@ public class Metabolite {
             return null;
         }
     }
-    
+///////////////////////////////////////////////////////////////////////////////
+//    public ArrayList<ArrayList<Metabolite>> getPathsWithinCertainDistance(String vertex1, int d) {
+//        if(d == 0) {
+//            return null;
+//        }
+//
+//        Metabolite v1 = search(vertex1);
+//        if (v1 == null ) {
+//            // If a vertex is not in the graph return null
+//         
+//            return null;
+//        }
+//
+//        // Mark all vertices unvisited and set their predecessor to null
+//        ArrayList<String> visited = new ArrayList<String>();
+//        // Queue to implement Breadth First Search
+//        Queue<Metabolite> q = new LinkedList<Metabolite>();
+//        
+//        // Mark v2 visited and add to queue
+// 
+//        visited.add(v1.name);
+//        q.add(v1);
+//        // Normal Breadth First Search, with a little extra code to properly
+//        // set the correct predecessor for each vertex and stop searching if
+//        // depth d is reached
+//        int currentDepth = 0; 
+//        int nodeToDepthIncrease  = 1;
+//        boolean depthIncrease = false;
+//        while (!q.isEmpty()) {
+//            nodeToDepthIncrease--;
+//            Metabolite current = q.poll();
+//            if(nodeToDepthIncrease == 0) {
+//                currentDepth++;
+//                System.out.println(currentDepth);
+//                depthIncrease = true;
+//            }
+//
+//            for (Metabolite k : current.succesors) {
+//                    if(depthIncrease) {
+//                        nodeToDepthIncrease = current.succesors.size();
+//                        depthIncrease = false;
+//                    }
+//            
+//                    // Set the vertex as visited
+//                    if(visited.contains(k.name)) {
+//                        continue;
+//                    }else {
+//                        visited.add( k.name);
+//                        k.shorestPathPred = (current);
+//                      
+//                        q.add(k);
+//                    }
+//                
+//            }    
+//            System.out.println();
+//           if(d <= currentDepth) {
+//               break;
+//           }
+//
+//
+//        }
+//        ArrayList<ArrayList<Metabolite>> allPaths = new ArrayList<>();
+//      
+//        while (!q.isEmpty()) {
+//            Metabolite current = q.poll();
+//            // List to store the names of users in the shortest path
+//            // from v1 to v2
+//            ArrayList<Metabolite> path = new ArrayList<>();
+//            // Add name at v1 to list
+//            path.add( current);
+//            // Add name at v1's predecessor to list
+//            path.add( current.shorestPathPred);
+//            // New queue to get correct order of the shortest path
+//            Queue<Metabolite> q2 = new LinkedList<>();
+//            // Add v1's predecessor to the queue
+//            q2.add(current.shorestPathPred);
+//            while (!q2.isEmpty()) {
+//                // Grab and remove the front of the queue
+//                Metabolite n = q2.poll();
+//                System.out.println(n.name);
+//                // If the vertex has a predecessor
+//                // Add the predecessor to the shortestPath list
+//                // and to the queue
+//                if (n.shorestPathPred != null) {
+//            
+//                    path.add( n.shorestPathPred);
+//                    if(visited.contains(n.shorestPathPred.name)) {
+//                        continue;
+//                    }
+//                    q2.add(n.shorestPathPred);
+//                }
+//            }
+//            allPaths.add(path);
+//            
+//        }
+//        return allPaths;
+//
+//    }
 ////////////////////////////////////////////////////////////////////////////////
     /*Private methods*/    
     /**
      * Searches for a specified vertex in the graph and returns the 
-     * Metabolite if the vertex is in the graph, otherwise return null
+     * Metabolite if he vertex is in the graph, otherwise return null
      * @param data
      * @return Metabolite or null
      */
@@ -390,39 +488,6 @@ public class Metabolite {
         }
     }
 
-       public static void main(String[] args) throws FileNotFoundException, IOException, ParseException { 
-           List<String> list = Arrays.asList("coa_c","nadp_c","nadph_c","nadh_c","nad_c","accoa_c",
-               "ac_c","ac_e","ac_p","h2o_c","h2o_e","h2o_p","h_c","h_e","h_p","pi_c","ppi_c","atp_c","h_m",
-               "h_h", "adp_x","amp_c","adp_c","adp_h","h_v","h_r","pi_r","h_g","h2o_r","h_x","pi_h","oh1_c",
-               "o2_c","nh4_c","ppi_r","co2_p","h_n","co2_c","pi_m","nad_r","h2o_h","fdxox_c","biomass_pro_c",
-               "udpg_c","udp_c","utp_c","q8_c","q8h2_c","itp_c","idp_c","datp_c","dadp_c","cdp_c","ctp_c","");
-
-       
-
-       List<String> list2 = Arrays.asList("BIOMASS_pro_c","nadp_c","nadph_c","nadh_c","nad_c","accoa_c",
-               "ac_c","ac_e","ac_p","h2o_c","h2o_e","h2o_p","h_c","h_e","h_p","pi_c","ppi_c","atp_c","h_m",
-               "h_h", "adp_x","amp_c","adp_c","adp_h","h_v","h_r","pi_r","h_g","h2o_r","h_x","pi_h","oh1_c",
-               "o2_c","nh4_c","ppi_r","co2_p","h_n","co2_c","pi_m","nad_r","h2o_h","fdxox_c","biomass_pro_c",
-               "udpg_c","udp_c","utp_c","q8_c","q8h2_c","itp_c","idp_c","datp_c","dadp_c","cdp_c","ctp_c","BIOMASS_WT_lumped");
-           
-     System.out.println("#nadph_c:-1.0,#h_c:-1.0,#13m3otdACP_c:-1.0".split(",")[0]);
-     String[] arr = "#nadph_c:-1.0,#h_c:-1.0,#13m3otdACP_c:-1.0".split(",");
-     System.out.println(arr[2].substring(arr[2].indexOf("#") + 1,arr[2].indexOf(":")));
-      
-
-//       ReactionGraph g = new ReactionGraph();
-//           
-//           g.addEdge("A", "B", "R");
-//
-//           g.addEdge("A", "D", "R");
-//           g.addEdge("B", "C", "R");
-//           g.addEdge("D", "C", "R");
-//
-//           ArrayList<String> visited = new ArrayList<String>();
-//           ArrayList<String> t = g.getShortestPath("A","D");
-//
-
-       } 
        
      
 }

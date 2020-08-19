@@ -86,7 +86,7 @@ public class CreateGraph {
                if(end[j].contains("#")) {
                    end[j] = end[j].substring(end[j].indexOf("#") + 1,end[j].indexOf(":"));
                }
-               if(!list.contains(end[j]) & !list.contains(st[i]) & !list2.contains(end[j]) & !list2.contains(st[i])) {
+               if(!list.contains(end[j]) && !list.contains(st[i]) && !list2.contains(end[j]) && !list2.contains(st[i])) {
                    g.addEdge(st[i].trim(),end[j].trim(),s.reactionID);
                }
                

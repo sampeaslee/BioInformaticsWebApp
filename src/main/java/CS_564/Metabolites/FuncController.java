@@ -96,10 +96,13 @@ public class FuncController {
 //        model.addAttribute("listofcompounds", list_of_compounds);
         //load.graph.addEdge("A", "B", "C");
      
-      
+      name = name.trim();
+     
 //
-        if( name.equals("") ) {
-            model.addAttribute("test", "No Search Specifed");
+        if( name.equals("")  ) {
+            if(times.equals("")) {
+            model.addAttribute("error", "Please Specify a Number of Rection Steps Between 1 and 4!");
+            }
         }else {
             /// Initial the search bar;
             ArrayList<String[]>  m =  (ArrayList<String[]>) StartMetaReactionRepo.findByMetaboliteId(name);
@@ -289,39 +292,77 @@ public class FuncController {
         return "functionality/find_pathway";
 
     }*/
+//    @GetMapping("/functionality/find_product")
+//    public String senTo2(@RequestParam(value = "name", defaultValue = "") String name, Model model,
+//        @RequestParam(value = "steps", defaultValue = "") String times) {
+//       boolean noInput = true;
+//       int steps = 0;
+//       try {
+//       steps = Integer.parseInt(times.trim());
+//        noInput = false;
+//       }catch(Exception e){
+//           
+//       }
+//       if(!noInput) {
+//        HashMap<String, String> nextMetabolites = new HashMap();
+//        ArrayList< ArrayList<CS_564.Metabolites.ReactionGraph.Metabolite>> paths = load.graph.getPathsWithinCertainDistance(name.trim(), steps);
+//        if((paths != null)) {
+//        if( paths.size() == 0) {
+//            model.addAttribute("error", "No Paths With Depth " + times);
+//        }else {
+//            
+//            
+//            String test =ArrayListtoString( paths.get(0));
+//            for(ArrayList<CS_564.Metabolites.ReactionGraph.Metabolite> p: paths) {
+//                nextMetabolites.put(paths.get(0).get(0).name, ArrayListtoString( p));
+//            }
+//            model.addAttribute("nextMetabolites", nextMetabolites);
+//            model.addAttribute("name", name);
+//            model.addAttribute("steps", times);
+//            model.addAttribute("error", "Cool Beans");
+//        }
+//       }
+//       }else {
+//           model.addAttribute("error", "No Paths With Depth " + times);
+//       }
+//        return "/functionality/find_product";
+//    }
+
     
-    @GetMapping("/functionality/find_pathway")   
- public String senTo3(@RequestParam(value = "start", defaultValue = "")
-  String start, Model model, @RequestParam(value = "end", defaultValue = "")
-  String end ) {
-        if(!start.equals("") && !end.equals("")) {
-        ArrayList<CS_564.Metabolites.ReactionGraph.Metabolite> t = load.graph.getShortestPath(start,end);
-            if(t != null) {
+    @GetMapping("/functionality/find_pathway")
+    public String senTo3(@RequestParam(value = "start", defaultValue = "") String start,
+        Model model, @RequestParam(value = "end", defaultValue = "") String end) {
+        if (!start.equals("") && !end.equals("")) {
+            ArrayList<CS_564.Metabolites.ReactionGraph.Metabolite> t =
+                load.graph.getShortestPath(start, end);
+            if (t != null) {
                 model.addAttribute("nextMetabolites", this.ArrayListtoString(t));
                 model.addAttribute("start", start);
                 model.addAttribute("end", end);
                 model.addAttribute("error", "Reaction Path Exists!");
-            }else {
-                model.addAttribute("error","No Reaction Path Between Metabolite: " + start +  " And Metabolie: " + end );
+            } else {
+                model.addAttribute("error",
+                    "No Reaction Path Between Metabolite: " + start + " And Metabolie: " + end);
             }
-        }else {
-            model.addAttribute("error", "Click Search To See If A Path Exists");
+        } else {
+            model.addAttribute("error", "Enter Two Metabolites And Click Search To See If A Path Exists");
         }
-      return "functionality/find_pathway";
-  }
-  
+        return "functionality/find_pathway";
+    }
+
     public String ArrayListtoString(ArrayList<CS_564.Metabolites.ReactionGraph.Metabolite> t) {
-        String res = ""; 
-        
-        for(int j = t.size() - 1; j > 0; j-- ) {
-            res += t.get(j).reactions.get(t.get(j-1).name);
+        String res = "";
+
+        for (int j = t.size() - 1; j > 0; j--) {
+            res += t.get(j).reactions.get(t.get(j - 1).name);
             res += " -> ";
         }
-        
+
 
         res = res.substring(0, res.length() - 4);
         return res;
     }
+
     public String ArrayListtoString2(ArrayList<String> pathway) {
         String res = "";
         for (String step : pathway) {
